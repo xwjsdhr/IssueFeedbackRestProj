@@ -65,13 +65,13 @@ public class DbUtils {
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-			System.out.println(connection.toString());
 			if (objects != null) {
 				for (int i = 0; i < objects.length; i++) {
-					preparedStatement.setObject(i + 1, objects[i]);
+					if (objects[i] != null) {
+						preparedStatement.setObject(i + 1, objects[i]);
+					}
 				}
 			}
-			System.out.println(preparedStatement.toString());
 			resultSet = preparedStatement.executeQuery();
 			return resultSet;
 		} catch (SQLException e) {

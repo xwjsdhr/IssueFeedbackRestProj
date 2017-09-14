@@ -88,4 +88,19 @@ public class BusinessService {
 	public IssuePage getAllByPageNum(Integer pageNum, Integer pageSize) {
 		return issueDao.getAllByPageNum(pageNum, pageSize);
 	}
+
+	public int deleteIssue(int issueId) {
+		// TODO Auto-generated method stub
+		return issueDao.deleteIssue(issueId);
+	}
+
+	public List<Issue> getAllDeletedIssues() {
+		// TODO Auto-generated method stub
+		return issueDao.getAllDeletedIssues();
+	}
+
+	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId) {
+		// TODO Auto-generated method stub
+		return issueDao.getIssuesByConditions(userId,deptId,statusId);
+	}
 }

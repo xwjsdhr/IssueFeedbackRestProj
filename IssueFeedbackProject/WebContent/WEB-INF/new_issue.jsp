@@ -15,42 +15,57 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="#">组长问题提交</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			    <ul class="navbar-nav mr-auto">
-			      <li class="nav-item ">
-			        <a class="nav-link" href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span></a>
-			      </li>
-			      
-			      <li class="nav-item active">
-			        <a class="nav-link" href="/IssueFeedbackProject/NewIssue">添加问题</a>
-			      </li>
-			      
-			      <li class="nav-item">
-			       <a class="nav-link" href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
-			      </li>
-			      <c:if test="${user_session.dept.id == 4 }">
-						<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/DeptManagement">部门管理</a>
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item "><a class="nav-link"
+						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span></a>
 					</li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					          	添加问题
+					    </a>
+					    
+					</li>
+
+					<c:if test="${user_session.dept.id == 4 }">
+					
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="/IssueFeedbackProject/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						          	用户管理
+						        </a>
+						        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						          <a class="dropdown-item" href="#">添加用户</a>
+						        </div>
+							</li>
+						<li class="nav-item active"><a class="nav-link"
+							href="/IssueFeedbackProject/DeptManagement">部门管理</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/IssueFeedbackProject/TrashBin">回收站</a></li>
 					</c:if>
-			      <li class="nav-item">
-					  <a class="nav-link" href="/IssueFeedbackProject/Logout">退出</a>
-			      </li>
-			    </ul>
-			   
-			  </div>
+					
+				</ul>
+				 <div class="btn-group " role="group">
+				 <a class="btn btn-link"
+						href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
+						<a class="nav-link"
+						href="/IssueFeedbackProject/Logout">退出</a>
+				 </div>
+			</div>
 		</nav>
 		<div class="row ">
 			<div class="col-md-12 panel ">
 				<form action="/IssueFeedbackProject/AddIssue" method="post">
 					<div class="form-froup">
-						<label for="inputIssueTitle">问题标题</label> 
-						<input
-							id="inputIssueTitle" type="text" class="form-control" name="title"/>
-							<label style="margin-top: 20px" for="textareaIssueContent">问题描述</label> 
-							
-						<textarea name="content" class="form-control" id="textareaIssueContent" rows="3"></textarea>
-							
-							<input style="margin-top: 20px" class="btn btn-primary" type="submit" value="提交"/>
+						<label for="inputIssueTitle">问题标题</label> <input
+							id="inputIssueTitle" type="text" class="form-control"
+							name="title" /> <label style="margin-top: 20px"
+							for="textareaIssueContent">问题描述</label>
+
+						<textarea name="content" class="form-control"
+							id="textareaIssueContent" rows="3"></textarea>
+
+						<input style="margin-top: 20px" class="btn btn-primary"
+							type="submit" value="提交" />
 					</div>
 
 				</form>

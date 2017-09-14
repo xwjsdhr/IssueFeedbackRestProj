@@ -45,31 +45,42 @@ public class IndexServlet extends HttpServlet {
 				Status selectedStatus = new Status();
 				selectedStatus.setId(statusId);
 				selectedStatus.setStatusName(statusName);
-				
+
 				List<Issue> issues = businessService.getIssueByStatusId(statusId);
-				
+
 				req.setAttribute("select_status", selectedStatus);
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
-			} else if (deptIdStr != null) {
+			}
+			if (deptIdStr != null) {
 				Integer deptId = Integer.parseInt(deptIdStr);
 				String deptName = req.getParameter("dept_name");
 				Dept dept = new Dept();
 				dept.setId(deptId);
-				
 				dept.setDeptName(deptName);
-				
 				List<Issue> issues = businessService.getIssueByDeptId(deptId);
 				req.setAttribute("select_dept", dept);
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
-				
-			}else if(keyword != null) {
+
+			}
+			if (keyword != null) {
+				System.out.println("keyword");
 				List<Issue> issues = businessService.getIssueByKeyword(keyword);
+				System.out.println("size:"+issues.size());
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 				req.setAttribute("keyword", keyword);
-			}else if (userIdStr != null){
+			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null) {
+				
+				List<Issue> issues = businessService.getAllIssues();
+				req.setAttribute("list", issues);
+				req.setAttribute("issue_quantity", issues.size());
+				// IssuePage issuePage = businessService.getAllByPageNum(1, 10);
+				// req.setAttribute("issue_page", issuePage);
+				// req.setAttribute("issue_quantity", issuePage.getIssues().size());
+			}
+			if (userIdStr != null) {
 				Integer userId = Integer.parseInt(userIdStr);
 				String realName = req.getParameter("real_name");
 				List<Issue> issues = businessService.getIssuesByUserId(userId);
@@ -77,19 +88,20 @@ public class IndexServlet extends HttpServlet {
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 			}
-//			else if(pageNum != null){
-//				Integer pageN = Integer.parseInt(pageNum);
-//				IssuePage issuePage = businessService.getAllByPageNum(pageN, 10);
-//				req.setAttribute("issue_page", issuePage);
-//				req.setAttribute("issue_quantity", issuePage.getIssues().size());
-//			}
-			else {
-				List<Issue> issues = businessService.getAllIssues();
+			 
+			if (userIdStr != null && deptIdStr != null && statusIdStr != null) {
+				System.out.println("都不等于nnull");
+				int userId = Integer.parseInt(userIdStr);
+				int deptId = Integer.parseInt(deptIdStr);
+				int statusId = Integer.parseInt(statusIdStr);
+				
+				List<Issue> issues = businessService.getIssuesByConditions(userId,deptId,statusId);
+				req.setAttribute("user_id", userId);
+				req.setAttribute("dept_id", deptId);
+				req.setAttribute("status_id", statusId);
+				
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
-//				IssuePage issuePage = businessService.getAllByPageNum(1, 10);
-//				req.setAttribute("issue_page", issuePage);
-//				req.setAttribute("issue_quantity", issuePage.getIssues().size());
 			}
 			List<User> users = businessService.getAllUsers();
 			req.setAttribute("all_users", users);

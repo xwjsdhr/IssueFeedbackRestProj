@@ -20,21 +20,41 @@
 						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
 					</a></li>
 
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/NewIssue">添加问题</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					          	问题管理
+					    </a>
+					    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					         <a class="nav-link" href="/IssueFeedbackProject/NewIssue">添加问题</a>
+					          <c:if test="${user_session.dept.id == 4 }">
+					         	<a class="nav-link" href="/IssueFeedbackProject/TrashBin">回收站</a>
+					         </c:if>
+					    </div>
+					</li>
 
-					<li class="nav-item ">
-					<a class="nav-link" href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
-					</li>
 					<c:if test="${user_session.dept.id == 4 }">
+					
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="/IssueFeedbackProject/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						          	用户管理
+						        </a>
+						        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						          <a class="dropdown-item" href="#">添加用户</a>
+						        </div>
+							</li>
 						<li class="nav-item active"><a class="nav-link"
-						href="#">部门管理</a>
-					</li>
+							href="/IssueFeedbackProject/DeptManagement">部门管理</a></li>
+						
 					</c:if>
 					
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Logout">退出</a></li>
+					
 				</ul>
+				 <div class="btn-group " role="group">
+				 <a class="btn btn-link"
+						href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
+						<a class="nav-link"
+						href="/IssueFeedbackProject/Logout">退出</a>
+				 </div>
 				
 			</div>
 		</nav>

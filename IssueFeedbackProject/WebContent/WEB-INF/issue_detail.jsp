@@ -18,17 +18,25 @@
 					<li class="nav-item active"><a class="nav-link"
 						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
 					</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> 问题管理 </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="nav-link" href="/IssueFeedbackProject/NewIssue">添加问题</a>
+						</div></li>
 
-					<li class="nav-item"><a class="nav-link" href="#">${user_session.realName}</a>
-					</li>
 					<c:if test="${user_session.dept.id == 4 }">
 						<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/DeptManagement">部门管理</a>
-					</li>
+							href="/IssueFeedbackProject/DeptManagement">部门管理</a></li>
 					</c:if>
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Logout">退出</a></li>
+
 				</ul>
+				<div class="btn-group " role="group">
+					<a class="btn btn-link" href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
+					<a class="nav-link" href="/IssueFeedbackProject/Logout">退出</a>
+				</div>
 			</div>
 		</nav>
 
@@ -46,7 +54,7 @@
 					</c:when>
 				</c:choose>
 
-<!-- 
+				<!-- 
 				<c:if test="${user_session.dept.id == 3 }">
 					<form action="/" method="post" class="form-inline">
 						<div class="form-group">
@@ -60,10 +68,7 @@
 						<div class="form-group mx-sm-3">
 							<input class="btn btn-primary" type="submit" value="修改" />
 						</div>
-
-
 					</form>
-
 				</c:if>
  -->
 			</div>
@@ -79,9 +84,10 @@
 						<p class="pull-right">
 							<small>${comment.createTime }</small>
 						</p>
-						<a class="media-left" href="#"> <img
-							src="http://lorempixel.com/40/40/people/1/">
-						</a>
+						<c:if test="${comment.isResovleIssue == 1 }">
+							<span class="badge badge-pill badge-success">已解决</span>
+						</c:if>
+						
 						<div class="media-body">
 							<p class=" user_name">${comment.user.realName }</p>
 							${comment.content }
@@ -99,6 +105,14 @@
 						<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>
 						<textarea name="comment" class="form-control"
 							id="textareaIssueContent" rows="3"></textarea>
+						<div class="form-check">
+							<label style="margin-top: 20px" class="form-check-label"
+								for="checkboxResovled"> <input type="checkbox"
+								class="form-check-input" id="checkboxResovled" name="is_resovled" />
+								 标记为已解决
+							</label>
+						</div>
+
 
 						<input style="margin-top: 20px" class="btn btn-primary"
 							type="submit" value="回复">
@@ -109,5 +123,7 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="lib/js/popper.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 </html>

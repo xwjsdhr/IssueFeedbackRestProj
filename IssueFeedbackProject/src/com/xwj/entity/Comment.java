@@ -6,7 +6,14 @@ public class Comment {
 	private String content;
 	private User user;
 	private String createTime;
+	private int isResovleIssue = 0;
 	
+	public int getIsResovleIssue() {
+		return isResovleIssue;
+	}
+	public void setIsResovleIssue(int isResovleIssue) {
+		this.isResovleIssue = isResovleIssue;
+	}
 	public String getCreateTime() {
 		return createTime;
 	}

@@ -20,20 +20,33 @@
 						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
 					</a></li>
 
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/NewIssue">添加问题</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> 问题管理 </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="nav-link" href="/IssueFeedbackProject/NewIssue">添加问题</a>
+							<c:if test="${user_session.dept.id == 4 }">
+								<a class="nav-link" href="/IssueFeedbackProject/TrashBin">回收站</a>
+							</c:if>
+						</div></li>
 
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
-					</li>
-					
 					<c:if test="${user_session.dept.id == 4 }">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle"
+							href="/IssueFeedbackProject/UserManagement"
+							id="navbarDropdownMenuLink" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"> 用户管理 </a>
+							<div class="dropdown-menu"
+								aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="#">添加用户</a>
+							</div></li>
 						<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/DeptManagement">部门管理</a>
-					</li>
+							href="/IssueFeedbackProject/DeptManagement">部门管理</a></li>
+
 					</c:if>
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Logout">退出</a></li>
+
 				</ul>
 				<form action="/IssueFeedbackProject/Index" method="get"
 					class="form-inline my-2 my-lg-0">
@@ -41,10 +54,96 @@
 						placeholder="请输入关键字" aria-label="Search" value="${keyword }" />
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
 				</form>
+
+				<div class="btn-group " role="group">
+					<a class="btn btn-link" href="/IssueFeedbackProject/UserInfo">${user_session.realName}</a>
+					<a class="nav-link" href="/IssueFeedbackProject/Logout">退出</a>
+				</div>
 			</div>
 		</nav>
 		<div class="row ">
-			<div class="col-md-12 panel ">
+			<div class="col-md-12 panel">
+				<form action="/IssueFeedbackProject/Index" class="form-inline">
+
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">部门</div>
+						<select name="dept_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineFormInputName2">
+							<c:if test="${dept_id == dept.id }">
+									<option value="-1" selected="selected">全部部门</option>
+								</c:if>
+								<c:if test="${dept_id != dept.id }">
+									<option value="-1">全部部门</option>
+								</c:if>
+							<c:forEach items="${all_depts }" var="dept">
+
+								<c:if test="${dept_id == dept.id }">
+									<option value="${dept.id }" selected="selected">${dept.deptName}</option>
+								</c:if>
+								<c:if test="${dept_id != dept.id }">
+									<option value="${dept.id }">${dept.deptName}</option>
+								</c:if>
+
+							</c:forEach>
+						</select>
+					</div>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">用户</div>
+						<select name="user_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineFormInputName2">
+							<c:if test="${user_id == user.id }">
+									<option value="-1" selected="selected">全部用户</option>
+								</c:if>
+								<c:if test="${user_id != user.id }">
+									<option value="-1">全部用户</option>
+								</c:if>
+							
+							<c:forEach items="${all_users }" var="user">
+
+								<c:if test="${user_id == user.id }">
+									<option value="${user.id }" selected="selected">${user.realName}</option>
+								</c:if>
+								<c:if test="${user_id != user.id }">
+									<option value="${user.id }">${user.realName}</option>
+								</c:if>
+
+							</c:forEach>
+						</select>
+					</div>
+					
+					<label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">状态</div>
+						<select name="status_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineFormInputName2">
+							<c:if test="${status_id == status.id }">
+								<option value="-1" selected="selected">全部状态</option>
+							</c:if>
+
+							<c:if test="${status_id != status.id }">
+								<option value="-1">全部状态</option>
+							</c:if>
+
+
+							<c:forEach items="${all_status }" var="status">
+								<c:if test="${status_id == status.id }">
+									<option value="${status.id }" selected="selected">${status.statusName }</option>
+								</c:if>
+
+								<c:if test="${status_id != status.id }">
+									<option value="${status.id }">${status.statusName }</option>
+								</c:if>
+
+							</c:forEach>
+						</select>
+					</div>
+
+					<button type="submit" class="btn btn-primary">查询</button>
+				</form>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="col-md-12 ">
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
@@ -59,8 +158,6 @@
 										<c:if test="${select_status !=null }">
 											${select_status.statusName }
 										</c:if>
-
-
 										<span class="badge badge-secondary">${issue_quantity }</span>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -79,9 +176,8 @@
 
 							</td>
 							<td width="15%">标题</td>
-
-							<td>时间</td>
-
+							<td>创建时间</td>
+							<td>上次更新时间</td>
 							<td>
 								<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button"
@@ -137,6 +233,9 @@
 								</div>
 
 							</td>
+							<c:if test="${user_session.dept.id == 4 }">
+								<td>删除</td>
+							</c:if>
 							<td width="10%"></td>
 						</tr>
 					</thead>
@@ -155,14 +254,20 @@
 										<c:when test="${issue.status.id == 3 }">
 											<span class="badge badge-pill badge-success">${issue.status.statusName }</span>
 										</c:when>
+
 									</c:choose> <span class="badge badge-pill badge-info">${issue.commentsNum }</span>
 								</td>
 								<td>${issue.title }</td>
-								
+
 								<td>${issue.submitTime}</td>
+								<td>${issue.lastUpdateTime }</td>
 								<td>${issue.user.realName }</td>
 								<td>${issue.user.dept.deptName }</td>
-
+								<c:if test="${user_session.dept.id == 4 }">
+									<td><a
+										href="/IssueFeedbackProject/DeleteIssue?issue_id=${issue.id }"
+										class="btn btn-danger">删除</a></td>
+								</c:if>
 								<td><a
 									href="/IssueFeedbackProject/IssueDetail?id=${issue.id }"
 									class="btn btn-link">查看</a></td>
@@ -208,4 +313,5 @@
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/js/index.js"></script>
 </html>

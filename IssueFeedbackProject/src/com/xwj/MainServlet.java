@@ -11,25 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 import com.xwj.entity.User;
 
 /**
- * Servlet implementation class DeptManagementServlet
+ * Servlet implementation class MainServlet
  */
-@WebServlet("/DeptManagement")
-public class DeptManagementServlet extends HttpServlet {
+@WebServlet("/")
+public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-    public DeptManagementServlet() {
+    public MainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User userSession = (User) request.getSession().getAttribute("user_session");
-		if(userSession!= null && userSession.getDept().getId() == 4) {
-			request.getRequestDispatcher("/WEB-INF/dept_management.jsp").forward(request, response);
-		}else if(userSession == null) {
+		
+		User user = (User) request.getSession().getAttribute("user_session");
+		if(user != null) {
+			response.sendRedirect(request.getContextPath()+"/Index");
+		}else {
 			response.sendRedirect(request.getContextPath()+"/Login");
 		}
 	}
+
+	
+
 }

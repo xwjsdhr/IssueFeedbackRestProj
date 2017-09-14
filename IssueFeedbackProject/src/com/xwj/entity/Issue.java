@@ -24,7 +24,14 @@ public class Issue implements Serializable{
 	private List<Comment> comments;
 	private Long createTimestamp;
 	private String lastUpdateTime;
+	private int isDeleted;
 	
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	public String getLastUpdateTime() {
 		return lastUpdateTime;
 	}
@@ -87,8 +94,4 @@ public class Issue implements Serializable{
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
-	
-	
-	
 }

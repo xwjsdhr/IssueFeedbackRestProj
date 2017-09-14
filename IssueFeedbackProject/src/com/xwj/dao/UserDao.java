@@ -78,4 +78,30 @@ public class UserDao {
 		}
 		return users;
 	}
+	public List<User> getUsersByDeptId(int deptId){
+		String querySql ="select u.id, u.user_name,u.password,u.real_name,d.id,d.dept_name from t_user u, t_dept d where u.dept_id = d.id and d.id=?";
+		Object [] objects = new Object[] {
+				deptId
+		};
+		List<User> users = new ArrayList<>();
+		ResultSet resultSet = dbUtils.executeQuery(querySql, objects);
+		try {
+			while (resultSet.next()) {
+				User user = new User();
+				user.setId(resultSet.getInt("id"));
+				user.setUsername(resultSet.getString("user_name"));
+				user.setPassword(resultSet.getString("password"));
+				user.setRealName(resultSet.getString("real_name"));
+				Dept dept = new Dept();
+				dept.setId(resultSet.getInt("d.id"));
+				dept.setDeptName(resultSet.getString("dept_name"));
+				user.setDept(dept);
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users;			
+	}
 }
