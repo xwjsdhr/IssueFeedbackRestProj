@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xwj.entity.MyError;
 import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
 
@@ -26,12 +28,18 @@ public class DeleteIssueServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user_session");
 		System.out.println("request.getContextPath()"+request.getContextPath());
 		if(user != null) {
-			int issueId = Integer.parseInt(request.getParameter("issue_id"));
-			int res = businessService.deleteIssue(issueId);
-			if(res > 0) {
-				response.sendRedirect("/IssueFeedbackProject/Index");
+			if(user.getDept().getId() == 4) {
+				int issueId = Integer.parseInt(request.getParameter("issue_id"));
+				int res = businessService.deleteIssue(issueId);
+				if(res > 0) {
+					response.sendRedirect("/IssueFeedbackProject/Index");
+				}
+			}else {
+				MyError error = new MyError("ÎÞÈ¨ÏÞÉ¾³ý", 1,request.getContextPath()+"/Index");
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+				
 			}
-			
 		}else {
 			response.sendRedirect("/IssueFeedbackProject/Login");
 		}

@@ -18,7 +18,7 @@
 			<div class="col-md-2"></div>
 			<div class="col">
 
-				<form action="/IssueFeedbackProject/Auth" method="post">
+				<form action="${pageContext.request.contextPath }/Auth" method="post">
 					<div class="form-group">
 						<label for="usernameInputId">用户名</label> <input name="user_name"
 							id="usernameInputId" placeholder="请输入用户名" type="text"

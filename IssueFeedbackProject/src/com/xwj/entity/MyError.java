@@ -1,0 +1,38 @@
+package com.xwj.entity;
+
+import java.io.Serializable;
+
+public class MyError implements Serializable {
+	
+	private String msg;
+	private int errorCode;
+	private String backAddr;
+	
+	public String getBackAddr() {
+		return backAddr;
+	}
+	public void setBackAddr(String backAddr) {
+		this.backAddr = backAddr;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	public int getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
+	}
+	public MyError(String msg, int errorCode, String backAddr) {
+		super();
+		this.msg = msg;
+		this.errorCode = errorCode;
+		this.backAddr = backAddr;
+	}
+	
+	
+
+}

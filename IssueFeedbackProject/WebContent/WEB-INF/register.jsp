@@ -13,11 +13,11 @@
 	<div class="container">
 
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/IssueFeedbackProject/Index">注册</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath }/Index">注册</a>
 		</nav>
 		<div class="row ">
 			<div class="col-md-12 panel ">
-				<form action="/IssueFeedbackProject/AddUser" method="post">
+				<form action="${pageContext.request.contextPath }/AddUser" method="post">
 					<div class="form-froup">
 						<label style="margin-top: 20px" for="inputIssueTitle">用户名</label> 
 						<input id="inputIssueTitle" type="text" class="form-control" name="user_name"/>

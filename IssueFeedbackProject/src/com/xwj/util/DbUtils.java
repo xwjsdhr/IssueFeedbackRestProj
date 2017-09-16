@@ -61,7 +61,7 @@ public class DbUtils {
 		return result;
 	}
 
-	public ResultSet executeQuery(String sql, Object... objects) {
+	public ResultSet executeQuery(String sql,  Object... objects) {
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);

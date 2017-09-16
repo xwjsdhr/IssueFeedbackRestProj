@@ -449,4 +449,13 @@ public class IssueDao {
 		issue.setCommentsNum(commentsNum);
 		return issue;
 	}
+
+	public int restoreIssue(Integer id) {
+		String updateSql = "update t_issue set is_deleted = 1 where id=?";
+		Object [] params = new Object[] {
+				id
+		};
+		int res = dbUtils.executeUpdate(updateSql, params);
+		return res;
+	}
 }

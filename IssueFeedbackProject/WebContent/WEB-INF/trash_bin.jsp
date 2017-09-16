@@ -19,7 +19,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><a class="nav-link"
-						href="/IssueFeedbackProject/Index">
+						href="${pageContext.request.contextPath }/Index">
 						<i class="ion-home"></i>首页
 					</a></li>
 
@@ -28,7 +28,7 @@
 					       <i class="ion-trash-a"></i> 回收站
 					    </a>
 					    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					         <a class="dropdown-item" href="/IssueFeedbackProject/NewIssue">
+					         <a class="dropdown-item" href="${pageContext.request.contextPath }/NewIssue">
 					         <i class="ion-plus"></i>
 					       	  添加问题</a>
 
@@ -37,7 +37,7 @@
 
 					<c:if test="${user_session.dept.id == 4 }">
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="/IssueFeedbackProject/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath }/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						          <i class="ion-person-stalker"></i>	用户管理
 						        </a>
 						        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -47,14 +47,14 @@
 						        </div>
 							</li>
 						<li class="nav-item"><a class="nav-link"
-							href="/IssueFeedbackProject/DeptManagement">
+							href="${pageContext.request.contextPath }/DeptManagement">
 							<i class="ion-ios-people"></i>
 							部门管理</a></li>
 						
 					</c:if>
 					
 				</ul>
-				<form action="/IssueFeedbackProject/Index" method="get"
+				<form action="${pageContext.request.contextPath }/Index" method="get"
 					class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" name="keyword" type="text"
 						placeholder="请输入关键字" aria-label="Search" value="${keyword }" />
@@ -62,10 +62,10 @@
 				</form>
 				 <div class="btn-group " role="group">
 				 <a class="btn btn-link"
-						href="/IssueFeedbackProject/UserInfo">
+						href="${pageContext.request.contextPath }/UserInfo">
 						<i class="ion-person"></i> ${user_session.realName}</a>
 						<a class="nav-link"
-						href="/IssueFeedbackProject/Logout">退出
+						href="${pageContext.request.contextPath }/Logout">退出
 						<i class="ion-log-out"></i>
 						</a>
 				 </div>
@@ -90,11 +90,11 @@
 										<span class="badge badge-secondary">${issue_quantity }</span>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="/IssueFeedbackProject/Index">全部</a>
+										<a class="dropdown-item" href="${pageContext.request.contextPath }/Index">全部</a>
 										<c:forEach items="${all_status }" var="status">
 											<c:if test="${status.id != 5 }">
-												<form action="/IssueFeedbackProject/Index" method="get">
-													<input type="hidden" href="#" name="status_id"
+												<form action="${pageContext.request.contextPath }/Index" method="get">
+													<input type="hidden" name="status_id"
 														value="${status.id }" /> <input type="hidden"
 														value="${status.statusName }" name="status_name" /> <input
 														class="dropdown-item" type="submit"
@@ -124,9 +124,9 @@
 										</c:if>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="/IssueFeedbackProject/Index">全部</a>
+										<a class="dropdown-item" href="${pageContext.request.contextPath }/Index">全部</a>
 										<c:forEach items="${all_users }" var="user">
-											<form action="/IssueFeedbackProject/Index" method="get">
+											<form action="${pageContext.request.contextPath }/Index" method="get">
 												<input type="hidden" name="real_name"
 													value="${user.realName }" /> <input type="hidden"
 													name="user_id" value="${user.id }" /> <input
@@ -152,11 +152,11 @@
 										<span class="badge badge-secondary">${dept_quantity }</span>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="/IssueFeedbackProject/Index">全部</a>
+										<a class="dropdown-item" href="${pageContext.request.contextPath }/Index">全部</a>
 										<c:forEach items="${all_depts }" var="dept">
-											<form action="/IssueFeedbackProject/Index" method="get">
-												<input type="hidden" href="#" name="dept_name"
-													value="${dept.deptName }" /> <input type="hidden" href="#"
+											<form action="${pageContext.request.contextPath }/Index" method="get">
+												<input type="hidden" name="dept_name"
+													value="${dept.deptName }" /> <input type="hidden"
 													name="dept_id" value="${dept.id }" /> <input
 													class="dropdown-item" type="submit"
 													value="${dept.deptName }" />
@@ -167,7 +167,7 @@
 
 							</td>
 							<c:if test="${user_session.dept.id == 4 }">
-								<td>删除</td>
+								<td>还原</td>
 							</c:if>
 							<td width="10%"></td>
 						</tr>
@@ -198,10 +198,10 @@
 								<td>${issue.user.realName }</td>
 								<td>${issue.user.dept.deptName }</td>
 								<td><a
-									href="#"
+									href="${pageContext.request.contextPath }/Restore?id=${issue.id }"
 									class="btn btn-success">还原</a></td>
 								<td><a
-									href="/IssueFeedbackProject/IssueDetail?id=${issue.id }"
+									href="${pageContext.request.contextPath }/IssueDetail?id=${issue.id }"
 									class="btn btn-link">查看</a></td>
 							</tr>
 						</c:forEach>

@@ -14,11 +14,11 @@
 <body>
 	<div class="container">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/IssueFeedbackProject/Index">组长问题提交</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath }/Index">组长问题提交</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><a class="nav-link"
-						href="/IssueFeedbackProject/Index">
+						href="${pageContext.request.contextPath }/Index">
 						<i class="ion-home"></i>
 						首页 <span class="sr-only">(current)</span>
 					</a></li>
@@ -29,11 +29,11 @@
 						<i class="ion-help-circled"></i> 问题管理 </a>
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="nav-link" href="/IssueFeedbackProject/NewIssue">
+							<a class="nav-link" href="${pageContext.request.contextPath }/NewIssue">
 							<i class="ion-plus"></i>
 							添加问题</a>
 							<c:if test="${user_session.dept.id == 4 }">
-								<a class="nav-link" href="/IssueFeedbackProject/TrashBin">
+								<a class="nav-link" href="${pageContext.request.contextPath }/TrashBin">
 								<i class="ion-trash-a"></i>
 								回收站</a>
 							</c:if>
@@ -41,17 +41,17 @@
 
 					<c:if test="${user_session.dept.id == 4 }">
 						<li class="nav-item"><a class="nav-link"
-							href="/IssueFeedbackProject/DeptManagement">
+							href="${pageContext.request.contextPath }/DeptManagement">
 							<i class="ion-ios-people"></i>
 							部门管理</a></li>
 					</c:if>
 
 				</ul>
 				<div class="btn-group " role="group">
-					<a class="btn btn-link" href="/IssueFeedbackProject/UserInfo">
+					<a class="btn btn-link" href="${pageContext.request.contextPath }/UserInfo">
 					<i class="ion-person"></i>
 					${user_session.realName}</a>
-					<a class="nav-link" href="/IssueFeedbackProject/Logout">退出
+					<a class="nav-link" href="${pageContext.request.contextPath }/Logout">退出
 					<i class="ion-log-out"></i>
 					</a>
 				</div>
@@ -71,24 +71,6 @@
 						<span class="badge badge-pill badge-success">${issue_detail.status.statusName }</span>
 					</c:when>
 				</c:choose>
-
-				<!-- 
-				<c:if test="${user_session.dept.id == 3 }">
-					<form action="/" method="post" class="form-inline">
-						<div class="form-group">
-							<select class="form-control" name="status_id">
-								<c:forEach items="${all_status }" var="status">
-									<option value=${status.id }
-										selected="${issue_detail.status.id == status.id  ? 'selected' :'' }"> ${status.statusName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="form-group mx-sm-3">
-							<input class="btn btn-primary" type="submit" value="修改" />
-						</div>
-					</form>
-				</c:if>
- -->
 			</div>
 			<div class="card-body">
 
@@ -117,7 +99,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<form action="/IssueFeedbackProject/AddComment" method="get">
+					<form action="${pageContext.request.contextPath }/AddComment" method="get">
 						<input type="hidden" name="issue_id" value="${issue_detail.id }" />
 						<input type="hidden" name="user_id" value="${user_session.id }" />
 						<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>

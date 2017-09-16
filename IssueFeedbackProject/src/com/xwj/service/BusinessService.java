@@ -112,4 +112,8 @@ public class BusinessService {
 	public int addDept(String deptName) {
 		return deptDao.addDept(deptName);
 	}
+
+	public int restoreIssue(Integer id) {
+		return issueDao.restoreIssue(id);
+	}
 }
