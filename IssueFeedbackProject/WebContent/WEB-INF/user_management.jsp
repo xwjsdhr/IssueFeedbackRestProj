@@ -17,7 +17,8 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
+						href="/IssueFeedbackProject/Index">
+						<img alt="name" src="icon/ic_home_black_24px.svg">首页 <span class="sr-only">(current)</span>
 					</a></li>
 
 					<li class="nav-item"><a class="nav-link"
@@ -56,6 +57,6 @@
 	</div>
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 </html>

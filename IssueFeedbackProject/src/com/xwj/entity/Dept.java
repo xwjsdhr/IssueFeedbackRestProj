@@ -4,6 +4,7 @@ public class Dept {
 
 	private Integer id;
 	private String deptName;
+	private User leader;
 	
 	public Integer getId() {
 		return id;
@@ -17,5 +18,12 @@ public class Dept {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+	public User getLeader() {
+		return leader;
+	}
+	public void setLeader(User leader) {
+		this.leader = leader;
+	}
+	
 	
 }

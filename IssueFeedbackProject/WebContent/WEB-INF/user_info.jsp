@@ -17,11 +17,27 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
+						href="/IssueFeedbackProject/Index">
+						<img alt="name" src="icon/ic_home_black_24px.svg">首页 <span class="sr-only">(current)</span>
 					</a></li>
 
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/NewIssue">添加问题</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink1" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<img alt="aaaa" src="icon/ic_question_answer_black_24px.svg">
+						 问题管理 </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink1">
+							<a class="nav-link" href="/IssueFeedbackProject/NewIssue">
+							<img alt="aaa" src="icon/ic_add_black_24px.svg">
+							添加问题</a>
+							<c:if test="${user_session.dept.id == 4 }">
+								<a class="nav-link" href="/IssueFeedbackProject/TrashBin">
+								<img alt="aaaaa" src="icon/ic_delete_black_24px.svg">
+								回收站</a>
+							</c:if>
+						</div></li>
 					<c:if test="${user_session.dept.id == 4 }">
 					<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="/IssueFeedbackProject/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,6 +196,6 @@
 	</div>
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 </html>

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
-import com.xwj.entity.IssuePage;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
@@ -76,9 +75,7 @@ public class IndexServlet extends HttpServlet {
 				List<Issue> issues = businessService.getAllIssues();
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
-				// IssuePage issuePage = businessService.getAllByPageNum(1, 10);
-				// req.setAttribute("issue_page", issuePage);
-				// req.setAttribute("issue_quantity", issuePage.getIssues().size());
+				
 			}
 			if (userIdStr != null) {
 				Integer userId = Integer.parseInt(userIdStr);

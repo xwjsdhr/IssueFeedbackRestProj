@@ -17,7 +17,9 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/Index">首页 <span class="sr-only">(current)</span>
+						href="/IssueFeedbackProject/Index">
+						<img alt="name" src="icon/ic_home_black_24px.svg">
+						首页 
 					</a></li>
 
 					<li class="nav-item dropdown"><a

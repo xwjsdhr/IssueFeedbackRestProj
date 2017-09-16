@@ -7,16 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>登录</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet">
-<link href="lib/css/app/login.css" rel="stylesheet">
+<link href="lib/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="lib/css/app/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
-
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">Navbar</a>
-
-		</nav>
 
 		<div class="row loginPanel">
 
@@ -43,9 +38,7 @@
 							<div class="col-md-4">
 								<input type="submit" value="登录" class="btn btn-primary" />
 							</div>
-							<div class="col-md-4">
-								<a class="btn btn-primary" href="/IssueFeedbackProject/Register">注册</a>
-							</div>
+							
 							<div class="col-md-4">
 								<input type="reset" value="取消" class="btn btn-default centerSub" />
 							</div>
@@ -61,6 +54,6 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 </html>

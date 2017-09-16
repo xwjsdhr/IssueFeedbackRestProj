@@ -45,9 +45,9 @@ public class AddUserServlet extends HttpServlet {
 		
 		int res = businessService.registerUser(user);
 		if(res >0) {
-			response.sendRedirect("/IssueFeedbackProject/Login");
+			response.sendRedirect("/IssueFeedbackProject/Index");
 		}else {
-			response.sendRedirect("/IssueFeedbackProject/Login");
+			response.sendRedirect("/IssueFeedbackProject/Index");
 		}
 	}
 

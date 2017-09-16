@@ -1,4 +1,13 @@
 @charset "UTF-8";
-.panel{
+
+.panel {
 	padding: 40px;
+}
+.my_icon{
+	width: 12px;
+	height: 12px;
+}
+i{
+	width: 16px;
+	height: 16px;
 }

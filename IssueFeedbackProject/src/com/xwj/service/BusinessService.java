@@ -103,4 +103,13 @@ public class BusinessService {
 		// TODO Auto-generated method stub
 		return issueDao.getIssuesByConditions(userId,deptId,statusId);
 	}
+
+	public List<User> getUsersByDeptId(Integer id) {
+		// TODO Auto-generated method stub
+		return userDao.getUsersByDeptId(id);
+	}
+
+	public int addDept(String deptName) {
+		return deptDao.addDept(deptName);
+	}
 }

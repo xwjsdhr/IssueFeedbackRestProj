@@ -39,5 +39,7 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="lib/js/popper.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 </html>
