@@ -57,7 +57,8 @@ public class UserDao {
 	public List<User> getAllUsers(){
 		
 		String loginSql = "select u.id, u.user_name,u.password,u.real_name,d.id,d.dept_name from t_user u, t_dept d where u.dept_id = d.id";
-		ResultSet resultSet = dbUtils.executeQuery(loginSql, null);
+		Object[] objects = new Object[] {};
+		ResultSet resultSet = dbUtils.executeQuery(loginSql, objects);
 		List<User> users = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
@@ -99,7 +100,6 @@ public class UserDao {
 				users.add(user);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return users;			

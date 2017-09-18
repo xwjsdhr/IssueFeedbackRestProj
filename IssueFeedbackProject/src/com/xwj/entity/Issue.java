@@ -1,7 +1,6 @@
 package com.xwj.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -94,4 +93,12 @@ public class Issue implements Serializable{
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+	@Override
+	public String toString() {
+		return "Issue [id=" + id + ", title=" + title + ", content=" + content + ", user=" + user + ", submitTime="
+				+ submitTime + ", status=" + status + ", comments=" + comments + ", createTimestamp=" + createTimestamp
+				+ ", lastUpdateTime=" + lastUpdateTime + ", isDeleted=" + isDeleted + ", commentsNum=" + commentsNum
+				+ "]";
+	}
+	
 }

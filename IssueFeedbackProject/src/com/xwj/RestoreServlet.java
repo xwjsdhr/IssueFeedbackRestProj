@@ -32,7 +32,7 @@ public class RestoreServlet extends HttpServlet {
 			Integer id = Integer.parseInt(issueIdStr);
 			int res = businessService.restoreIssue(id);
 			if(res > 0) {
-				request.getRequestDispatcher("WEB-INF/TrashBin").forward(request, response);
+				request.getRequestDispatcher("/TrashBin").forward(request, response);
 			}else {
 				
 			}

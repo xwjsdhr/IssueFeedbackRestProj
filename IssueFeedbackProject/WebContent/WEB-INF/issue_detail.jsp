@@ -82,14 +82,15 @@
 
 					<div class="media list-group-item">
 						<p class="pull-right">
-							<small>${comment.createTime }</small>
+							<i class="ion-clock"></i>  <small>${comment.createTime }</small>
 						</p>
 						<c:if test="${comment.isResovleIssue == 1 }">
 							<span class="badge badge-pill badge-success">已解决</span>
 						</c:if>
 						
 						<div class="media-body">
-							<p class=" user_name">${comment.user.realName }</p>
+							<p class=" user_name"> <i class="ion-person"></i>
+						${comment.user.realName }</p>
 							${comment.content }
 						</div>
 					</div>
@@ -112,8 +113,6 @@
 								 标记为已解决
 							</label>
 						</div>
-
-
 						<input style="margin-top: 20px" class="btn btn-primary"
 							type="submit" value="回复">
 					</form>

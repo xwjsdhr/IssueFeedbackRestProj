@@ -24,6 +24,10 @@ public class Dept {
 	public void setLeader(User leader) {
 		this.leader = leader;
 	}
+	@Override
+	public String toString() {
+		return "Dept [id=" + id + ", deptName=" + deptName + ", leader=" + leader + "]";
+	}
 	
 	
 }

@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
@@ -30,23 +29,19 @@ public class IssueDao {
 	public List<Issue> getAllIssues() {
 		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id  and ti.is_deleted = 1  order by submit_time desc";
-
-		ResultSet result = dbUtils.executeQuery(allSql, null);
+		Object params[] = new Object[] {};
+		ResultSet result = dbUtils.executeQuery(allSql, params);
 		List<Issue> list = new ArrayList<>();
 
 		try {
 			while (result.next()) {
-				
 				Issue issue = packageIssue(result);
-
 				list.add(issue);
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -62,18 +57,17 @@ public class IssueDao {
 
 	public int deleteIssue(int id) {
 		String updateSql = "update t_issue set is_deleted = 0 where id=?";
-		Object [] params = new Object[] {
-				id
-		};
+		Object[] params = new Object[] { id };
 		int res = dbUtils.executeUpdate(updateSql, params);
 		return res;
 	}
+
 	public Issue getById(int id) {
 		String sql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and ti.id=? ";
 		Object[] objects = new Object[] { id };
 		ResultSet result = dbUtils.executeQuery(sql, objects);
-		
+
 		try {
 			if (result.next()) {
 				Issue issue = packageIssue(result);
@@ -81,22 +75,21 @@ public class IssueDao {
 			}
 			return null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public List<Comment> getCommentsByIssueId(int id) {
-		String allSql = "select ti.id ,  " + "ti.title, " + "ti.content , " + "tc.content, " + "tu.real_name, tc.is_resovled_issue,"
-				+ "tu.user_name, " + "ts.status_name,  " + "tc.id , tc.create_time," + "tc.user_id , " + " td.id, "
-				+ "td.dept_name," + "tu.id, tu.password " + " from  " + "t_issue ti, " + " t_issue_comments tic, "
-				+ " t_comment tc , " + " t_user tu, " + " t_dept td , " + " t_status ts " + "where  "
-				+ "ti.id = tic.issue_id and " + " tc.id = tic.comment_id and " + " tc.user_id = tu.id and "
-				+ " tu.dept_id = td.id and " + " ti.status_id = ts.id and " + " ti.id = ? order by tc.create_time";
+		String allSql = "select ti.id ,  " + "ti.title, " + "ti.content , " + "tc.content, "
+				+ "tu.real_name, tc.is_resovled_issue," + "tu.user_name, " + "ts.status_name,  "
+				+ "tc.id , tc.create_time," + "tc.user_id , " + " td.id, " + "td.dept_name," + "tu.id, tu.password "
+				+ " from  " + "t_issue ti, " + " t_issue_comments tic, " + " t_comment tc , " + " t_user tu, "
+				+ " t_dept td , " + " t_status ts " + "where  " + "ti.id = tic.issue_id and "
+				+ " tc.id = tic.comment_id and " + " tc.user_id = tu.id and " + " tu.dept_id = td.id and "
+				+ " ti.status_id = ts.id and " + " ti.id = ? order by tc.create_time";
 		Object[] objs = new Object[] { id };
 		ResultSet result = dbUtils.executeQuery(allSql, objs);
 
@@ -127,7 +120,6 @@ public class IssueDao {
 			}
 			return comments;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -137,18 +129,19 @@ public class IssueDao {
 		Issue issue = this.getById(issueId);
 
 		String insertSql = "insert into t_comment(content,user_id,create_time,is_resovled_issue) values(?,?,now(),?)";
-		Object[] objects = new Object[] { comment.getContent(), comment.getUser().getId() ,comment.getIsResovleIssue()};
+		Object[] objects = new Object[] { comment.getContent(), comment.getUser().getId(),
+				comment.getIsResovleIssue() };
 		int res = dbUtils.executeUpdate(insertSql, objects);
 		Comment comment2 = new Comment();
 		if (res != 0) {
 			String querySql = "select * from t_comment order by id desc";
-			ResultSet rs = dbUtils.executeQuery(querySql, null);
+			Object params[] = new Object[] {};
+			ResultSet rs = dbUtils.executeQuery(querySql, params);
 			try {
 				if (rs.next()) {
 					comment2.setId(rs.getInt("id"));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -157,35 +150,30 @@ public class IssueDao {
 
 		int result = dbUtils.executeUpdate(insertSql2, objects2);
 		if (issue.getCommentsNum() == 0) {
-			if(result > 0 ) {
-				updateIssueStatusById(issue.getId(),2);
+			if (result > 0) {
+				updateIssueStatusById(issue.getId(), 2);
 			}
-		}else {
-			if(comment.getIsResovleIssue() == 1 &&issue.getStatus().getId() !=3) {
+		} else {
+			if (comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
 				String updateResovledSql = "update t_issue set status_id = 3 where id = ?";
-				Object [] params = new Object[] {
-						issue.getId()
-				};
+				Object[] params = new Object[] { issue.getId() };
 				dbUtils.executeUpdate(updateResovledSql, params);
 			}
 		}
 		String updateTimeSql = "update t_issue set last_update_time = now() where id = ?";
-		Object [] params = new Object[] {
-				issue.getId()
-		};
+		Object[] params = new Object[] { issue.getId() };
 		dbUtils.executeUpdate(updateTimeSql, params);
-		
+
 		return result;
 	}
 
-	public int updateIssueStatusById(int issueId,int statusId) {
+	public int updateIssueStatusById(int issueId, int statusId) {
 		String updateSql = "update t_issue set status_id = ? where id = ?";
-		Object [] params = new Object[] {
-				statusId,issueId
-		};
+		Object[] params = new Object[] { statusId, issueId };
 		int res = dbUtils.executeUpdate(updateSql, params);
 		return res;
 	}
+
 	public List<Issue> getIssueByStatusId(Integer statusId) {
 
 		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
@@ -196,17 +184,15 @@ public class IssueDao {
 
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 
 				list.add(issue);
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -221,16 +207,14 @@ public class IssueDao {
 
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 				list.add(issue);
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -259,17 +243,15 @@ public class IssueDao {
 		System.out.println(allSql);
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 
 				list.add(issue);
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -284,7 +266,7 @@ public class IssueDao {
 
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 				list.add(issue);
 			}
@@ -292,7 +274,6 @@ public class IssueDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -300,14 +281,14 @@ public class IssueDao {
 
 	public IssuePage getAllByPageNum(Integer pageNum, Integer pageSize) {
 		String countSql = "select count(*) " + " from t_issue";
-		ResultSet rs = dbUtils.executeQuery(countSql, null);
+		Object params[] = new Object[] {};
+		ResultSet rs = dbUtils.executeQuery(countSql, params);
 		int issueTotal = 0;
 		try {
 			if (rs.next()) {
 				issueTotal = rs.getInt(1);
 			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -331,7 +312,7 @@ public class IssueDao {
 
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 
 				list.add(issue);
@@ -343,7 +324,6 @@ public class IssueDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -352,13 +332,13 @@ public class IssueDao {
 	public List<Issue> getAllDeletedIssues() {
 		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and is_deleted = 0 order by submit_time desc";
-
-		ResultSet result = dbUtils.executeQuery(allSql, null);
+		Object params[] = new Object[] {};
+		ResultSet result = dbUtils.executeQuery(allSql, params);
 		List<Issue> list = new ArrayList<>();
 
 		try {
 			while (result.next()) {
-				
+
 				Issue issue = packageIssue(result);
 
 				list.add(issue);
@@ -367,7 +347,6 @@ public class IssueDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -379,24 +358,24 @@ public class IssueDao {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(allSql);
 		List<Object> objects = new ArrayList<Object>();
-		if(userId != -1 ) {
+		if (userId != -1) {
 			System.out.println("add userId");
 			buffer.append(" and tu.id = ? ");
 			objects.add(userId);
 		}
-		if(deptId != -1) {
+		if (deptId != -1) {
 			System.out.println("add userId");
 			buffer.append(" and td.id= ? ");
 			objects.add(deptId);
 		}
-		if(statusId != -1) {
+		if (statusId != -1) {
 			System.out.println("add userId");
 			buffer.append(" and ts.id = ? ");
 			objects.add(statusId);
 		}
 		buffer.append("order by submit_time desc");
-		Object [] params = new Object[objects.size()];
-		for(int i = 0;i< objects.size();i++) {
+		Object[] params = new Object[objects.size()];
+		for (int i = 0; i < objects.size(); i++) {
 			params[i] = objects.get(i);
 		}
 		System.out.println(buffer.toString());
@@ -410,10 +389,8 @@ public class IssueDao {
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -452,10 +429,17 @@ public class IssueDao {
 
 	public int restoreIssue(Integer id) {
 		String updateSql = "update t_issue set is_deleted = 1 where id=?";
-		Object [] params = new Object[] {
-				id
-		};
+		Object[] params = new Object[] { id };
 		int res = dbUtils.executeUpdate(updateSql, params);
 		return res;
+	}
+
+	public List<Issue> getIssuesInRange(List<Integer> list) {
+		List<Issue> issues = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			Issue issue = this.getById(list.get(i));
+			issues.add(issue);
+		}
+		return issues;
 	}
 }

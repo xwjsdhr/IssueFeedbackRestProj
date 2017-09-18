@@ -65,7 +65,7 @@ public class DbUtils {
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-			if (objects != null) {
+			if (objects != null && objects.length != 0) {
 				for (int i = 0; i < objects.length; i++) {
 					if (objects[i] != null) {
 						preparedStatement.setObject(i + 1, objects[i]);

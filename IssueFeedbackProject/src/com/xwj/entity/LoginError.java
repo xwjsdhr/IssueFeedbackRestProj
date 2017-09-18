@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class LoginError implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7385027907416104253L;
 	private String errorMsg;
 	private int errorCode;
 	public String getErrorMsg() {

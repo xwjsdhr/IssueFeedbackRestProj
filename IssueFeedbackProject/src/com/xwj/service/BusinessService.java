@@ -81,7 +81,6 @@ public class BusinessService {
 	}
 
 	public List<Issue> getIssuesByUserId(Integer userId) {
-		// TODO Auto-generated method stub
 		return issueDao.getIssuesByUserId(userId);
 	}
 
@@ -90,22 +89,18 @@ public class BusinessService {
 	}
 
 	public int deleteIssue(int issueId) {
-		// TODO Auto-generated method stub
 		return issueDao.deleteIssue(issueId);
 	}
 
 	public List<Issue> getAllDeletedIssues() {
-		// TODO Auto-generated method stub
 		return issueDao.getAllDeletedIssues();
 	}
 
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId) {
-		// TODO Auto-generated method stub
 		return issueDao.getIssuesByConditions(userId,deptId,statusId);
 	}
 
 	public List<User> getUsersByDeptId(Integer id) {
-		// TODO Auto-generated method stub
 		return userDao.getUsersByDeptId(id);
 	}
 
@@ -115,5 +110,9 @@ public class BusinessService {
 
 	public int restoreIssue(Integer id) {
 		return issueDao.restoreIssue(id);
+	}
+
+	public List<Issue> getIssuesInRange(List<Integer> list) {
+		return issueDao.getIssuesInRange(list);
 	}
 }

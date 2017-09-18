@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class MyError implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4792046695605437693L;
 	private String msg;
 	private int errorCode;
 	private String backAddr;

@@ -19,7 +19,8 @@ public class DeptDao {
 	public List<Dept> getAllDepts(){
 		List<Dept> list = new ArrayList<>();
 		String querySql = "select td.id ,td.dept_name from t_dept td ";
-		ResultSet rs = dbUtils.executeQuery(querySql, null);
+		Object params [] = new Object[] {};
+		ResultSet rs = dbUtils.executeQuery(querySql, params);
 		try {
 			while(rs.next()) {
 				User user = new User();
@@ -31,7 +32,6 @@ public class DeptDao {
 				list.add(dept);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;

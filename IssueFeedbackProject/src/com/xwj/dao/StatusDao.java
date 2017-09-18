@@ -18,7 +18,8 @@ public class StatusDao {
 	public List<Status> getAllStatus(){
 		String selectSql = "select * from t_status";
 		List<Status> list = new ArrayList<>();
-		ResultSet rs = dbUtils.executeQuery(selectSql, null);
+		Object [] params = new Object[] {};
+		ResultSet rs = dbUtils.executeQuery(selectSql, params);
 		try {
 			while(rs.next()) {
 				Status status = new Status();

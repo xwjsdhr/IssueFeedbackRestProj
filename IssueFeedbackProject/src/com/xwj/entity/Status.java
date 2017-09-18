@@ -16,5 +16,10 @@ public class Status {
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
 	}
+	@Override
+	public String toString() {
+		return "Status [id=" + id + ", statusName=" + statusName + "]";
+	}
+	
 	
 }

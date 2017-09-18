@@ -37,7 +37,7 @@ public class IndexServlet extends HttpServlet {
 			String deptIdStr = req.getParameter("dept_id");
 			String keyword = req.getParameter("keyword");
 			String userIdStr = req.getParameter("user_id");
-			String pageNum = req.getParameter("page_num");
+//			String pageNum = req.getParameter("page_num");
 			if (statusIdStr != null) {
 				Integer statusId = Integer.parseInt(statusIdStr);
 				String statusName = req.getParameter("status_name");
