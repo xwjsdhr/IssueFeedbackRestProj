@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xwj.dao.IssueDao;
-import com.xwj.dao.MyBatisIssueDao;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.Status;
@@ -102,8 +100,6 @@ public class IndexServlet extends HttpServlet {
 				List<Issue> issues = null;
 				if(orderType == null) {
 					 issues = businessService.getIssuesByConditions(userId, deptId, statusId, order, "asc");
-					 IssueDao dao = new MyBatisIssueDao();
-					 System.out.println(dao.getIssuesByConditions(userId, deptId, statusId, order, orderType).size());
 					 req.setAttribute("order_type", "off");
 				}else if(orderType.equals("on")) {
 					issues = businessService.getIssuesByConditions(userId, deptId, statusId, order, "desc");

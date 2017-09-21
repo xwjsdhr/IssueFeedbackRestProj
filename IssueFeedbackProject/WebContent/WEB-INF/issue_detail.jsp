@@ -122,7 +122,7 @@
 							id="textareaIssueContent" rows="3"></textarea>
 							
 						<c:if test="${user_session.dept.id==3 }">
-							<c:if test="${comment_number !=0 }">
+							<c:if test="${comment_number !=0 && issue_detail.status.id != 3}">
 								<div class="form-check form-check-inline">
 									<label style="margin-top: 20px" class="form-check-label"
 										for="checkboxResovled"> <input type="checkbox"
@@ -133,14 +133,16 @@
 								</div>
 							</c:if>
 							
-	
-							<div class="form-check form-check-inline">
-								<label class="form-check-label" style="margin-top: 20px"> <input
-									class="form-check-input" type="checkbox"
-									id="checkboxProblem"  name="is_problem">
-									 标记为疑难问题
-								</label>
-							</div>
+							<c:if test="${comment_number != 0 && issue_detail.status.id != 4}">
+								<div class="form-check form-check-inline">
+									<label class="form-check-label" style="margin-top: 20px"> <input
+										class="form-check-input" type="checkbox"
+										id="checkboxProblem"  name="is_problem">
+										 标记为疑难问题
+									</label>
+								</div>
+							</c:if>
+							
 						</c:if>
 						<input style="margin-top: 20px;clear: left; float: none;" class="btn btn-primary"
 							type="submit" value="回复">

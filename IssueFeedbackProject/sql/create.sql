@@ -1,4 +1,4 @@
-select * from t_issue where CREATE TABLE `t_comment` (
+ CREATE TABLE `t_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(200) NOT NULL,
   `user_id` varchar(45) NOT NULL,

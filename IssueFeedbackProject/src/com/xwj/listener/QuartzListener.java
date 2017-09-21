@@ -1,11 +1,9 @@
 package com.xwj.listener;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
 import org.quartz.ee.servlet.QuartzInitializerListener;
-import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * Application Lifecycle Listener implementation class QuartzListener
@@ -17,9 +15,9 @@ public class QuartzListener extends QuartzInitializerListener  {
 	    public void contextInitialized(ServletContextEvent sce) {
 	        super.contextInitialized(sce);
 	        System.out.println("hello,world");
-	        ServletContext ctx = sce.getServletContext();
-	        @SuppressWarnings("unused")
-			StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
+//	        ServletContext ctx = sce.getServletContext();
+//	        @SuppressWarnings("unused")
+//			StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
 //	        try {
 //	            Scheduler scheduler = factory.getScheduler();
 //	            JobDetail jobDetail = JobBuilder.newJob(StatisticsJob.class).build();

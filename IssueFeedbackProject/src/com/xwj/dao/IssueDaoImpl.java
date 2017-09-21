@@ -191,7 +191,7 @@ public class IssueDaoImpl implements IssueDao {
 		String insertSql = "insert into t_comment(content,user_id,create_time,is_resovled_issue,is_problem) values(?,?,now(),?,?)";
 		Object[] objects = new Object[] { comment.getContent(), comment.getUser().getId(),
 				comment.getIsResovleIssue(),comment.getIsProblem() };
-		int res = dbUtils.executeUpdate(insertSql, objects);
+		int res = dbUtils.executeUpdateReturnId(insertSql, objects);
 		Comment comment2 = new Comment();
 		if (res != 0) {
 			String querySql = "select * from t_comment order by id desc";
@@ -199,7 +199,9 @@ public class IssueDaoImpl implements IssueDao {
 			ResultSet rs = dbUtils.executeQuery(querySql, params);
 			try {
 				if (rs.next()) {
-					comment2.setId(rs.getInt("id"));
+//					comment2.setId(rs.getInt("id"));
+					System.out.println(res);
+					comment2.setId(res);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -616,7 +618,7 @@ public class IssueDaoImpl implements IssueDao {
 	@Override
 	public List<Issue> orderIssues(String order, String desc) {
 		List<Issue> issues = new ArrayList<>();
-		String selectSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String selectSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id  and ti.is_deleted = 1  order by %s  %s";
 		String orderSql = null;
 		if (!order.equals("dept_id")) {

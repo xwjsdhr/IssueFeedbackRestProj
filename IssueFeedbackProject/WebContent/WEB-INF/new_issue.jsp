@@ -78,11 +78,11 @@
 					<div class="form-froup">
 						<label for="inputIssueTitle">问题标题</label> <input
 							id="inputIssueTitle" type="text" class="form-control"
-							name="title" /> <label style="margin-top: 20px"
+							name="title" required="required"/> <label style="margin-top: 20px"
 							for="textareaIssueContent">问题描述</label>
 
 						<textarea name="content" class="form-control"
-							id="textareaIssueContent" rows="3"></textarea>
+							id="textareaIssueContent" rows="3" required="required"></textarea>
 
 						<input style="margin-top: 20px" class="btn btn-primary"
 							type="submit" value="提交" />

@@ -40,7 +40,7 @@ public class DbUtils {
 
 	private DbUtils() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_issue", "root", "123456");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "951753");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -80,6 +80,29 @@ public class DbUtils {
 		return result;
 	}
 
+	public int executeUpdateReturnId(String insertSql , Object... objects) {
+		int result = 0;
+		try {
+			preparedStatement = connection.prepareStatement(insertSql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+			if (objects != null) {
+				for (int i = 0; i < objects.length; i++) {
+					preparedStatement.setObject(i + 1, objects[i]);
+				}
+			}
+			result = preparedStatement.executeUpdate();
+			if(result >0) {
+				ResultSet resultSet = preparedStatement.getGeneratedKeys();
+				if(resultSet.next()) {
+					return  resultSet.getInt(1); 
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
 	public ResultSet executeQuery(String sql, Object... objects) {
 
 		try {

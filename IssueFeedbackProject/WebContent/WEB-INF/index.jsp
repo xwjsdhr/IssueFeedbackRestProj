@@ -289,17 +289,7 @@
 								<td  class="last_update_time_td">${issue.lastUpdateTime }</td>
 								<td>${issue.user.realName }</td>
 								<td>${issue.user.dept.deptName }</td>
-								<!-- 
-								<c:if test="${user_session.dept.id == 4 }">
-									<td><c:if test="${issue.user.dept.id!=4 }">
-											<a
-												href="${pageContext.request.contextPath }/DeleteIssue?issue_id=${issue.id }"
-												class="btn btn-danger btn-sm"> <i class="ion-trash-a"></i>
-												删除
-											</a>
-										</c:if></td>
-								</c:if>
-								 -->
+							
 								<td>
 									<div class="btn-group" role="group"
 										aria-label="Button group with nested dropdown">
