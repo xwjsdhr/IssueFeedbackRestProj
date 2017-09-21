@@ -106,3 +106,14 @@ CREATE TABLE `t_user` (
   KEY `fk_user_dept_idx` (`dept_id`),
   CONSTRAINT `fk_user_dept` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_issue_statistics_statistics_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `statistics_id` int(11) DEFAULT NULL,
+  `item_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_issue_statistics_idx` (`statistics_id`),
+  KEY `fk_item_idx` (`item_id`),
+  CONSTRAINT `fk_issue_statistics` FOREIGN KEY (`statistics_id`) REFERENCES `t_issue_statistics` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_item` FOREIGN KEY (`item_id`) REFERENCES `t_statistics_item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
