@@ -2,4 +2,217 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sql_mapper">
 
+
+	<sql id="issueColumn">
+		${alias}.id as issue_id,
+		${alias}.title as issue_title,
+		${alias}.content as issue_content,
+		${alias}.submit_time as issue_submit_time,
+		${alias}.last_update_time as issue_last_update_time,
+	</sql>
+	<sql id="statusColumn">
+		${alias}.id as status_id,
+		${alias}.status_name as statusName,
+	</sql>
+	<sql id="userColumn">
+		${alias}.id as pk_user_id,
+		${alias}.user_name as userName,
+		${alias}.password as password ,
+		${alias}.dept_id as user_dept_id ,
+		${alias}.real_name as user_real_name,
+	</sql>
+	<sql id="deptColumn">
+		${alias}.id as dept_id,
+		${alias}.dept_name as dept_name
+	</sql>
+	
+	<sql id="commentColumn">
+		${alias}.content as commentContent,
+		${alias}.is_resovled_issue as isResolvedIssue,
+		${alias}.is_problem as isProblem,
+		${alias}.id as pkCommentId,
+		${alias}.create_time as commentCreateTime,
+		${alias}.user_id as commentUserId
+	</sql>
+	
+	<sql id="issueTable"> t_issue ${alias}, </sql>
+	<sql id="statusTable"> t_status ${alias} ,</sql>
+	<sql id="userTable"> t_user ${alias} ,</sql>
+	<sql id="deptTable"> t_dept ${alias} ,</sql>
+	<sql id="commentTable">t_comment ${alias},</sql>
+	<sql id="commentIssueTable">t_issue_comments ${alias},</sql>
+	
+	
+	<sql id="issueStatus">${alias1}.status_id = ${alias2}.id </sql>
+	<sql id="issueUser">${alias1}.user_id = ${alias2}.id</sql>
+	<sql id="userDept">${alias1}.dept_id = ${alias2}.id</sql>
+	
+	<sql id="issueIssueComment">ti.id = tic.issue_id</sql>
+	<sql id="commentIssueComment">tc.id = tic.comment_id</sql>
+	<sql id="commentUser">tc.user_id = tu.id</sql>
+	<sql id="issueNotDelete">and ${alias1}.is_deleted =1</sql>
+	<sql id="orderBySubmitTime">
+		order by ${alias}.submit_time desc
+	</sql>
+	<sql id="allIssueSql">
+		select
+		<include refid="issueColumn">
+			<property name="alias" value="ti" />
+		</include>
+		<include refid="statusColumn">
+			<property name="alias" value="ts" />
+		</include>
+		<include refid="userColumn">
+			<property name="alias" value="tu" />
+		</include>
+		<include refid="deptColumn">
+			<property name="alias" value="td" />
+		</include>
+		from
+		<include refid="issueTable">
+			<property name="alias" value="ti" />
+		</include>
+		<include refid="statusTable">
+			<property name="alias" value="ts" />
+		</include>
+		<include refid="userTable">
+			<property name="alias" value="tu" />
+		</include>
+		<include refid="deptTable">
+			<property name="alias" value="td" />
+		</include>
+		where
+		<include refid="issueStatus">
+			<property name="alias1" value="ti" />
+			<property name="alias2" value="ts" />
+		</include>
+		and
+		<include refid="issueUser">
+			<property name="alias1" value="ti" />
+			<property name="alias2" value="tu" />
+
+		</include>
+		and
+		<include refid="userDept">
+			<property name="alias1" value="tu" />
+			<property name="alias2" value="td" />
+		</include>
+	</sql>
+	<sql id="commentSql">
+		select 
+		<include refid="commentColumn"><property name="alias" value="tc"/></include>
+		<include refid="userColumn"><property name="alias" value="tu"/></include>
+		<include refid="deptColumn"><property name="alias" value="td"/></include>
+		from 
+		<include refid="issueTable"><property name="alias" value="ti"/></include>
+		<include refid="commentTable"><property name="alias" value="tc"/></include>
+		<include refid="userTable"><property name="alias" value="tu"/></include>
+		<include refid="deptTable"><property name="alias" value="td"/></include>
+		<include refid="commentIssueTable"><property name="alias" value="tic"/></include>
+		where 
+		<include refid="issueIssueComment"/>and
+		<include refid="commentIssueComment"/>and
+		<include refid="userDept">
+			<property name="alias1" value="tu"/>
+			<property name="alias2" value="td"/>
+		</include>and
+		<include refid="commentUser"></include>
+	</sql>
+	<sql id="orderByCommentCreatedTime">
+	order by tc.create_time
+	</sql>
+	<select id="selectAllIssue" resultMap="IssueResultMap" >
+		<include refid="allIssueSql"/>
+		
+		<include refid="issueNotDelete">
+			<property name="alias1" value="ti" />
+		</include>
+		<include refid="orderBySubmitTime"/>
+	</select>
+	<select id="selectCommentsByIssueId" parameterType="integer" resultMap="CommentResultMap">
+		<include refid="commentSql"></include>
+		and 
+		ti.id = #{id} and 
+		<include refid="orderByCommentCreatedTime"/>
+	</select>
+	
+	<select id="selectIssueByKeyword" parameterType="String"  resultMap="IssueResultMap">
+		<include refid="allIssueSql"/>
+		and 
+		(ti.content like #{keyword} or ti.title like #{keyword} or tu.real_name like #{keyword})
+	</select>
+	
+	<select id="selectIssueByCondition" parameterType="com.xwj.entity.QueryCondition" resultMap="IssueResultMap">
+		<include refid="allIssueSql"/>
+		
+		<if test="userId !=-1">
+			and	tu.id = #{userId}
+		</if>
+		<if test="deptId != -1">
+			and td.id = #{deptId}
+		</if>
+		<if test="statusId != -1">
+			and ts.id = #{statusId}
+		</if>
+		order by ${order} ${orderType}
+	</select>
+	<select id="selectIssueById" parameterType="integer" resultMap="IssueResultMap">
+		<include refid="allIssueSql"/>
+		and ti.id = #{id}
+	</select>
+	
+	<insert id="insertIssue" parameterType="com.xwj.entity.Issue" useGeneratedKeys="true" >
+		insert into t_issue(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time)
+		values(#{title},#{content},1,#{user.id},now(),now(),now());
+	</insert>
+	
+	<resultMap type="com.xwj.entity.Issue" id="IssueResultMap">
+		<result column="issue_id" property="id"/>
+		<result column="issue_title" property="title"/>
+		<result column="issue_content" property="content"/>
+		<result column="issue_submit_time" property="submitTime"/>
+		<result column="issue_last_update_time" property="lastUpdateTime"/>
+		
+		<association property="status" javaType="com.xwj.entity.Status">
+			<result column="status_id" property="id"/>
+			<result column="statusName" property="statusName"/>
+		</association>
+		<association property="user" javaType="com.xwj.entity.User">
+			<result column="pk_user_id" property="id"/>
+			<result column="userName" property="username"/>
+			<result column="password" property="password"/>
+			<result column="user_real_name" property="realName"/>
+			<association property="dept" javaType="com.xwj.entity.Dept">
+				<result column="user_dept_id" property="id"/>
+				<result column="dept_name" property="deptName"/>		
+			</association>
+		</association>
+	</resultMap>
+<!-- 
+		"select tc.content, tu.real_name, tc.is_resovled_issue, tc.is_problem, tu.user_name, 
+				tc.id , tc.create_time,tc.user_id ,  td.id, td.dept_name,tu.id, tu.password 
+				 from  t_issue ti,  t_issue_comments tic,  t_comment tc ,  t_user tu, 
+				 t_dept td ,  t_status ts where  ti.id = tic.issue_id and 
+				 tc.id = tic.comment_id and  tc.user_id = tu.id and  tu.dept_id = td.id and 
+				 ti.status_id = ts.id and  ti.id = ? order by tc.create_time"
+	
+	 -->
+	<resultMap type="com.xwj.entity.Comment" id="CommentResultMap">
+		<result column="commentContent" property="content"/>
+		<result column="commentCreateTime" property="createTime"/>
+		<result column="pkCommentId" property="id"/>
+		<result column="isProblem" property="isProblem"/>
+		<result column="isResovledIssue" property="isResovleIssue"/>
+		<association property="user" javaType="com.xwj.entity.User">
+			<result column="userName" property="username"/>
+			<result column="password" property="password"/>
+			<result column="user_real_name" property="realName"/>
+			
+			<association property="dept" javaType="com.xwj.entity.Dept">
+				<result column="user_dept_id" property="id"/>
+				<result column="dept_name" property="deptName"/>		
+			</association>
+		</association>
+	</resultMap>
+	
 </mapper>

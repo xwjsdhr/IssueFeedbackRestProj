@@ -1,4 +1,13 @@
 $(document).ready(function() {
+	moment.locale("zh-cn");
+	var tdArr = $(".last_update_time_td");
+	
+	$.each(tdArr,function(index,element){
+		var dateStr = $(element).text();
+		var relativeStr = moment(dateStr,"YYYY-MM-DD HH:mm:ss").fromNow();
+		$(element).text(relativeStr);
+	});
+		
 	$("#inlineSelectDepts").change(function(event) {
 		getUserByDeptId(event.target.value);
 	});
@@ -40,6 +49,7 @@ $(document).ready(function() {
 			}
 		})
 	});
+	
 	$(".selectedCheckbox").change(function(event) {
 		var element = event.target;
 		if (element.checked) {
@@ -48,6 +58,20 @@ $(document).ready(function() {
 			$(this).removeClass("selected");
 		}
 	});
+	$("#chb_order_type").change(function(event){
+		var element = event.target;
+		
+		if(element.checked){
+			$("#label_order_type").text("倒序");
+		}else{
+			$("#label_order_type").text("正序");
+		}
+	});
+	
+	
+	
+	
+	
 });
 
 function getUserByDeptId(id) {

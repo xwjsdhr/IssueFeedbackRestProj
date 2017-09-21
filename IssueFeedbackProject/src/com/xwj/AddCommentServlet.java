@@ -26,6 +26,8 @@ public class AddCommentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String isResovled = request.getParameter("is_resovled");
+		String isProblem = request.getParameter("is_problem");
+
 		Integer issueId = Integer.parseInt(request.getParameter("issue_id"));
 		String commentStr = request.getParameter("comment");
 		Integer userId = Integer.parseInt(request.getParameter("user_id"));
@@ -35,6 +37,10 @@ public class AddCommentServlet extends HttpServlet {
 		if (isResovled != null) {
 			comment.setIsResovleIssue(isResovled.equals("on") ? 1 : 0);
 		}
+		if (isProblem != null) {
+			System.out.println("is problem :" + isProblem);
+			comment.setIsProblem(isProblem.equals("on") ? 1 : 0);
+		}
 		User user = new User();
 		user.setId(userId);
 
@@ -43,6 +49,7 @@ public class AddCommentServlet extends HttpServlet {
 		if (res > 0) {
 			response.sendRedirect("/IssueFeedbackProject/IssueDetail?id=" + issueId);
 		}
+
 	}
 
 }

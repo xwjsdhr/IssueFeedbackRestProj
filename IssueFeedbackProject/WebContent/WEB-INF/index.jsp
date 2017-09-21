@@ -153,6 +153,71 @@
 							</c:forEach>
 						</select>
 					</div>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">排序</div>
+						<select name="order" class="form-control mb-2 mb-sm-0"
+							id="inlineFormInputName2">
+							<c:if test="${empty order }">
+								<option value="last_update_time" selected="selected">最新更新时间</option>
+							</c:if>
+							<c:if test="${order != null && last_update_time =='last_update_time' }">
+								<option value="last_update_time" selected="selected">最新更新时间</option>
+							</c:if>
+							<c:if test="${order != null && last_update_time !='last_update_time' }">
+								<option value="last_update_time" >最新更新时间</option>
+							</c:if>
+							
+							<c:if test="${order == 'status_id' }">
+								<option value="status_id" selected="selected">状态</option>
+							</c:if>
+							<c:if test="${order != 'status_id' }">
+								<option value="status_id" >状态</option>
+							</c:if>
+							<c:if test="${order == 'user_id' }">
+								<option value="user_id" selected="selected">用户</option>
+							</c:if>
+							<c:if test="${order != 'user_id' }">
+								<option value="user_id" >用户</option>
+							</c:if>
+							<c:if test="${order == 'dept_id' }">
+								<option value="dept_id" selected="selected">部门</option>
+							</c:if>
+							<c:if test="${order != 'dept_id' }">
+								<option value="dept_id" >部门</option>
+							</c:if>
+							<c:if test="${order == 'submit_time' }">
+								<option value="submit_time" selected="selected">创建时间</option>
+							</c:if>
+							<c:if test="${order != 'submit_time' }">
+								<option value="submit_time" >创建时间</option>
+							</c:if>
+							
+							
+						</select>
+						
+						<span class="input-group-addon"><a id="label_order_type">
+							<c:if test="${empty order_type }">
+								正序
+							</c:if>
+							<c:if test="${order_type == 'off' }">
+								正序
+							</c:if>
+							<c:if test="${order_type == 'on' }">
+								倒序
+							</c:if>
+						</a>
+							<c:if test="${empty order_type }">
+								<input style="margin-left: 10px"   id="chb_order_type" type="checkbox" name="order_type" />
+							</c:if>
+						    <c:if test="${order_type == 'off' }">
+						     	<input style="margin-left: 10px"   id="chb_order_type" type="checkbox" name="order_type" />
+						    </c:if>
+						    <c:if test="${order_type == 'on' }">
+						     	<input style="margin-left: 10px" checked="checked" id="chb_order_type" type="checkbox" name="order_type" />
+						    </c:if>
+						</span>
+					</div>
+					
 
 					<button type="submit" class="btn btn-primary">
 						查询 <i class="ion-search"></i>
@@ -166,47 +231,46 @@
 					<thead>
 						<tr>
 							<td colspan="2">
-							 <button id="btnClickShow" class="btn btn-info btn-sm" >导出</button>
+								<button id="btnClickShow" class="btn btn-info btn-sm">导出</button>
 							</td>
-							<td colspan="2">
-							 
-							</td>
-							<td colspan="3">
-							 
-							</td>
-							
-							
+							<td colspan="2"></td>
+							<td colspan="3"></td>
+							<td></td>
+
 						</tr>
 					</thead>
+
 					<thead>
-					
+
 						<tr>
-							<td></td>
-							<td>状态 <span class="badge badge-secondary">${issue_quantity }</span>
+
+							<td>
+								<button id="btnSelectAll" class="btn btn-info btn-sm">全选</button>
 							</td>
+							<td><span class="badge badge-secondary">${issue_quantity }</span>
+								状态</td>
 							<td width="15%">标题</td>
 							<td>创建时间</td>
 							<td>上次更新时间</td>
 							<td>提交人</td>
 
-							<td>部门 <span class="badge badge-secondary">${dept_quantity }</span>
+							<td><span class="badge badge-secondary">${dept_quantity }
+							</span> 部门</td>
+							<td></td>
 
-							</td>
-								<td></td>
-							
 						</tr>
+
 					</thead>
 
 					<tbody>
 
 						<c:forEach items="${list }" var="issue">
-							<tr>
-							<td>
-								<input type="checkbox" value="${issue.id }"  class="selectedCheckbox"/>
-							</td>
+							<tr class="clickableRow" id="${issue.id }">
+								<td><input id="chb_${issue.id }" type="checkbox"
+									value="${issue.id }" class="selectedCheckbox" /></td>
 								<td><c:choose>
 										<c:when test="${issue.status.id == 1 }">
-											<span class="badge badge-pill badge-danger">${issue.status.statusName }</span>
+											<span class="badge badge-pill badge-secondary">${issue.status.statusName }</span>
 										</c:when>
 										<c:when test="${issue.status.id == 2 }">
 											<span class="badge badge-pill badge-warning">${issue.status.statusName }</span>
@@ -214,13 +278,15 @@
 										<c:when test="${issue.status.id == 3 }">
 											<span class="badge badge-pill badge-success">${issue.status.statusName }</span>
 										</c:when>
-
+										<c:when test="${issue.status.id == 4 }">
+											<span class="badge badge-pill badge-danger">${issue.status.statusName }</span>
+										</c:when>
 									</c:choose> <span class="badge badge-pill badge-info">${issue.commentsNum }</span>
 								</td>
 								<td>${issue.title }</td>
 
-								<td>${issue.submitTime}</td>
-								<td>${issue.lastUpdateTime }</td>
+								<td class="submit_time_td">${issue.submitTime}</td>
+								<td  class="last_update_time_td">${issue.lastUpdateTime }</td>
 								<td>${issue.user.realName }</td>
 								<td>${issue.user.dept.deptName }</td>
 								<!-- 
@@ -242,7 +308,7 @@
 											<a
 												href="${pageContext.request.contextPath }/DeleteIssue?issue_id=${issue.id }"
 												class="btn btn-danger btn-sm"> <i class="ion-trash-a"></i>
-													删除
+												删除
 											</a>
 										</c:if>
 
@@ -252,8 +318,6 @@
 											class="ion-arrow-right-a"></i>
 										</a>
 									</div>
-
-
 								</td>
 							</tr>
 						</c:forEach>
@@ -270,6 +334,8 @@
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="lib/js/index.js"></script>
+<script type="text/javascript" src="lib/js/moment.js"></script>
+<script type="text/javascript" src="lib/js/zh-cn.js"></script>
 
 
 </html>

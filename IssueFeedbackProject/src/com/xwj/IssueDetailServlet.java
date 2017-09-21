@@ -42,6 +42,7 @@ public class IssueDetailServlet extends HttpServlet {
 			if (issue != null) {
 				request.setAttribute("issue_detail", issue);
 				request.setAttribute("comments", comments);
+				request.setAttribute("comment_number", comments.size());
 				request.setAttribute("all_status", allStatus);
 				request.getRequestDispatcher("/WEB-INF/issue_detail.jsp").forward(request, response);
 			}

@@ -1,9 +1,11 @@
 package com.xwj.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
+import com.xwj.dao.IssueDaoImpl;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
 import com.xwj.entity.Comment;
@@ -22,7 +24,7 @@ public class BusinessService {
 
 	public BusinessService() {
 		userDao = new UserDao();
-		issueDao = new IssueDao();
+		issueDao = new IssueDaoImpl();
 		deptDao = new DeptDao();
 		statusDao = new StatusDao();
 	}
@@ -96,8 +98,8 @@ public class BusinessService {
 		return issueDao.getAllDeletedIssues();
 	}
 
-	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId) {
-		return issueDao.getIssuesByConditions(userId,deptId,statusId);
+	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
+		return issueDao.getIssuesByConditions(userId,deptId,statusId,order,orderType);
 	}
 
 	public List<User> getUsersByDeptId(Integer id) {
@@ -114,5 +116,13 @@ public class BusinessService {
 
 	public List<Issue> getIssuesInRange(List<Integer> list) {
 		return issueDao.getIssuesInRange(list);
+	}
+
+	public List<Issue> orderIssueByType(String order, String desc) {
+		return issueDao.orderIssues(order,desc);
+	}
+
+	public Map<Integer,String> getColumns() {
+		return issueDao.getColumns();
 	}
 }

@@ -1,7 +1,13 @@
 package com.xwj.entity;
 
-public class User {
+import java.io.Serializable;
 
+public class User  implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2191696781409941829L;
 	private Integer id;
 	private String username;
 	private String password;

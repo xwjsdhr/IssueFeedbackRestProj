@@ -1,7 +1,13 @@
 package com.xwj.entity;
 
-public class Status {
+import java.io.Serializable;
 
+public class Status implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7173807477593194299L;
 	private Integer id;
 	private String statusName;
 	public Integer getId() {

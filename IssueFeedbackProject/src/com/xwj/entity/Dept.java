@@ -1,7 +1,13 @@
 package com.xwj.entity;
 
-public class Dept {
+import java.io.Serializable;
 
+public class Dept implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6148741875700909204L;
 	private Integer id;
 	private String deptName;
 	private User leader;

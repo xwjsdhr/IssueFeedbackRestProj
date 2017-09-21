@@ -1,10 +1,16 @@
 package com.xwj.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 /**
  * 数据库操作工具类
@@ -18,19 +24,33 @@ public class DbUtils {
 	private Connection connection;
 	private PreparedStatement preparedStatement;
 	private ResultSet resultSet;
+	private SqlSessionFactory sessionFactory;
+
 	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public SqlSessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
 
 	private DbUtils() {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_issue", "root", "123456");
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		String resource = "com/xwj/util/mybatis-config.xml";
+		InputStream inputStream = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -54,14 +74,13 @@ public class DbUtils {
 			}
 			result = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return result;
 	}
 
-	public ResultSet executeQuery(String sql,  Object... objects) {
+	public ResultSet executeQuery(String sql, Object... objects) {
 
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -79,4 +98,27 @@ public class DbUtils {
 		}
 		return resultSet;
 	}
+
+	public void disconnect() {
+		if (connection != null) {
+			try {
+				if (!connection.isClosed()) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void closeStatement() {
+		if (preparedStatement != null) {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

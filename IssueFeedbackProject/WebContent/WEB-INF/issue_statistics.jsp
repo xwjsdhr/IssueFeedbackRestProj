@@ -91,7 +91,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 			
-				<canvas id="myChart" width="400" height="400"></canvas>
+				<canvas id="myChart" width="400" height="200"></canvas>
 			</div>
 		
 		</div>
@@ -103,5 +103,7 @@
 <script type="text/javascript" src="lib/js/moment.js"></script>
 <script type="text/javascript" src="lib/js/zh-cn.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+<script type="text/javascript" src="lib/js/issue_staistics.js"></script>
+
 
 </html>

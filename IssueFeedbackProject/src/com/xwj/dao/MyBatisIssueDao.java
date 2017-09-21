@@ -8,11 +8,12 @@ import org.apache.ibatis.session.SqlSession;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.QueryCondition;
 import com.xwj.util.DbUtils;
 
 public class MyBatisIssueDao implements IssueDao{
 	private DbUtils dbUtils;
-	MyBatisIssueDao(){
+	public MyBatisIssueDao(){
 		dbUtils = DbUtils.newInstance();
 	}
 	
@@ -20,14 +21,17 @@ public class MyBatisIssueDao implements IssueDao{
 	public List<Issue> getAllIssues() {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		List<Issue> issues = session.selectList("selectAllIssue");
-		
+		session.close();
 		return issues;
 	}
 
 	@Override
 	public int insertIssue(Issue issue) {
-		// TODO Auto-generated method stub
-		return 0;
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i = session.insert("insertIssue", issue);
+		session.commit();
+		session.close();
+		return i;
 	}
 
 	@Override
@@ -38,14 +42,18 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public Issue getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession session =dbUtils.getSessionFactory().openSession();
+		Issue issue = (Issue) session.selectOne("selectIssueById",id);
+		session.close();
+		return issue;
 	}
 
 	@Override
 	public List<Comment> getCommentsByIssueId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession openSession = dbUtils.getSessionFactory().openSession();
+		List<Comment> comments = openSession.selectList("selectCommentsByIssueId", id);
+		openSession.close();
+		return comments;
 	}
 
 	@Override
@@ -74,8 +82,11 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public List<Issue> getIssueByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Issue> selectList = session.selectList("selectIssueByKeyword", keyword);
+		session.close();
+		
+		return selectList;
 	}
 
 	@Override
@@ -98,8 +109,10 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		// TODO Auto-generated method stub
-		return null;
+		QueryCondition condition = new QueryCondition(userId,deptId,statusId,order,orderType);
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Issue> issues = session.selectList("selectIssueByCondition",condition);
+		return issues;
 	}
 
 	@Override

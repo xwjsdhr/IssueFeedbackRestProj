@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xwj.dao.IssueDao;
+import com.xwj.dao.MyBatisIssueDao;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.Status;
@@ -37,7 +39,9 @@ public class IndexServlet extends HttpServlet {
 			String deptIdStr = req.getParameter("dept_id");
 			String keyword = req.getParameter("keyword");
 			String userIdStr = req.getParameter("user_id");
-//			String pageNum = req.getParameter("page_num");
+			String order = req.getParameter("order");
+			String orderType = req.getParameter("order_type");
+			// String pageNum = req.getParameter("page_num");
 			if (statusIdStr != null) {
 				Integer statusId = Integer.parseInt(statusIdStr);
 				String statusName = req.getParameter("status_name");
@@ -63,19 +67,25 @@ public class IndexServlet extends HttpServlet {
 				req.setAttribute("issue_quantity", issues.size());
 
 			}
+			if (order != null) {
+				List<Issue> issues = businessService.orderIssueByType(order, "desc");
+				req.setAttribute("list", issues);
+				req.setAttribute("issue_quantity", issues.size());
+
+			}
 			if (keyword != null) {
-				System.out.println("keyword");
 				List<Issue> issues = businessService.getIssueByKeyword(keyword);
-				System.out.println("size:"+issues.size());
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 				req.setAttribute("keyword", keyword);
-			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null) {
-				
+				IssueDao dao = new MyBatisIssueDao();
+				System.out.println(dao.getIssueByKeyword(keyword));
+			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null && order == null) {
+
 				List<Issue> issues = businessService.getAllIssues();
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
-				
+
 			}
 			if (userIdStr != null) {
 				Integer userId = Integer.parseInt(userIdStr);
@@ -85,21 +95,32 @@ public class IndexServlet extends HttpServlet {
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 			}
-			 
-			if (userIdStr != null && deptIdStr != null && statusIdStr != null) {
-				System.out.println("都不等于nnull");
+
+			if (userIdStr != null && deptIdStr != null && statusIdStr != null && order != null) {
 				int userId = Integer.parseInt(userIdStr);
 				int deptId = Integer.parseInt(deptIdStr);
 				int statusId = Integer.parseInt(statusIdStr);
 				
-				List<Issue> issues = businessService.getIssuesByConditions(userId,deptId,statusId);
+				List<Issue> issues = null;
+				if(orderType == null) {
+					 issues = businessService.getIssuesByConditions(userId, deptId, statusId, order, "asc");
+					 IssueDao dao = new MyBatisIssueDao();
+					 System.out.println(dao.getIssuesByConditions(userId, deptId, statusId, order, orderType).size());
+					 req.setAttribute("order_type", "off");
+				}else if(orderType.equals("on")) {
+					issues = businessService.getIssuesByConditions(userId, deptId, statusId, order, "desc");
+					req.setAttribute("order_type",orderType);
+				}
+
 				req.setAttribute("user_id", userId);
 				req.setAttribute("dept_id", deptId);
 				req.setAttribute("status_id", statusId);
-				
+				req.setAttribute("order", order);
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 			}
+			
+			
 			List<User> users = businessService.getAllUsers();
 			req.setAttribute("all_users", users);
 			List<Status> allStatus = businessService.getAllStatus();
