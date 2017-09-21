@@ -117,3 +117,7 @@ CREATE TABLE `t_issue_statistics_statistics_item` (
   CONSTRAINT `fk_issue_statistics` FOREIGN KEY (`statistics_id`) REFERENCES `t_issue_statistics` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_item` FOREIGN KEY (`item_id`) REFERENCES `t_statistics_item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+select * from t_issue_statistics tis,t_issue_statistics_statistics_item tissi, t_statistics_item tsi,t_status ts
+where 
+tis.id = tissi.statistics_id and tsi.id = tissi.item_id and ts.id = tsi.status_id;
