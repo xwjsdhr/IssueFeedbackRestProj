@@ -7,6 +7,14 @@ $(document).ready(function() {
 		var relativeStr = moment(dateStr,"YYYY-MM-DD HH:mm:ss").fromNow();
 		$(element).text(relativeStr);
 	});
+	
+	
+	$("#btnSearch").click(function(event){
+		var input = $("#inputSearch");
+		if(input.val().length()==0){
+			return;
+		}
+	});
 		
 	$("#inlineSelectDepts").change(function(event) {
 		getUserByDeptId(event.target.value);

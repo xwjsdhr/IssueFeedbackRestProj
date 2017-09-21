@@ -68,9 +68,9 @@
 				</ul>
 				<form action="${pageContext.request.contextPath }/Index"
 					method="get" class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" name="keyword" type="text"
-						placeholder="请输入关键字" aria-label="Search" value="${keyword }" />
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+					<input class="form-control mr-sm-2" name="keyword" id="inputSearch" type="text"
+						placeholder="请输入关键字" aria-label="Search" value="${keyword }" required/>
+					<button id="btnSearch" class="btn btn-outline-success my-2 my-sm-0" type="submit">
 						搜索 <i class="ion-search"></i>
 					</button>
 				</form>

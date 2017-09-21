@@ -35,7 +35,8 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getAllIssues() {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = 
+				"select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id  and ti.is_deleted = 1  order by submit_time desc";
 		Object params[] = new Object[] {};
 		ResultSet result = dbUtils.executeQuery(allSql, params);
@@ -69,8 +70,9 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public int insertIssue(Issue issue) {
-		String insertSql = "insert into t_issue(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time) values(?,?,1,?,now(),now(),now())";
-		Object[] objects = new Object[] { issue.getTitle(), issue.getContent(), issue.getUser().getId() };
+		String insertSql = 
+				"insert into t_issue(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year) values(?,?,1,?,now(),now(),now(),?)";
+		Object[] objects = new Object[] { issue.getTitle(), issue.getContent(), issue.getUser().getId(),issue.getWeekOfYear() };
 
 		int res = dbUtils.executeUpdate(insertSql, objects);
 		dbUtils.closeStatement();
@@ -94,7 +96,8 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public Issue getById(int id) {
-		String sql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String sql = 
+				"select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and ti.id=? ";
 		Object[] objects = new Object[] { id };
 		ResultSet result = dbUtils.executeQuery(sql, objects);
@@ -126,7 +129,8 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Comment> getCommentsByIssueId(int id) {
-		String allSql = "select ti.id ,  " + "ti.title, " + "ti.content , " + "tc.content, "
+		String allSql = 
+				"select ti.id ,  " + "ti.title, " + "ti.content , " + "tc.content, "
 				+ "tu.real_name, tc.is_resovled_issue, tc.is_problem, " + "tu.user_name, " + "ts.status_name,  "
 				+ "tc.id , tc.create_time," + "tc.user_id , " + " td.id, " + "td.dept_name," + "tu.id, tu.password "
 				+ " from  " + "t_issue ti, " + " t_issue_comments tic, " + " t_comment tc , " + " t_user tu, "
@@ -215,7 +219,7 @@ public class IssueDaoImpl implements IssueDao {
 				Object[] params = new Object[] { issue.getId() };
 				dbUtils.executeUpdate(updateResovledSql, params);
 			}else if(comment.getIsProblem() == 1 && issue.getStatus().getId() != 4) {
-				String updateResovledSql = "update t_issue set status_id = 4 where id = ?";
+				String updateResovledSql = "update t_issue set status_id = 4 , resolved_time = now() where id = ?";
 				Object[] params = new Object[] { issue.getId() };
 				dbUtils.executeUpdate(updateResovledSql, params);
 			}
@@ -248,7 +252,7 @@ public class IssueDaoImpl implements IssueDao {
 	@Override
 	public List<Issue> getIssueByStatusId(Integer statusId) {
 
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and ts.id= ? and ti.is_deleted = 1 order by submit_time desc";
 		Object[] objects = new Object[] { statusId };
 		ResultSet result = dbUtils.executeQuery(allSql, objects);
@@ -284,7 +288,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getIssueByDeptId(Integer deptId) {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and td.id= ?  and ti.is_deleted = 1  order by submit_time desc ";
 		Object[] objects = new Object[] { deptId };
 		ResultSet result = dbUtils.executeQuery(allSql, objects);
@@ -332,7 +336,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getIssueByKeyword(String keyword) {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and "
 				+ " (ti.content like ? or ti.title like ? or tu.real_name like ?)  and ti.is_deleted = 1  order by submit_time desc";
 		Object[] objects = new Object[] { "%" + keyword + "%", "%" + keyword + "%" , "%" + keyword + "%"};
@@ -369,7 +373,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getIssuesByUserId(Integer userId) {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and ti.user_id= ?  and ti.is_deleted = 1 order by submit_time desc";
 		Object[] objects = new Object[] { userId };
 		ResultSet result = dbUtils.executeQuery(allSql, objects);
@@ -458,7 +462,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getAllDeletedIssues() {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ti.week_of_year,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and is_deleted = 0 order by submit_time desc";
 		Object params[] = new Object[] {};
 		ResultSet result = dbUtils.executeQuery(allSql, params);
@@ -494,7 +498,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and ti.is_deleted = 1 ";
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(allSql);
@@ -555,10 +559,11 @@ public class IssueDaoImpl implements IssueDao {
 		issue.setSubmitTime(result.getString("submit_time"));
 		issue.setLastUpdateTime(result.getString("last_update_time"));
 		issue.setCreateTimestamp(dateFormat.parse(result.getString("submit_time")).getTime());
+		issue.setResolvedTime(result.getString("resolved_time"));
 		Status status = new Status();
 		status.setId(result.getInt("ts.id"));
 		status.setStatusName(result.getString("ts.status_name"));
-
+		issue.setWeekOfYear(result.getInt("ti.week_of_year"));
 		User user = new User();
 		user.setId(result.getInt("tu.id"));
 		user.setUsername(result.getString("tu.user_name"));
@@ -611,7 +616,7 @@ public class IssueDaoImpl implements IssueDao {
 	@Override
 	public List<Issue> orderIssues(String order, String desc) {
 		List<Issue> issues = new ArrayList<>();
-		String selectSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String selectSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id  and ti.is_deleted = 1  order by %s  %s";
 		String orderSql = null;
 		if (!order.equals("dept_id")) {

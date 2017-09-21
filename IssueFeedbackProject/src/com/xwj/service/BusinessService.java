@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
 import com.xwj.dao.IssueDaoImpl;
+import com.xwj.dao.IssueStatisticsDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
 import com.xwj.entity.Comment;
@@ -21,12 +22,14 @@ public class BusinessService {
 	private IssueDao issueDao;
 	private DeptDao deptDao;
 	private StatusDao statusDao;
+	private IssueStatisticsDao issueStatisticsDao;
 
 	public BusinessService() {
 		userDao = new UserDao();
 		issueDao = new IssueDaoImpl();
 		deptDao = new DeptDao();
 		statusDao = new StatusDao();
+		issueStatisticsDao = new IssueStatisticsDao();
 	}
 
 	public User login(String username, String password) {
@@ -124,5 +127,9 @@ public class BusinessService {
 
 	public Map<Integer,String> getColumns() {
 		return issueDao.getColumns();
+	}
+
+	public void statisticsIssue() {
+		issueStatisticsDao.statisticsIssue();
 	}
 }

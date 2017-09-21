@@ -22,12 +22,12 @@
 					<div class="form-group">
 						<label for="usernameInputId">用户名</label> <input name="user_name"
 							id="usernameInputId" placeholder="请输入用户名" type="text"
-							class="form-control" />
+							class="form-control" required/>
 					</div>
 					<div class="form-group">
 						<label for="usernameInputId">密码</label> <input name="password"
 							id="usernameInputId" placeholder="请输入密码" type="password"
-							class="form-control" />
+							class="form-control" required/>
 						<c:if test="${error != null }">
 						<div class="alert alert-danger" role="alert">${error.errorMsg }</div>
 						</c:if>

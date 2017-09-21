@@ -1,6 +1,8 @@
 package com.xwj;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +21,12 @@ import com.xwj.service.BusinessService;
 public class AddIssueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BusinessService businessService;
+	private Calendar calendar;
 
 	public AddIssueServlet() {
 		super();
 		businessService = new BusinessService();
+		calendar = Calendar.getInstance(Locale.CHINA);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +37,8 @@ public class AddIssueServlet extends HttpServlet {
 		Issue issue = new Issue();
 		issue.setTitle(title);
 		issue.setContent(content);
+		issue.setWeekOfYear(calendar.get(Calendar.WEEK_OF_YEAR));
+		
 	
 		User userSession = (User) request.getSession().getAttribute("user_session");
 		if (userSession != null) {

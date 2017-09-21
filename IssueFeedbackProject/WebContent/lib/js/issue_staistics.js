@@ -1,5 +1,13 @@
-$(document).ready(function() {
-	
+$(document).ready(
+		function() {
+
+			$.ajax({
+				url : "/IssueFeedbackProject/AllIssueRest",
+				method : "get",
+				success : function(data) {
+					console.log(data);
+				}
+			});
 			var ctx = document.getElementById("myChart").getContext("2d");
 			var data = {
 				labels : [ "Monday", "Tuesday", "Wedns", "April", "May",
@@ -18,15 +26,15 @@ $(document).ready(function() {
 			var myNewChart = new Chart(ctx, {
 				type : 'bar',
 				data : data,
-				options:{
-					layout:{
-						padding:{
-							left: 0,
-			                right: 0,
-			                top: 0,
-			                bottom: 0
+				options : {
+					layout : {
+						padding : {
+							left : 0,
+							right : 0,
+							top : 0,
+							bottom : 0
 						}
 					}
 				}
 			});
-});
+		});

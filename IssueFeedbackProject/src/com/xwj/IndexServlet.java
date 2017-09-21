@@ -78,8 +78,6 @@ public class IndexServlet extends HttpServlet {
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 				req.setAttribute("keyword", keyword);
-				IssueDao dao = new MyBatisIssueDao();
-				System.out.println(dao.getIssueByKeyword(keyword));
 			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null && order == null) {
 
 				List<Issue> issues = businessService.getAllIssues();

@@ -24,7 +24,22 @@ public class Issue implements Serializable{
 	private Long createTimestamp;
 	private String lastUpdateTime;
 	private int isDeleted;
+	private String resolvedTime;
+	private int weekOfYear;
 	
+	
+	public int getWeekOfYear() {
+		return weekOfYear;
+	}
+	public void setWeekOfYear(int weekOfYear) {
+		this.weekOfYear = weekOfYear;
+	}
+	public String getResolvedTime() {
+		return resolvedTime;
+	}
+	public void setResolvedTime(String resolvedTime) {
+		this.resolvedTime = resolvedTime;
+	}
 	public int getIsDeleted() {
 		return isDeleted;
 	}
