@@ -1,9 +1,12 @@
+var countArr = [];
+var statusNameArr = [];
+var maxCount = 0;
+var myNewChart;
+var ctx = document.getElementById("myChart").getContext("2d");
 $(document).ready(
 
 		function() {
-			var countArr = [];
-			var statusNameArr = [];
-			var maxCount = 0;
+
 			$.ajax({
 				url : "/IssueFeedbackProject/AllIssueRest",
 				method : "get",
@@ -13,13 +16,10 @@ $(document).ready(
 
 						countArr.push(value.count);
 						statusNameArr.push(value.status.statusName);
-						if(value.count > maxCount){
+						if (value.count > maxCount) {
 							maxCount = value.count;
 						}
 					});
-					
-					var ctx = document.getElementById("myChart").getContext(
-							"2d");
 					var data = {
 						labels : statusNameArr,
 
@@ -28,13 +28,12 @@ $(document).ready(
 							backgroundColor : [ 'RGB(134,142,150)',
 									'RGB(255,193,7)', 'RGB(40,167,69)',
 									'RGB(220,53,69)' ],
-
 							data : countArr
 						} ],
 
 					};
 
-					var myNewChart = new Chart(ctx, {
+					myNewChart = new Chart(ctx, {
 						type : 'bar',
 						data : data,
 						options : {
@@ -64,4 +63,30 @@ $(document).ready(
 				}
 			});
 
+			$("#inlineSelect").change(
+					function(event) {
+						var element = event.target;
+						$.ajax({
+							url : "/IssueFeedbackProject/AllIssueRest",
+							data : {
+								weekOfYear : element.value
+							},
+							method : "get",
+							success : function(data) {
+								console.log(data);
+								myNewChart.data.datasets[0].data = [];
+								myNewChart.data.labels = [];
+								
+								$.each(data.items, function(index, value) {
+									myNewChart.data.datasets[0].data
+											.push(value.count);
+									myNewChart.data.labels
+											.push(value.status.statusName);
+								});
+
+								myNewChart.update();
+
+							}
+						});
+					});
 		});

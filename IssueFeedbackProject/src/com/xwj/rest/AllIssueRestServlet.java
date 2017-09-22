@@ -1,6 +1,8 @@
 package com.xwj.rest;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,21 +17,33 @@ import com.xwj.service.BusinessService;
 @WebServlet("/AllIssueRest")
 public class AllIssueRestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private BusinessService businessService;
-    private Gson gson;
-    public AllIssueRestServlet() {
-        super();
-        businessService = new BusinessService();
-        gson = new Gson();
-    }
+	private BusinessService businessService;
+	private Gson gson;
+	private Calendar calendar;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AllIssueRestServlet() {
+		super();
+		businessService = new BusinessService();
+		gson = new Gson();
+		calendar =Calendar.getInstance(Locale.CHINA);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");     
-		IssueStatistics byWeekOfYear = businessService.getByWeekOfYear(38);
-		
+		response.setContentType("application/json; charset=UTF-8");
+		String weekOfYearStr = request.getParameter("weekOfYear");
+		int weekOfYear = 0;
+		if (weekOfYearStr != null) {
+			weekOfYear = Integer.parseInt(weekOfYearStr);
+		} else {
+			weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+		}
+
+		IssueStatistics byWeekOfYear = businessService.getByWeekOfYear(weekOfYear);
+
 		String jsonStr = gson.toJson(byWeekOfYear);
 		response.getWriter().append(jsonStr);
-	
+
 	}
 }

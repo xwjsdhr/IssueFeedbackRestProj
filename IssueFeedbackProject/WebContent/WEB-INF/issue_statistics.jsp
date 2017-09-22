@@ -92,25 +92,11 @@
 				
 
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-						<div class="input-group-addon">部门</div>
-						<select name="dept_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
-							id="inlineSelectDepts">
-							<c:if test="${dept_id == dept.id }">
-								<option value="-1" selected="selected">全部部门</option>
-							</c:if>
-							<c:if test="${dept_id != dept.id }">
-								<option value="-1">全部部门</option>
-							</c:if>
-							<c:forEach items="${all_depts }" var="dept">
-
-								<c:if test="${dept_id == dept.id }">
-									<option value="${dept.id }" selected="selected">${dept.deptName}</option>
-								</c:if>
-								<c:if test="${dept_id != dept.id }">
-									<option value="${dept.id }">${dept.deptName}</option>
-								</c:if>
-
-							</c:forEach>
+						<div class="input-group-addon">周</div>
+						<select class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineSelect">
+							<option value="37">37</option>
+							<option value="38">38</option>
 						</select>
 					</div>
 				
