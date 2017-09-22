@@ -113,40 +113,43 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<!--  -->
-					<form action="${pageContext.request.contextPath }/AddComment"
-						method="get">
-						<input type="hidden" name="issue_id" value="${issue_detail.id }" />
-						<input type="hidden" name="user_id" value="${user_session.id }" />
-						<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>
-						<textarea name="comment" class="form-control"
-							id="textareaIssueContent" rows="3"></textarea>
-							
-						<c:if test="${user_session.dept.id==3 }">
-							<c:if test="${comment_number !=0 && issue_detail.status.id != 3}">
-								<div class="form-check form-check-inline">
-									<label style="margin-top: 20px" class="form-check-label"
-										for="checkboxResovled"> <input type="checkbox"
-										class="form-check-input" id="checkboxResovled"
-										
-										name="is_resovled" /> 标记为已解决
-									</label>
-								</div>
+					<c:if test="${issue_detail.status.id != 3 }">
+						<form action="${pageContext.request.contextPath }/AddComment"
+							method="get">
+							<input type="hidden" name="issue_id" value="${issue_detail.id }" />
+							<input type="hidden" name="user_id" value="${user_session.id }" />
+							<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>
+							<textarea name="comment" class="form-control"
+								id="textareaIssueContent" rows="3"></textarea>
+
+							<c:if test="${user_session.dept.id==3 }">
+								<c:if
+									test="${comment_number !=0 && issue_detail.status.id != 3}">
+									<div class="form-check form-check-inline">
+										<label style="margin-top: 20px" class="form-check-label"
+											for="checkboxResovled"> <input type="checkbox"
+											class="form-check-input" id="checkboxResovled"
+											name="is_resovled" /> 标记为已解决
+										</label>
+									</div>
+								</c:if>
+
+								<c:if
+									test="${comment_number != 0 && issue_detail.status.id != 4}">
+									<div class="form-check form-check-inline">
+										<label class="form-check-label" style="margin-top: 20px">
+											<input class="form-check-input" type="checkbox"
+											id="checkboxProblem" name="is_problem"> 标记为疑难问题
+										</label>
+									</div>
+								</c:if>
+
 							</c:if>
-							
-							<c:if test="${comment_number != 0 && issue_detail.status.id != 4}">
-								<div class="form-check form-check-inline">
-									<label class="form-check-label" style="margin-top: 20px"> <input
-										class="form-check-input" type="checkbox"
-										id="checkboxProblem"  name="is_problem">
-										 标记为疑难问题
-									</label>
-								</div>
-							</c:if>
-							
-						</c:if>
-						<input style="margin-top: 20px;clear: left; float: none;" class="btn btn-primary"
-							type="submit" value="回复">
-					</form>
+							<input style="margin-top: 20px; clear: left; float: none;"
+								class="btn btn-primary" type="submit" value="回复">
+						</form>
+
+					</c:if>
 				</div>
 
 			</div>

@@ -179,7 +179,7 @@
 							<tr>
 								<td><c:choose>
 										<c:when test="${issue.status.id == 1 }">
-											<span class="badge badge-pill badge-danger">${issue.status.statusName }</span>
+											<span class="badge badge-pill badge-secondary">${issue.status.statusName }</span>
 										</c:when>
 										<c:when test="${issue.status.id == 2 }">
 											<span class="badge badge-pill badge-warning">${issue.status.statusName }</span>
@@ -187,8 +187,8 @@
 										<c:when test="${issue.status.id == 3 }">
 											<span class="badge badge-pill badge-success">${issue.status.statusName }</span>
 										</c:when>
-										<c:when test="${issue.status.id == 5 }">
-											<span class="badge badge-pill badge-dark">${issue.status.statusName }</span>
+										<c:when test="${issue.status.id == 4 }">
+											<span class="badge badge-pill badge-danger">${issue.status.statusName }</span>
 										</c:when>
 									</c:choose> <span class="badge badge-pill badge-info">${issue.commentsNum }</span>
 								</td>

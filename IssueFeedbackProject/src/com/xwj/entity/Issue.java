@@ -26,8 +26,16 @@ public class Issue implements Serializable{
 	private int isDeleted;
 	private String resolvedTime;
 	private int weekOfYear;
+	private int year;
 	
 	
+	
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
 	public int getWeekOfYear() {
 		return weekOfYear;
 	}

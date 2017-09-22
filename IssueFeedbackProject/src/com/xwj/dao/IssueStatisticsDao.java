@@ -80,10 +80,15 @@ public class IssueStatisticsDao {
 				"tis.id = tissi.statistics_id and " + 
 				"tissi.item_id = tsi.id and " + 
 				"ts.id = tsi.status_id and "+
-				"tis.week_of_year = ?";
-		Object [] params = new Object[] {
-				weekOfYearParam
-		};
+				"tis.week_of_year = ? ";
+		StringBuffer sb = new StringBuffer();
+		sb.append(sql);
+		Object [] params = null;
+		
+			params = new Object[] {
+					weekOfYearParam
+			};
+		
 		ResultSet resultSet = dbUtils.executeQuery(sql, params);
 		IssueStatistics issueStatistics = new IssueStatistics();
 		List<IssueStatisticsItem> issueStatisticsItems = new ArrayList<>();
@@ -107,10 +112,39 @@ public class IssueStatisticsDao {
 			}
 			issueStatistics.setItems(issueStatisticsItems);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return issueStatistics;
+	}
+
+	public List<Integer> getAllYears() {
+		List<Integer> list = new ArrayList<>();
+		String sql = "select year from t_issue group by year;";
+		Object [] params = new Object[] {};
+		ResultSet rs = dbUtils.executeQuery(sql, params);
+		try {
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<Integer> getWeeksByYear(Integer year) {
+		List<Integer> list = new ArrayList<>();
+		String sql = "select week_of_year from t_issue where year = ? group by week_of_year ";
+		Object [] params = new Object[] {year};
+		ResultSet rs = dbUtils.executeQuery(sql, params);
+		try {
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

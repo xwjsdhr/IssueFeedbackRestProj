@@ -464,7 +464,7 @@ public class IssueDaoImpl implements IssueDao {
 	 */
 	@Override
 	public List<Issue> getAllDeletedIssues() {
-		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ts.id,ti.week_of_year,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
+		String allSql = "select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ts.id,ti.week_of_year,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id and is_deleted = 0 order by submit_time desc";
 		Object params[] = new Object[] {};
 		ResultSet result = dbUtils.executeQuery(allSql, params);

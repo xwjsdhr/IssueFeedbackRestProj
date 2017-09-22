@@ -18,7 +18,7 @@
 			<a class="navbar-brand" href="#">组长问题提交</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath }/Index"> <i
 							class="ion-home"></i> 首页
 					</a></li>
@@ -62,6 +62,11 @@
 							href="${pageContext.request.contextPath }/DeptManagement"> <i
 								class="ion-ios-people"></i> 部门管理
 						</a></li>
+						<li class="nav-item active"><a class="nav-link"
+							href="#"> <i
+								class="ion-stats-bars"></i> 统计管理
+						</a></li>
+						
 
 					</c:if>
 
@@ -88,15 +93,25 @@
 			</div>
 		</nav>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-2" style="margin-top: 20px">
+				
+
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">年</div>
+						<select class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineSelectYear">
+							
+						</select>
+					</div>
+				
+			</div>
+			<div class="col-lg-2" style="margin-top: 20px">
 				
 
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 						<div class="input-group-addon">周</div>
 						<select class="form-control mb-2 mr-sm-2 mb-sm-0"
 							id="inlineSelect">
-							<option value="37">37</option>
-							<option value="38">38</option>
 						</select>
 					</div>
 				

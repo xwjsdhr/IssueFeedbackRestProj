@@ -20,15 +20,15 @@ $(document).ready(function() {
 		getUserByDeptId(event.target.value);
 	});
 
-	$(".clickableRow").click(function(event) {
-		var issueId = $(this).attr("id");
-		if ($("#chb_" + issueId).prop("checked")) {
-			$("#chb_" + issueId).prop("checked", false).change();
-		} else {
-			$("#chb_" + issueId).prop("checked", true).change();
-		}
-
-	});
+//	$(".clickableRow").click(function(event) {
+//		var issueId = $(this).attr("id");
+//		if ($("#chb_" + issueId).prop("checked")) {
+//			$("#chb_" + issueId).prop("checked", false).change();
+//		} else {
+//			$("#chb_" + issueId).prop("checked", true).change();
+//		}
+//
+//	});
 	$("#btnClickShow").on("click", function(event) {
 		var arr = $(".selected");
 		var idArr = [];

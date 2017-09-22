@@ -137,4 +137,12 @@ public class BusinessService {
 	public IssueStatistics getByWeekOfYear(int weekOfYear) {
 		return issueStatisticsDao.getByWeekOfYear(weekOfYear);
 	}
+	
+	public List<Integer> getAllYears(){
+		return issueStatisticsDao.getAllYears();
+	}
+
+	public List<Integer> getWeeksByYear(Integer year) {
+		return issueStatisticsDao.getWeeksByYear(year);
+	}
 }
