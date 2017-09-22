@@ -87,13 +87,40 @@
 				</div>
 			</div>
 		</nav>
-		
+		<div class="row">
+			<div class="col-lg-12">
+				
+
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">部门</div>
+						<select name="dept_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
+							id="inlineSelectDepts">
+							<c:if test="${dept_id == dept.id }">
+								<option value="-1" selected="selected">全部部门</option>
+							</c:if>
+							<c:if test="${dept_id != dept.id }">
+								<option value="-1">全部部门</option>
+							</c:if>
+							<c:forEach items="${all_depts }" var="dept">
+
+								<c:if test="${dept_id == dept.id }">
+									<option value="${dept.id }" selected="selected">${dept.deptName}</option>
+								</c:if>
+								<c:if test="${dept_id != dept.id }">
+									<option value="${dept.id }">${dept.deptName}</option>
+								</c:if>
+
+							</c:forEach>
+						</select>
+					</div>
+				
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-lg-12">
 			
 				<canvas id="myChart" width="400" height="200"></canvas>
 			</div>
-		
 		</div>
 	</div>
 </body>

@@ -63,15 +63,54 @@ public class IssueStatisticsDao {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public int insertIssueStatistics(IssueStatistics issueStatistics) {
-
-		return 0;
+	public IssueStatistics getByWeekOfYear(int weekOfYearParam) {
+		String sql = "select tis.week_of_year , " + 
+				"tis.year , " + 
+				"tsi.count , "+
+				"ts.id ," + 
+				"ts.status_name,  "+
+				"tsi.id " + 
+				"from t_issue_statistics tis,t_issue_statistics_statistics_item tissi, t_statistics_item tsi , t_status ts " + 
+				"where  " + 
+				"tis.id = tissi.statistics_id and " + 
+				"tissi.item_id = tsi.id and " + 
+				"ts.id = tsi.status_id and "+
+				"tis.week_of_year = ?";
+		Object [] params = new Object[] {
+				weekOfYearParam
+		};
+		ResultSet resultSet = dbUtils.executeQuery(sql, params);
+		IssueStatistics issueStatistics = new IssueStatistics();
+		List<IssueStatisticsItem> issueStatisticsItems = new ArrayList<>();
+		try {
+			while(resultSet.next()) {
+				
+				int weekOfYear = resultSet.getInt("tis.week_of_year");
+				int year = resultSet.getInt("tis.year");
+				issueStatistics.setNumOfWeek(weekOfYear);
+				issueStatistics.setYear(year);
+				int statusId = resultSet.getInt("ts.id");
+				int count = resultSet.getInt("tsi.count");
+				int itemId = resultSet.getInt("tsi.id");
+				IssueStatisticsItem issueStatisticsItem = new IssueStatisticsItem();
+				String statusName = resultSet.getString("ts.status_name");
+				Status status = new Status(statusId, statusName);
+				issueStatisticsItem.setCount(count);
+				issueStatisticsItem.setStatus(status);
+				issueStatisticsItem.setId(itemId);
+				issueStatisticsItems.add(issueStatisticsItem);
+			}
+			issueStatistics.setItems(issueStatisticsItems);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return issueStatistics;
 	}
 
 }

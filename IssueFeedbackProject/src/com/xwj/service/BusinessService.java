@@ -13,6 +13,7 @@ import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.IssueStatistics;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 
@@ -102,7 +103,7 @@ public class BusinessService {
 	}
 
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		return issueDao.getIssuesByConditions(userId,deptId,statusId,order,orderType);
+		return issueDao.getIssuesByConditions(userId, deptId, statusId, order, orderType);
 	}
 
 	public List<User> getUsersByDeptId(Integer id) {
@@ -122,14 +123,18 @@ public class BusinessService {
 	}
 
 	public List<Issue> orderIssueByType(String order, String desc) {
-		return issueDao.orderIssues(order,desc);
+		return issueDao.orderIssues(order, desc);
 	}
 
-	public Map<Integer,String> getColumns() {
+	public Map<Integer, String> getColumns() {
 		return issueDao.getColumns();
 	}
 
 	public void statisticsIssue() {
 		issueStatisticsDao.statisticsIssue();
+	}
+
+	public IssueStatistics getByWeekOfYear(int weekOfYear) {
+		return issueStatisticsDao.getByWeekOfYear(weekOfYear);
 	}
 }
