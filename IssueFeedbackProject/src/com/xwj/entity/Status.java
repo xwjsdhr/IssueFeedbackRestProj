@@ -10,6 +10,16 @@ public class Status implements Serializable{
 	private static final long serialVersionUID = 7173807477593194299L;
 	private Integer id;
 	private String statusName;
+	
+	public Status() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Status(Integer id, String statusName) {
+		super();
+		this.id = id;
+		this.statusName = statusName;
+	}
 	public Integer getId() {
 		return id;
 	}

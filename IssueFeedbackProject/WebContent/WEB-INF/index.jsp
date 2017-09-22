@@ -62,6 +62,11 @@
 							href="${pageContext.request.contextPath }/DeptManagement"> <i
 								class="ion-ios-people"></i> 部门管理
 						</a></li>
+						
+						<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath }/Statistics"> <i
+								class="ion-stats-bars"></i> 统计管理
+						</a></li>
 
 					</c:if>
 
