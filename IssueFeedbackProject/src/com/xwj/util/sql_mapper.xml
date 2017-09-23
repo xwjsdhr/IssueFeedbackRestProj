@@ -2,4 +2,198 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sql_mapper">
 
+	<sql id="issueColumns">
+		ti.id AS issueId ,
+		ti.title AS title ,
+		ti.content AS
+		issueContent,
+		ti.submit_time AS submitTime,
+		ti.last_update_time AS
+		lastUpdateTime,
+		ti.resolved_time AS resolvedTime,
+		ti.week_of_year AS
+		weekOfYear,
+		ti.status_id AS statusId,
+		ti.user_id AS issueUserId,
+	</sql>
+
+	<sql id="statusColumns">
+		ts.id AS statusId,
+		ts.status_name AS statusName,
+	</sql>
+	<sql id="userColumns">
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS
+		realName,
+		tu.password AS password,
+		tu.dept_id AS deptId,
+	</sql>
+	<sql id="deptColumns">
+		td.id AS pkDeptId,
+		td.dept_name AS deptName,
+	</sql>
+
+	<sql id="commentColumn">
+		tc.content AS commentContent,
+		tc.is_resovled_issue AS
+		isResolvedIssue,
+		tc.is_problem AS isProblem,
+		tc.id AS pkCommentId,
+		tc.create_time AS
+		commentCreateTime,
+		tc.user_id AS commentUserId
+	</sql>
+
+	<sql id="issueTable">t_issue ti </sql>
+	<sql id="statusTable">t_status ts</sql>
+	<sql id="userTable">t_user tu</sql>
+	<sql id="deptTable">t_dept td</sql>
+	<sql id="commentTable">t_comment tc</sql>
+	<sql id="issueCommentTable">t_issue_comments tic</sql>
+
+	<sql id="issueStatusJoint">ti.status_id = ts.id</sql>
+	<sql id="issueUserJoint">ti.user_id = tu.id</sql>
+	<sql id="userDeptJoint">tu.dept_id = td.id</sql>
+	<sql id="issueJoint"> ti.id = tic.issue_id </sql>
+	<sql id="commentJoint"> tic.comment_id =tc.id </sql>
+	<sql id="isNotDelete">ti.is_deleted = 1</sql>
+	<sql id="commentUserJoint"> tc.user_id = tu.id</sql>
+
+	<sql id="orderByLastUptTime">ORDER BY ti.last_update_time</sql>
+
+	<sql id="IssueSelect">
+		SELECT
+		<include refid="issueColumns" />
+		<include refid="statusColumns" />
+		<include refid="userColumns" />
+		<include refid="deptColumns" />
+		<include refid="commentColumn" />
+		FROM
+		<include refid="issueTable" />
+		LEFT JOIN
+		<include refid="statusTable" />
+		ON
+		<include refid="issueStatusJoint" />
+		LEFT JOIN
+		<include refid="userTable" />
+		ON
+		<include refid="issueUserJoint" />
+		LEFT JOIN
+		<include refid="deptTable" />
+		ON
+		<include refid="userDeptJoint" />
+		LEFT JOIN
+		<include refid="issueCommentTable" />
+		ON
+		<include refid="issueJoint" />
+		LEFT JOIN
+		<include refid="commentTable" />
+		ON
+		<include refid="commentJoint" />
+		WHERE
+		<include refid="isNotDelete" />
+	</sql>
+
+	<select id="selectAllIssues" resultMap="issueResultMap">
+		<include refid="IssueSelect" />
+
+		<include refid="orderByLastUptTime" />
+	</select>
+
+
+	<select id="selectById" parameterType="Integer" resultMap="issueCommentResultMap">
+		<include refid="IssueSelect" />
+		AND
+		ti.id = #{id}
+	</select>
+	<select id="selectCommentsForIssue" parameterType="Integer">
+		select 
+		<include refid="userColumns"/>
+		<include refid="commentColumn"/>
+		<include refid="deptColumns"/>
+		<include refid="statusColumns"/>
+
+				 from  
+		<include refid="issueTable" />
+		<include refid="statusTable" />,
+		<include refid="userTable" />,
+		<include refid="deptTable" />,
+		<include refid="issueCommentTable" />,
+		<include refid="commentTable" />
+		where 
+		 ti.id = tic.issue_id and 
+				 tc.id = tic.comment_id and  tc.user_id = tu.id and  tu.dept_id = td.id and 
+				 ti.status_id = ts.id and  ti.id = #{id} order by tc.create_time
+	</select>
+
+	<resultMap type="com.xwj.entity.Issue" id="issueCommentResultMap" >
+		
+		<id column="issueId" property="id" />
+		<result column="title" property="title" />
+		<result column="issueContent" property="content" />
+		<result column="submitTime" property="submitTime" />
+		<result column="lastUpdateTime" property="lastUpdateTime" />
+		<result column="resolvedTime" property="resolvedTime" />
+		<result column="weekOfYear" property="weekOfYear" />
+		<association property="status" javaType="com.xwj.entity.Status" >
+			<id column="statusId" property="id" />
+			<result column="statusName" property="statusName" />
+		</association>
+		<association property="user" javaType="com.xwj.entity.User">
+			<id column="issueUserId" property="id" />
+			<result column="userName" property="username" />
+			<result column="password" property="password" />
+			<result column="realName" property="realName" />
+			<association property="dept" javaType="com.xwj.entity.Dept">
+				<id column="pkDeptId" property="id" />
+				<result column="deptId" property="id" />
+				<result column="deptName" property="deptName" />
+			</association>
+		</association>
+		
+		<collection property="comments" ofType="com.xwj.entity.Comment" select="selectCommentsForIssue">
+			<id column="pkCommentId" property="id" javaType="Integer" />
+			<result column="commentContent" property="content" />
+			<result column="isResolvedIssue" property="isResovleIssue" />
+			<result column="isProblem" property="isProblem" />
+			<result column="commentCreateTime" property="createTime" />
+			
+		</collection>
+	</resultMap>
+
+
+	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
+		<id column="issueId" property="id" />
+		<result column="title" property="title" />
+		<result column="issueContent" property="content" />
+		<result column="submitTime" property="submitTime" />
+		<result column="lastUpdateTime" property="lastUpdateTime" />
+		<result column="resolvedTime" property="resolvedTime" />
+		<result column="weekOfYear" property="weekOfYear" />
+		<association property="status" javaType="com.xwj.entity.Status">
+			<id column="statusId" property="id" />
+			<result column="statusName" property="statusName" />
+		</association>
+		<association property="user" javaType="com.xwj.entity.User">
+			<id column="issueUserId" property="id" />
+			<result column="userName" property="username" />
+			<result column="password" property="password" />
+			<result column="realName" property="realName" />
+			<association property="dept" javaType="com.xwj.entity.Dept">
+				<id column="pkDeptId" property="id" />
+				<result column="deptId" property="id" />
+				<result column="deptName" property="deptName" />
+			</association>
+		</association>
+
+		<collection property="comments" ofType="com.xwj.entity.Comment">
+			<id column="pkCommentId" property="id" javaType="Integer" />
+			<result column="commentContent" property="content" />
+			<result column="isResolvedIssue" property="isResovleIssue" />
+			<result column="isProblem" property="isProblem" />
+			<result column="commentCreateTime" property="createTime" />
+			
+		</collection>
+	</resultMap>
 </mapper>

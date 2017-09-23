@@ -286,7 +286,7 @@
 										<c:when test="${issue.status.id == 4 }">
 											<span class="badge badge-pill badge-danger">${issue.status.statusName }</span>
 										</c:when>
-									</c:choose> <span class="badge badge-pill badge-info">${issue.commentsNum }</span>
+									</c:choose> <span class="badge badge-pill badge-info">${issue.comments.size()}</span>
 								</td>
 								<td>${issue.title }</td>
 
@@ -316,7 +316,6 @@
 								</td>
 							</tr>
 						</c:forEach>
-
 					</tbody>
 				</table>
 

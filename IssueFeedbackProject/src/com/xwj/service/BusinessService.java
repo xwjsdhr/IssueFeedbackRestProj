@@ -7,6 +7,7 @@ import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
 import com.xwj.dao.IssueDaoImpl;
 import com.xwj.dao.IssueStatisticsDao;
+import com.xwj.dao.MyBatisIssueDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
 import com.xwj.entity.Comment;
@@ -24,6 +25,7 @@ public class BusinessService {
 	private DeptDao deptDao;
 	private StatusDao statusDao;
 	private IssueStatisticsDao issueStatisticsDao;
+	private MyBatisIssueDao myBatisIssueDao;
 
 	public BusinessService() {
 		userDao = new UserDao();
@@ -31,6 +33,7 @@ public class BusinessService {
 		deptDao = new DeptDao();
 		statusDao = new StatusDao();
 		issueStatisticsDao = new IssueStatisticsDao();
+		myBatisIssueDao = new MyBatisIssueDao();
 	}
 
 	public User login(String username, String password) {
@@ -38,7 +41,7 @@ public class BusinessService {
 	}
 
 	public List<Issue> getAllIssues() {
-		return issueDao.getAllIssues();
+		return myBatisIssueDao.getAllIssues();
 	}
 
 	public int addIssue(Issue issue) {
@@ -46,7 +49,7 @@ public class BusinessService {
 	}
 
 	public Issue getById(int id) {
-		return issueDao.getById(id);
+		return myBatisIssueDao.getById(id);
 	}
 
 	public List<Comment> getCommentsById(int issueid) {
