@@ -31,7 +31,7 @@ public class QuartzListener extends QuartzInitializerListener  {
 	            Scheduler scheduler = factory.getScheduler();
 	            JobDetail jobDetail = JobBuilder.newJob(StatisticsJob.class).build();
 	            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(
-	                    CronScheduleBuilder.cronSchedule("0 0 0 * *  SUN *"))
+	                    CronScheduleBuilder.cronSchedule("59 59 23 ? * SUN"))
 	            		.startNow().build();
 	            scheduler.scheduleJob(jobDetail, trigger);
 	            scheduler.start();

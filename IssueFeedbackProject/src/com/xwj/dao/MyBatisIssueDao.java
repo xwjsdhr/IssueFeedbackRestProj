@@ -20,7 +20,7 @@ public class MyBatisIssueDao implements IssueDao{
 	@Override
 	public List<Issue> getAllIssues() {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<Issue> issues = session.selectList("selectAllIssue");
+		List<Issue> issues = session.selectList("selectAllIssues");
 		session.close();
 		return issues;
 	}
@@ -43,7 +43,7 @@ public class MyBatisIssueDao implements IssueDao{
 	@Override
 	public Issue getById(int id) {
 		SqlSession session =dbUtils.getSessionFactory().openSession();
-		Issue issue = (Issue) session.selectOne("selectIssueById",id);
+		Issue issue = (Issue) session.selectOne("selectById",id);
 		session.close();
 		return issue;
 	}

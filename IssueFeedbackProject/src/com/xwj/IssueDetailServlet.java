@@ -36,7 +36,8 @@ public class IssueDetailServlet extends HttpServlet {
 		if (request.getSession().getAttribute("user_session") != null) {
 			Integer id = Integer.parseInt(request.getParameter("id"));
 			Issue issue = businessService.getById(id);
-			List<Comment> comments = businessService.getCommentsById(id);
+//			List<Comment> comments = businessService.getCommentsById(id);
+			List<Comment> comments = issue.getComments();
 			List<Status> allStatus = businessService.getAllStatus();
 			
 			if (issue != null) {
