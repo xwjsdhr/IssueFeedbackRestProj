@@ -18,7 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.google.gson.Gson;
 import com.xwj.entity.Issue;
-import com.xwj.entity.MyError;
+import com.xwj.params.MyError;
 import com.xwj.service.BusinessService;
 
 /**

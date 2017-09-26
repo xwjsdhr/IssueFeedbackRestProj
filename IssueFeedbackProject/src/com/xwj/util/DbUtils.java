@@ -40,7 +40,7 @@ public class DbUtils {
 
 	private DbUtils() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_issue", "root", "123456");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "951753");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

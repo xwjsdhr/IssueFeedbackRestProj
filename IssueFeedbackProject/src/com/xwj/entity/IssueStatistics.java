@@ -2,7 +2,11 @@ package com.xwj.entity;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * 问题统计实体类
+ * @author Administrator
+ *
+ */
 public class IssueStatistics implements Serializable{
 
 	/**

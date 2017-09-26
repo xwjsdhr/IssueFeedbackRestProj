@@ -3,6 +3,11 @@ package com.xwj.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 评论实体类
+ * @author Administrator
+ *
+ */
 public class Comment implements Serializable{
 
 	/**
@@ -10,12 +15,12 @@ public class Comment implements Serializable{
 	 */
 	private static final long serialVersionUID = 4032233724648024513L;
 	private int id;
-	private String content;
-	private User user;
-	private String createTime;
-	private int isResovleIssue = 0;
-	private List<String> imagePaths;
-	private int isProblem = 0;
+	private String content;//评论内容
+	private User user;//用户
+	private String createTime;//创建时间
+	private int isResovleIssue = 0;//是否解决问题
+	private List<String> imagePaths;//图片路径
+	private int isProblem = 0;//是否是疑难问题
 	
 	public int getIsProblem() {
 		return isProblem;

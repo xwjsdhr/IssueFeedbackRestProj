@@ -2,6 +2,11 @@ package com.xwj.entity;
 
 import java.io.Serializable;
 
+/**
+ * Χ΄Μ¬ΚµΜεΐΰ
+ * @author Administrator
+ *
+ */
 public class Status implements Serializable{
 
 	/**

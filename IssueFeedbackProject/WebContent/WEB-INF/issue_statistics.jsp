@@ -131,7 +131,7 @@
 <script type="text/javascript" src="lib/js/moment.js"></script>
 <script type="text/javascript" src="lib/js/zh-cn.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
-<script type="text/javascript" src="lib/js/issue_staistics.js"></script>
+<script type="text/javascript" src="lib/js/app/issue_staistics.js"></script>
 
 
 </html>

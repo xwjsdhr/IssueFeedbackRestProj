@@ -11,6 +11,7 @@
 <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
 	rel="stylesheet" />
+	<link   href="lib/css/app/register.css" rel="stylesheet"/>
 </head>
 <body>
 	<div class="container">
@@ -81,5 +82,5 @@
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/register.js"></script>
+<script type="text/javascript" src="lib/js/app/register.js"></script>
 </html>

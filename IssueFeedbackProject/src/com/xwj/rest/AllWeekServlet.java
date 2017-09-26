@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.xwj.entity.WeeksResult;
+import com.xwj.params.WeeksResult;
 import com.xwj.service.BusinessService;
 
 /**

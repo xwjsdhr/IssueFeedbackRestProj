@@ -1,7 +1,9 @@
-package com.xwj.entity;
+package com.xwj.params;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.xwj.entity.Issue;
 
 public class IssueResult  implements Serializable{
 	

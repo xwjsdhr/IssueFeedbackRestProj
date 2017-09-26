@@ -2,6 +2,11 @@ package com.xwj.entity;
 
 import java.io.Serializable;
 
+/**
+ * 部门实体类
+ * @author Administrator
+ *
+ */
 public class Dept implements Serializable{
 
 	/**

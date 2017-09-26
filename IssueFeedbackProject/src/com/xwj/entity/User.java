@@ -1,7 +1,11 @@
 package com.xwj.entity;
 
 import java.io.Serializable;
-
+/**
+ * 用户实体类
+ * @author Administrator
+ *
+ */
 public class User  implements Serializable{
 
 	/**

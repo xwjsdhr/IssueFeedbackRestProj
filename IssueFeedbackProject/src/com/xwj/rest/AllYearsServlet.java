@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.xwj.entity.YearResult;
+import com.xwj.params.YearResult;
 import com.xwj.service.BusinessService;
 
 /**

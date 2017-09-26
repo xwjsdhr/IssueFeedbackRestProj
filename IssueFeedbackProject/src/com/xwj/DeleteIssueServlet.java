@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xwj.entity.MyError;
 import com.xwj.entity.User;
+import com.xwj.params.MyError;
 import com.xwj.service.BusinessService;
 
 

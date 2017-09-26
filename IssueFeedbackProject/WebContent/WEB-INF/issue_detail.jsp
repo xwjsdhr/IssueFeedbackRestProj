@@ -161,5 +161,5 @@
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="lib/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="lib/js/issue_details.js"></script>
+<script type="text/javascript" src="lib/js/app/issue_details.js"></script>
 </html>
