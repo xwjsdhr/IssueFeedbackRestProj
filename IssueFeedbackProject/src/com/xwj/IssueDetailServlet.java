@@ -39,7 +39,7 @@ public class IssueDetailServlet extends HttpServlet {
 //			List<Comment> comments = businessService.getCommentsById(id);
 			List<Comment> comments = issue.getComments();
 			List<Status> allStatus = businessService.getAllStatus();
-			
+			System.out.println(issue.getComments());
 			if (issue != null) {
 				request.setAttribute("issue_detail", issue);
 				request.setAttribute("comments", comments);
@@ -48,7 +48,7 @@ public class IssueDetailServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/issue_detail.jsp").forward(request, response);
 			}
 		}else {
-			response.sendRedirect("/IssueFeedbackProject/Login");
+			response.sendRedirect(request.getContextPath()+"/Login");
 		}
 	}
 }

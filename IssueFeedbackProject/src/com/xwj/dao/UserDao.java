@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
 import com.xwj.util.DbUtils;
@@ -103,5 +105,12 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return users;			
+	}
+
+	public boolean checkUserName(String username) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		User user = session.selectOne("checkUsername",username);
+		session.close();
+		return user == null;
 	}
 }

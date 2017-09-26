@@ -40,9 +40,21 @@
 		isResolvedIssue,
 		tc.is_problem AS isProblem,
 		tc.id AS pkCommentId,
-		tc.create_time AS
-		commentCreateTime,
-		tc.user_id AS commentUserId
+		tc.create_time AS commentCreateTime,
+		tc.user_id AS commentUserId,
+	</sql>
+	<sql id="commentUserColumn">
+		tuc.id AS userIdC,
+		tuc.user_name AS userNameC,
+		tuc.real_name
+		AS realNameC,
+		tuc.password AS passwordC,
+		tuc.dept_id AS deptIdC,
+	</sql>
+	<sql id="commentUserDeptColumn">
+		tdc.id AS pkDeptIdC,
+		tdc.dept_name AS deptNameC
+
 	</sql>
 
 	<sql id="issueTable">t_issue ti </sql>
@@ -60,7 +72,7 @@
 	<sql id="isNotDelete">ti.is_deleted = 1</sql>
 	<sql id="commentUserJoint"> tc.user_id = tu.id</sql>
 
-	<sql id="orderByLastUptTime">ORDER BY ti.last_update_time</sql>
+	<sql id="orderByLastUptTime">ORDER BY ti.last_update_time desc</sql>
 
 	<sql id="IssueSelect">
 		SELECT
@@ -69,6 +81,8 @@
 		<include refid="userColumns" />
 		<include refid="deptColumns" />
 		<include refid="commentColumn" />
+		<include refid="commentUserColumn" />
+		<include refid="commentUserDeptColumn" />
 		FROM
 		<include refid="issueTable" />
 		LEFT JOIN
@@ -91,6 +105,14 @@
 		<include refid="commentTable" />
 		ON
 		<include refid="commentJoint" />
+		LEFT JOIN
+		t_user tuc
+		ON
+		tc.user_id = tuc.id
+		LEFT JOIN
+		t_dept tdc
+		ON
+		tuc.dept_id = tdc.id
 		WHERE
 		<include refid="isNotDelete" />
 	</sql>
@@ -101,68 +123,57 @@
 		<include refid="orderByLastUptTime" />
 	</select>
 
-
-	<select id="selectById" parameterType="Integer" resultMap="issueCommentResultMap">
+	<select id="selectById" parameterType="Integer" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
 		AND
 		ti.id = #{id}
 	</select>
-	<select id="selectCommentsForIssue" parameterType="Integer">
-		select 
-		<include refid="userColumns"/>
-		<include refid="commentColumn"/>
-		<include refid="deptColumns"/>
-		<include refid="statusColumns"/>
+	<insert id="insertIssue" parameterType="com.xwj.entity.Issue"
+		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO t_issue
+		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year)
+		VALUES
+		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear})
+	</insert>
+	<insert id="insertComment" parameterType="com.xwj.entity.Comment" useGeneratedKeys="true"
+	keyProperty="id" keyColumn="id">
+		INSERT INTO 
+		t_comment
+		(content,user_id,create_time,is_resovled_issue,is_problem)
+		VALUES
+		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem})
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id" keyColumn="id">
+        	SELECT LAST_INSERT_ID() as id;
+    	</selectKey>
+	</insert>
 
-				 from  
-		<include refid="issueTable" />
-		<include refid="statusTable" />,
-		<include refid="userTable" />,
-		<include refid="deptTable" />,
-		<include refid="issueCommentTable" />,
-		<include refid="commentTable" />
-		where 
-		 ti.id = tic.issue_id and 
-				 tc.id = tic.comment_id and  tc.user_id = tu.id and  tu.dept_id = td.id and 
-				 ti.status_id = ts.id and  ti.id = #{id} order by tc.create_time
+	<insert id="insertIssueJointComment" parameterType="com.xwj.params.IssueJointComment">
+		INSERT INTO
+		t_issue_comments(issue_id,comment_id)
+		VALUES
+		(#{issueId},#{commentId})
+	</insert>
+	<update id="resolveIssueByComment" parameterType="Integer">
+		UPDATE t_issue SET status_id = 3, resolved_time = now() WHERE id = #{issueId}
+	</update>
+	<update id="updateLastTime" parameterType="Integer">
+	UPDATE t_issue SET last_update_time = now() WHERE id = #{id}
+	</update>
+	<update id="updateStatusById" parameterType="com.xwj.params.UpdateStatusByIssueId">
+		UPDATE t_issue SET status_id = #{statusId},resolved_time=now() WHERE id = #{issueId}
+	</update>
+	<select id="checkUsername" parameterType="String" resultMap="userResultMap">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId
+		 FROM 
+		 <include refid="userTable"/>
+		  WHERE tu.user_name = #{username}
 	</select>
-
-	<resultMap type="com.xwj.entity.Issue" id="issueCommentResultMap" >
-		
-		<id column="issueId" property="id" />
-		<result column="title" property="title" />
-		<result column="issueContent" property="content" />
-		<result column="submitTime" property="submitTime" />
-		<result column="lastUpdateTime" property="lastUpdateTime" />
-		<result column="resolvedTime" property="resolvedTime" />
-		<result column="weekOfYear" property="weekOfYear" />
-		<association property="status" javaType="com.xwj.entity.Status" >
-			<id column="statusId" property="id" />
-			<result column="statusName" property="statusName" />
-		</association>
-		<association property="user" javaType="com.xwj.entity.User">
-			<id column="issueUserId" property="id" />
-			<result column="userName" property="username" />
-			<result column="password" property="password" />
-			<result column="realName" property="realName" />
-			<association property="dept" javaType="com.xwj.entity.Dept">
-				<id column="pkDeptId" property="id" />
-				<result column="deptId" property="id" />
-				<result column="deptName" property="deptName" />
-			</association>
-		</association>
-		
-		<collection property="comments" ofType="com.xwj.entity.Comment" select="selectCommentsForIssue">
-			<id column="pkCommentId" property="id" javaType="Integer" />
-			<result column="commentContent" property="content" />
-			<result column="isResolvedIssue" property="isResovleIssue" />
-			<result column="isProblem" property="isProblem" />
-			<result column="commentCreateTime" property="createTime" />
-			
-		</collection>
-	</resultMap>
-
-
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
 		<result column="title" property="title" />
@@ -175,17 +186,9 @@
 			<id column="statusId" property="id" />
 			<result column="statusName" property="statusName" />
 		</association>
-		<association property="user" javaType="com.xwj.entity.User">
-			<id column="issueUserId" property="id" />
-			<result column="userName" property="username" />
-			<result column="password" property="password" />
-			<result column="realName" property="realName" />
-			<association property="dept" javaType="com.xwj.entity.Dept">
-				<id column="pkDeptId" property="id" />
-				<result column="deptId" property="id" />
-				<result column="deptName" property="deptName" />
-			</association>
-		</association>
+
+		<association property="user" javaType="com.xwj.entity.User"
+			resultMap="userResultMap" />
 
 		<collection property="comments" ofType="com.xwj.entity.Comment">
 			<id column="pkCommentId" property="id" javaType="Integer" />
@@ -193,7 +196,28 @@
 			<result column="isResolvedIssue" property="isResovleIssue" />
 			<result column="isProblem" property="isProblem" />
 			<result column="commentCreateTime" property="createTime" />
-			
+
+			<association property="user" javaType="com.xwj.entity.User">
+				<result column="userNameC" property="username" />
+				<result column="passwordC" property="password" />
+				<result column="realNameC" property="realName" />
+				<association property="dept" javaType="com.xwj.entity.Dept">
+					<id column="deptIdC" property="id" />
+					<result column="deptNameC" property="deptName" />
+					
+				</association>
+			</association>
 		</collection>
+	</resultMap>
+
+	<resultMap type="com.xwj.entity.User" id="userResultMap">
+		<result column="userName" property="username" />
+		<result column="password" property="password" />
+		<result column="realName" property="realName" />
+		<association property="dept" javaType="com.xwj.entity.Dept">
+			<id column="pkDeptId" property="id" />
+			<result column="deptId" property="id" />
+			<result column="deptName" property="deptName" />
+		</association>
 	</resultMap>
 </mapper>

@@ -1,4 +1,4 @@
-package com.xwj.entity;
+package com.xwj.params;
 
 public class QueryCondition {
 
