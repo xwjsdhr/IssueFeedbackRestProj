@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
-import com.xwj.entity.QueryCondition;
+import com.xwj.params.IssueJointComment;
+import com.xwj.params.QueryCondition;
+import com.xwj.params.UpdateStatusByIssueId;
 import com.xwj.util.DbUtils;
 
 public class MyBatisIssueDao implements IssueDao{
@@ -28,7 +30,7 @@ public class MyBatisIssueDao implements IssueDao{
 	@Override
 	public int insertIssue(Issue issue) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		int i = session.insert("insertIssue", issue);
+		int i = session.insert("insertIssue",issue);
 		session.commit();
 		session.close();
 		return i;
@@ -36,7 +38,6 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public int deleteIssue(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -58,25 +59,49 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public int addCommentToIssue(int issueId, Comment comment) {
-		// TODO Auto-generated method stub
-		return 0;
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		Issue issue = session.selectOne("selectById",issueId);
+		int commentId = session.insert("insertComment",comment);
+		session.commit();
+		System.out.println("commentId:   " + commentId);
+		
+		IssueJointComment ic = new IssueJointComment(issueId,commentId);
+		int res = session.insert("insertIssueJointComment",ic);
+		if(issue.getComments().size() == 0) {
+			if(res >0 ) {
+				updateIssueStatusById(issueId, 2);
+			}
+		}else {
+			if(comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
+				session.update("resolveIssueByComment",issueId);
+			}else if(comment.getIsProblem() == 1 && issue.getStatus().getId() != 4){
+				updateIssueStatusById(issueId, 4);
+			}
+		}
+		
+		session.update("updateLastTime", issueId);
+		session.commit();
+		session.close();
+		return res;
 	}
 
 	@Override
 	public int updateIssueStatusById(int issueId, int statusId) {
-		// TODO Auto-generated method stub
-		return 0;
+		SqlSession openSession = dbUtils.getSessionFactory().openSession();
+		UpdateStatusByIssueId byIssueId = new UpdateStatusByIssueId(issueId, statusId);
+		int res = openSession.update("updateStatusById",byIssueId);
+		openSession.commit();
+		openSession.close();
+		return res;
 	}
 
 	@Override
 	public List<Issue> getIssueByStatusId(Integer statusId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Issue> getIssueByDeptId(Integer deptId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -91,19 +116,16 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public List<Issue> getIssuesByUserId(Integer userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public IssuePage getAllByPageNum(Integer pageNum, Integer pageSize) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Issue> getAllDeletedIssues() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -117,25 +139,21 @@ public class MyBatisIssueDao implements IssueDao{
 
 	@Override
 	public int restoreIssue(Integer id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<Issue> getIssuesInRange(List<Integer> list) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Issue> orderIssues(String order, String desc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Map<Integer, String> getColumns() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

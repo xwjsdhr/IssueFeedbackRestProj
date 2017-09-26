@@ -217,11 +217,11 @@ public class IssueDaoImpl implements IssueDao {
 			}
 		} else {
 			if (comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
-				String updateResovledSql = "update t_issue set status_id = 3 where id = ?";
+				String updateResovledSql = "update t_issue set status_id = 3, resolved_time = now() where id = ?";
 				Object[] params = new Object[] { issue.getId() };
 				dbUtils.executeUpdate(updateResovledSql, params);
 			}else if(comment.getIsProblem() == 1 && issue.getStatus().getId() != 4) {
-				String updateResovledSql = "update t_issue set status_id = 4 , resolved_time = now() where id = ?";
+				String updateResovledSql = "update t_issue set status_id = 4  where id = ?";
 				Object[] params = new Object[] { issue.getId() };
 				dbUtils.executeUpdate(updateResovledSql, params);
 			}

@@ -79,9 +79,7 @@ public class IndexServlet extends HttpServlet {
 			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null && order == null) {
 
 				List<Issue> issues = businessService.getAllIssues();
-				for(Issue issue :issues) {
-					System.out.println(issue.getComments());
-				}
+				
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 

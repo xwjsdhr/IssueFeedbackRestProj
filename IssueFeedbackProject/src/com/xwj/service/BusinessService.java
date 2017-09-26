@@ -45,7 +45,7 @@ public class BusinessService {
 	}
 
 	public int addIssue(Issue issue) {
-		return issueDao.insertIssue(issue);
+		return myBatisIssueDao.insertIssue(issue);
 	}
 
 	public Issue getById(int id) {
@@ -147,5 +147,9 @@ public class BusinessService {
 
 	public List<Integer> getWeeksByYear(Integer year) {
 		return issueStatisticsDao.getWeeksByYear(year);
+	}
+
+	public boolean checkUserName(String username) {
+		return userDao.checkUserName(username);
 	}
 }
