@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.User;
 import com.xwj.params.IssueJointComment;
 import com.xwj.params.QueryCondition;
 import com.xwj.params.UpdateStatusByIssueId;
@@ -155,6 +156,27 @@ public class MyBatisIssueDao implements IssueDao{
 	@Override
 	public Map<Integer, String> getColumns() {
 		return null;
+	}
+
+	@Override
+	public int stickTop(int issueId, Integer cancel) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int res = 0;
+		if(cancel == 0) {
+			res = session.update("updateIssueTop",issueId);
+		}else {
+			res = session.update("cancelIssueTop",issueId);
+		}
+		session.commit();
+		session.close();
+		return res;
+	}
+
+	public User getUserById(int userId) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		User user = session.selectOne("getUserById" ,userId);
+		session.close();
+		return user;
 	}
 
 }

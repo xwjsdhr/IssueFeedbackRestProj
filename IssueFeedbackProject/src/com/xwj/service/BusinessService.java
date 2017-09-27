@@ -152,4 +152,12 @@ public class BusinessService {
 	public boolean checkUserName(String username) {
 		return userDao.checkUserName(username);
 	}
+
+	public int stickTop(Integer issueId, Integer cancel) {
+		return myBatisIssueDao.stickTop(issueId,cancel);
+	}
+
+	public User getUserById(int userId) {
+		return myBatisIssueDao.getUserById(userId);
+	}
 }

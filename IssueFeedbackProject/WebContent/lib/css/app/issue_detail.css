@@ -3,3 +3,11 @@
 	font-size:14px;
     font-weight: bold;
 }
+.mdl-list__item{
+	padding: 0px;
+	margin: 0px;
+}
+.mdl-cell{
+	padding: 0px;
+	margin: 0px;
+}

@@ -113,4 +113,9 @@ public class UserDao {
 		session.close();
 		return user == null;
 	}
+
+	public User getUserById(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

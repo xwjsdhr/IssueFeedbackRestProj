@@ -44,5 +44,7 @@ public interface IssueDao {
 	List<Issue> orderIssues(String order, String desc);
 
 	Map<Integer, String> getColumns();
+	
+	int stickTop(int issueId, Integer cancel);
 
 }

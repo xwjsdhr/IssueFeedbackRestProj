@@ -8,64 +8,89 @@
 <title>个人信息</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
 <link href="lib/css/app/index.css" rel="stylesheet">
+<link
+	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+	rel="stylesheet" />
+<link href="lib/css/material/material.css" rel="stylesheet" />
+<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-	<div class="container">
-
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">组长问题提交</a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Index">
-						<img alt="name" src="icon/ic_home_black_24px.svg">首页 <span class="sr-only">(current)</span>
-					</a></li>
-
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#"
-						id="navbarDropdownMenuLink1" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
-						<img alt="aaaa" src="icon/ic_question_answer_black_24px.svg">
-						 问题管理 </a>
-						<div class="dropdown-menu"
-							aria-labelledby="navbarDropdownMenuLink1">
-							<a class="nav-link" href="${pageContext.request.contextPath }/NewIssue">
-							<img alt="aaa" src="icon/ic_add_black_24px.svg">
-							添加问题</a>
-							<c:if test="${user_session.dept.id == 4 }">
-								<a class="nav-link" href="${pageContext.request.contextPath }/TrashBin">
-								<img alt="aaaaa" src="icon/ic_delete_black_24px.svg">
-								回收站</a>
-							</c:if>
-						</div></li>
-					<c:if test="${user_session.dept.id == 4 }">
-					<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath }/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						          	用户管理
-						        </a>
-						        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						          <a class="dropdown-item" href="#">添加用户</a>
-						        </div>
-							</li>
-						<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/DeptManagement">部门管理</a>
-						</li>
-						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath }/TrashBin">回收站</a></li>
-					
-					</c:if>
-					
+	
+	
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+	    <div class="mdl-layout__header-row">
+	     
+	      <span class="mdl-layout-title">组长问题提交</span>
+	     
+	      <div class="mdl-layout-spacer"></div>
+	     
+	      <nav class="mdl-navigation mdl-layout--large-screen-only">
+	        
+	        <a class="mdl-navigation__link" href="${pageContext.request.contextPath }/Index">
+				<i class="ion-home"></i>
+				首页</a>
+	        <button id="demo-menu-lower-left"
+        		class="mdl-button mdl-js-button" style="color: white;">
+			  <i class="ion-help-circled"></i>  问题管理
+			</button>
+			
+			<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+			    for="demo-menu-lower-left">
+			  <li class="mdl-menu__item">
+			  	<a href="${pageContext.request.contextPath }/NewIssue">添加问题</a>
+			  </li>
+				 <c:if test="${user_session.dept.id == 4 }">
+				 	<li class="mdl-menu__item">
+						<a href="${pageContext.request.contextPath }/TrashBin"> <i
+							class="ion-trash-a"></i> 回收站
+						</a>
+					</li>
+				</c:if>
+			</ul>
+			<c:if test="${user_session.dept.id == 4 }">
+				 <button id="demo-menu-lower-user"
+	        		class="mdl-button mdl-js-button" style="color: white;">
+	        		<i class="ion-person-stalker"></i>
+				  用户管理
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+				    for="demo-menu-lower-user">
+				  <li class="mdl-menu__item">
+				  	<a href="${pageContext.request.contextPath }/Register">添加用户</a>
+				  </li>
 				</ul>
-				 <div class="btn-group " role="group">
-				 <a class="btn btn-link"
-						href="${pageContext.request.contextPath }/UserInfo">${user_session.realName}</a>
-						<a class="nav-link"
-						href="${pageContext.request.contextPath }/Logout">退出</a>
-				 </div>
-			</div>
-		</nav>
-		<div class="row ">
-			<div class="col-md-12 panel ">
+				
+				<a class="mdl-navigation__link" href="${pageContext.request.contextPath }/DeptManagement">
+				<i class="ion-ios-people"></i>
+				部门管理</a>
+				
+				<a class="mdl-navigation__link" href="${pageContext.request.contextPath }/Statistics"> <i
+									class="ion-stats-bars"></i> 统计管理</a>
+			</c:if>
+			
+			<a class="mdl-navigation__link"
+						href="${pageContext.request.contextPath }/UserInfo"> <i
+						class="ion-person"></i> ${user_session.realName}
+					</a>
+	         <a class="mdl-navigation__link"
+						href="${pageContext.request.contextPath }/Logout"> 
+						退出  <i class="ion-log-out"></i>
+			</a>
+
+	      </nav>
+	      	
+	    </div>
+	    
+	  </header>
+	  
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	   
+	    
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--1-col panel "></div>
+			<div class="mdl-cell mdl-cell--10-col panel ">
 				<form action="${pageContext.request.contextPath }/AddUser" method="post">
 					<div class="form-froup">
 						<label for="inputIssueTitle">用户名</label> <input
@@ -87,9 +112,9 @@
 				</form>
 			</div>
 		</div>
-		<div class="row ">
-
-			<div class="col-md-12 panel ">
+		<div class="mdl-grid ">
+			<div class="mdl-cell mdl-cell--1-col panel "></div>
+			<div class="mdl-cell mdl-cell--10-col panel ">
 
 				<table class="table table-bordered table-hover">
 					<thead>
@@ -194,8 +219,19 @@
 			</div>
 		</div>
 	</div>
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    </main>
+	    </div>
+	
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+<script type="text/javascript"  src="lib/js/material/material.js"></script>
 </html>

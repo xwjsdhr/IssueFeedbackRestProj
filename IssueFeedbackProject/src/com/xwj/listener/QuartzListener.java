@@ -25,6 +25,7 @@ public class QuartzListener extends QuartzInitializerListener  {
 	    public void contextInitialized(ServletContextEvent sce) {
 	        super.contextInitialized(sce);
 	        System.out.println("hello,world");
+	        
 	        ServletContext ctx = sce.getServletContext();
 			StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
 	        try {

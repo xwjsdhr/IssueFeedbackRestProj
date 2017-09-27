@@ -37,6 +37,7 @@ public class AddIssueServlet extends HttpServlet {
 		Issue issue = new Issue();
 		issue.setTitle(title);
 		issue.setContent(content);
+		issue.setIsTop(0);
 		issue.setWeekOfYear(calendar.get(Calendar.WEEK_OF_YEAR));
 		
 	

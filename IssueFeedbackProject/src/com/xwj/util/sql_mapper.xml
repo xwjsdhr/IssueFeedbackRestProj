@@ -11,8 +11,8 @@
 		ti.last_update_time AS
 		lastUpdateTime,
 		ti.resolved_time AS resolvedTime,
-		ti.week_of_year AS
-		weekOfYear,
+		ti.week_of_year AS weekOfYear,
+		ti.is_top as isTop,
 		ti.status_id AS statusId,
 		ti.user_id AS issueUserId,
 	</sql>
@@ -72,7 +72,7 @@
 	<sql id="isNotDelete">ti.is_deleted = 1</sql>
 	<sql id="commentUserJoint"> tc.user_id = tu.id</sql>
 
-	<sql id="orderByLastUptTime">ORDER BY ti.last_update_time desc</sql>
+	<sql id="orderByLastUptTime">ORDER BY ti.is_top, ti.last_update_time desc</sql>
 
 	<sql id="IssueSelect">
 		SELECT
@@ -132,9 +132,9 @@
 		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO t_issue
-		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year)
+		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top)
 		VALUES
-		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear})
+		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop})
 	</insert>
 	<insert id="insertComment" parameterType="com.xwj.entity.Comment" useGeneratedKeys="true"
 	keyProperty="id" keyColumn="id">
@@ -147,7 +147,14 @@
         	SELECT LAST_INSERT_ID() as id;
     	</selectKey>
 	</insert>
-
+	
+	<update parameterType="Integer" id="updateIssueTop">
+		UPDATE t_issue SET is_top = -1 where id = #{id};		
+	</update>
+	<update id="cancelIssueTop" parameterType="Integer">
+	
+		UPDATE t_issue SET is_top = 0 where id = #{id};		
+	</update>
 	<insert id="insertIssueJointComment" parameterType="com.xwj.params.IssueJointComment">
 		INSERT INTO
 		t_issue_comments(issue_id,comment_id)
@@ -174,6 +181,17 @@
 		 <include refid="userTable"/>
 		  WHERE tu.user_name = #{username}
 	</select>
+	<select id="getUserById" parameterType="Integer">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId
+		 FROM 
+		 <include refid="userTable"/>
+		  WHERE tu.user_name = #{username}
+	</select>
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
 		<result column="title" property="title" />
@@ -182,6 +200,8 @@
 		<result column="lastUpdateTime" property="lastUpdateTime" />
 		<result column="resolvedTime" property="resolvedTime" />
 		<result column="weekOfYear" property="weekOfYear" />
+		<result column="isTop" property="isTop"/>
+		
 		<association property="status" javaType="com.xwj.entity.Status">
 			<id column="statusId" property="id" />
 			<result column="statusName" property="statusName" />

@@ -11,6 +11,7 @@
 <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
 	rel="stylesheet" />
+	<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="container">

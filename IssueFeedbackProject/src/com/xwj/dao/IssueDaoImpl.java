@@ -665,4 +665,10 @@ public class IssueDaoImpl implements IssueDao {
 		
 		return hashMap;
 	}
+
+	@Override
+	public int stickTop(int issueId, Integer cancel) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

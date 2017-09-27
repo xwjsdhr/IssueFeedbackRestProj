@@ -1,13 +1,26 @@
-@charset "UTF-8";
 
-.panel {
-	padding: 40px;
+.mdl-chip-unsovled{
+	background-color: #868E96;
+	color: white;
 }
-.my_icon{
-	width: 12px;
-	height: 12px;
+.mdl-chip-sovled{
+	background-color: #28A745;
+	color: white;
 }
-i{
-	width: 16px;
-	height: 16px;
+.mdl-chip-feedback{
+	background-color: #FFC107;
+}
+.mdl-chip-problem{
+	background-color: #DC3545;
+	color: white;
+}
+.float-over-bottom {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    z-index: 900;
+    line-height: 40px;
 }

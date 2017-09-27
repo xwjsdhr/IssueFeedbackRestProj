@@ -8,6 +8,7 @@
 <title>个人信息</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
 <link href="lib/css/app/index.css" rel="stylesheet">
+<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="container">
