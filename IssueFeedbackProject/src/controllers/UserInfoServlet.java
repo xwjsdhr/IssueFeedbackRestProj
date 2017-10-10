@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +13,7 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -25,7 +26,7 @@ public class UserInfoServlet extends HttpServlet {
 
 	public UserInfoServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

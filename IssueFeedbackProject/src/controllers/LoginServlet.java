@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -20,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 	
     public LoginServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,4 +35,10 @@ public class LoginServlet extends HttpServlet {
 		}
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);	
 	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+	
 }

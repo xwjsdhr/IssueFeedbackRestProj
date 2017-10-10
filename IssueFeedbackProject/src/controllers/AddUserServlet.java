@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -25,7 +26,7 @@ public class AddUserServlet extends HttpServlet {
      */
     public AddUserServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
     }
 
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -22,7 +23,7 @@ public class CheckUserNameServlet extends HttpServlet {
        
     public CheckUserNameServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
         gson = new Gson();
     }
 

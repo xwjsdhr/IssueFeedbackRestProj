@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.User;
 import com.xwj.params.MyError;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 
@@ -20,7 +21,7 @@ public class DeleteIssueServlet extends HttpServlet {
    
     public DeleteIssueServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

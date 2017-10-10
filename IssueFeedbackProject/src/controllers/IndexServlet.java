@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +13,7 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -25,7 +26,7 @@ public class IndexServlet extends HttpServlet {
 
 	public IndexServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 	}
 
 	@Override
@@ -130,26 +131,8 @@ public class IndexServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		User user = (User) req.getSession().getAttribute("user_session");
-		if (user != null) {
-			String statusIdStr = req.getParameter("status_id");
-			if (statusIdStr != null) {
-				Integer statusId = Integer.parseInt(statusIdStr);
-				List<Issue> issues = businessService.getIssueByStatusId(statusId);
-				req.setAttribute("list", issues);
-				req.setAttribute("issue_quantity", issues.size());
-			} else {
-				List<Issue> issues = businessService.getAllIssues();
-				req.setAttribute("list", issues);
-				req.setAttribute("issue_quantity", issues.size());
-			}
-
-			List<Status> allStatus = businessService.getAllStatus();
-			req.setAttribute("all_status", allStatus);
-			List<Dept> allDepts = businessService.getAllDepts();
-			req.setAttribute("all_depts", allDepts);
-			req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
-		}
+		System.out.println("post");
+		
+		doGet(req,resp);
 	}
 }

@@ -48,7 +48,7 @@ public class IssueStatisticsDao {
 
 			}
 
-			for (Iterator iterator = statisticsItems.iterator(); iterator.hasNext();) {
+			for (Iterator<IssueStatisticsItem> iterator = statisticsItems.iterator(); iterator.hasNext();) {
 				IssueStatisticsItem issueStatisticsItem = (IssueStatisticsItem) iterator.next();
 				int itemId = dbUtils.executeUpdateReturnId(insertItemSql,
 						new Object[] { issueStatisticsItem.getStatus().getId(), issueStatisticsItem.getCount() });

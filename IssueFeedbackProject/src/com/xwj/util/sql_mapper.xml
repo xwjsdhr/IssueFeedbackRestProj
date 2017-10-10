@@ -117,17 +117,19 @@
 		<include refid="isNotDelete" />
 	</sql>
 
+	<!-- 获取全部问题 -->
 	<select id="selectAllIssues" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
-
 		<include refid="orderByLastUptTime" />
 	</select>
-
+	
+	<!-- 获取指定id的问题 -->
 	<select id="selectById" parameterType="Integer" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
 		AND
 		ti.id = #{id}
 	</select>
+	<!-- 插入问题 -->
 	<insert id="insertIssue" parameterType="com.xwj.entity.Issue"
 		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
 		INSERT
@@ -136,6 +138,8 @@
 		VALUES
 		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop})
 	</insert>
+	
+	<!-- 为指定的问题插入评论 -->
 	<insert id="insertComment" parameterType="com.xwj.entity.Comment" useGeneratedKeys="true"
 	keyProperty="id" keyColumn="id">
 		INSERT INTO 
@@ -170,28 +174,7 @@
 	<update id="updateStatusById" parameterType="com.xwj.params.UpdateStatusByIssueId">
 		UPDATE t_issue SET status_id = #{statusId},resolved_time=now() WHERE id = #{issueId}
 	</update>
-	<select id="checkUsername" parameterType="String" resultMap="userResultMap">
-		SELECT 
-		tu.id AS userId,
-		tu.user_name AS userName,
-		tu.real_name AS realName,
-		tu.password AS password,
-		tu.dept_id AS deptId
-		 FROM 
-		 <include refid="userTable"/>
-		  WHERE tu.user_name = #{username}
-	</select>
-	<select id="getUserById" parameterType="Integer">
-		SELECT 
-		tu.id AS userId,
-		tu.user_name AS userName,
-		tu.real_name AS realName,
-		tu.password AS password,
-		tu.dept_id AS deptId
-		 FROM 
-		 <include refid="userTable"/>
-		  WHERE tu.user_name = #{username}
-	</select>
+	
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
 		<result column="title" property="title" />
@@ -229,6 +212,7 @@
 			</association>
 		</collection>
 	</resultMap>
+
 
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />

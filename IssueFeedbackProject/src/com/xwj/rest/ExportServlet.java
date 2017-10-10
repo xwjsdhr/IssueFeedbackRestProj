@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.google.gson.Gson;
 import com.xwj.entity.Issue;
 import com.xwj.params.MyError;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -33,7 +34,7 @@ public class ExportServlet extends HttpServlet {
 
 	public ExportServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 		gson = new Gson();
 	}
 

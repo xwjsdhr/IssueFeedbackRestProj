@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.xwj.entity.Comment;
 import com.xwj.entity.User;
 import com.xwj.params.MyError;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -26,7 +27,7 @@ public class AddCommentRestServlet extends HttpServlet {
 
 	public AddCommentRestServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 		gson = new Gson();
 	}
 

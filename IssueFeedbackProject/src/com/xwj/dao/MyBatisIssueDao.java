@@ -13,7 +13,11 @@ import com.xwj.params.IssueJointComment;
 import com.xwj.params.QueryCondition;
 import com.xwj.params.UpdateStatusByIssueId;
 import com.xwj.util.DbUtils;
-
+/**
+ * 使用Mybatis实现数据股操作的实现类。
+ * @author Administrator
+ *
+ */
 public class MyBatisIssueDao implements IssueDao{
 	private DbUtils dbUtils;
 	public MyBatisIssueDao(){

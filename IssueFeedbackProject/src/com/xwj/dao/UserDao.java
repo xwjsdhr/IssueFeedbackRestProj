@@ -26,8 +26,7 @@ public class UserDao {
 		ResultSet resultSet = dbUtils.executeQuery(loginSql, objects);
 
 		User user = new User();
-		System.out.println(username);
-		System.out.println(password);
+		
 		try {
 			if (resultSet.next()) {
 				user.setId(resultSet.getInt("id"));

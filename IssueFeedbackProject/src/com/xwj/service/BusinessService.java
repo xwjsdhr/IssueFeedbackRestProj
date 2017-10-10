@@ -3,13 +3,6 @@ package com.xwj.service;
 import java.util.List;
 import java.util.Map;
 
-import com.xwj.dao.DeptDao;
-import com.xwj.dao.IssueDao;
-import com.xwj.dao.IssueDaoImpl;
-import com.xwj.dao.IssueStatisticsDao;
-import com.xwj.dao.MyBatisIssueDao;
-import com.xwj.dao.StatusDao;
-import com.xwj.dao.UserDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
@@ -18,146 +11,105 @@ import com.xwj.entity.IssueStatistics;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 
-public class BusinessService {
+public interface BusinessService {
 
-	private UserDao userDao;
-	private IssueDao issueDao;
-	private DeptDao deptDao;
-	private StatusDao statusDao;
-	private IssueStatisticsDao issueStatisticsDao;
-	private MyBatisIssueDao myBatisIssueDao;
+	/**
+	 * 用户登录
+	 * @param username 用户名
+	 * @param password 密码
+	 * @return 登录用户，如果登录失败 则返回null
+	 */
+	User login(String username, String password);
 
-	public BusinessService() {
-		userDao = new UserDao();
-		issueDao = new IssueDaoImpl();
-		deptDao = new DeptDao();
-		statusDao = new StatusDao();
-		issueStatisticsDao = new IssueStatisticsDao();
-		myBatisIssueDao = new MyBatisIssueDao();
-	}
+	/**
+	 * 获取全部问题
+	 * @return 问题列表
+	 */
+	List<Issue> getAllIssues();
 
-	public User login(String username, String password) {
-		return userDao.login(username, password);
-	}
+	/**
+	 * 添加问题
+	 * @param issue 新增问题
+	 * @return 影响的行数
+	 */
+	int addIssue(Issue issue);
+	/**
+	 * 获取指定的问题
+	 * @param id 问题id
+	 * @return 指定的问题
+	 */
+	Issue getById(int id);
+	/**
+	 * 获取指定问题的评论
+	 * @param issueid 问题id
+	 * @return 评论列表
+	 */
+	List<Comment> getCommentsById(int issueid);
 
-	public List<Issue> getAllIssues() {
-		return myBatisIssueDao.getAllIssues();
-	}
-
-	public int addIssue(Issue issue) {
-		return myBatisIssueDao.insertIssue(issue);
-	}
-
-	public Issue getById(int id) {
-		return myBatisIssueDao.getById(id);
-	}
-
-	public List<Comment> getCommentsById(int issueid) {
-		return issueDao.getCommentsByIssueId(issueid);
-	}
-
-	public int addCommentToIssue(int issueId, Comment comment) {
-		return issueDao.addCommentToIssue(issueId, comment);
-	}
-
-	public List<Dept> getAllDepts() {
-		return deptDao.getAllDepts();
-	}
-
-	public int registerUser(User user) {
-		return userDao.addUser(user);
-	}
-
-	public List<Status> getAllStatus() {
-		return statusDao.getAllStatus();
-	}
-
-	public List<Issue> getIssueByStatusId(Integer statusId) {
-
-		return issueDao.getIssueByStatusId(statusId);
-	}
-
-	public List<Issue> getIssueByDeptId(Integer deptId) {
-		return issueDao.getIssueByDeptId(deptId);
-	}
-
-	public List<Issue> getIssueByKeyword(String keyword) {
-		return issueDao.getIssueByKeyword(keyword);
-	}
-
-	public List<User> getAllUsers() {
-		return userDao.getAllUsers();
-	}
-
-	public List<Issue> getIssuesByUserId(Integer userId) {
-		return issueDao.getIssuesByUserId(userId);
-	}
-
-	public IssuePage getAllByPageNum(Integer pageNum, Integer pageSize) {
-		return issueDao.getAllByPageNum(pageNum, pageSize);
-	}
-
-	public int deleteIssue(int issueId) {
-		return issueDao.deleteIssue(issueId);
-	}
-
-	public List<Issue> getAllDeletedIssues() {
-		return issueDao.getAllDeletedIssues();
-	}
-
-	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		return issueDao.getIssuesByConditions(userId, deptId, statusId, order, orderType);
-	}
-
-	public List<User> getUsersByDeptId(Integer id) {
-		return userDao.getUsersByDeptId(id);
-	}
-
-	public int addDept(String deptName) {
-		return deptDao.addDept(deptName);
-	}
-
-	public int restoreIssue(Integer id) {
-		return issueDao.restoreIssue(id);
-	}
-
-	public List<Issue> getIssuesInRange(List<Integer> list) {
-		return issueDao.getIssuesInRange(list);
-	}
-
-	public List<Issue> orderIssueByType(String order, String desc) {
-		return issueDao.orderIssues(order, desc);
-	}
-
-	public Map<Integer, String> getColumns() {
-		return issueDao.getColumns();
-	}
-
-	public void statisticsIssue() {
-		issueStatisticsDao.statisticsIssue();
-	}
-
-	public IssueStatistics getByWeekOfYear(int weekOfYear) {
-		return issueStatisticsDao.getByWeekOfYear(weekOfYear);
-	}
+	/**
+	 * 为指定评论增加评论
+	 * @param issueId 问题id
+	 * @param comment 评论
+	 * @return 
+	 */
+	int addCommentToIssue(int issueId, Comment comment);
 	
-	public List<Integer> getAllYears(){
-		return issueStatisticsDao.getAllYears();
-	}
+	/**
+	 * 获取全部部门
+	 * @return
+	 */
+	List<Dept> getAllDepts();
+	/**
+	 * 注册用户
+	 * @param user
+	 * @return
+	 */
+	int registerUser(User user);
 
-	public List<Integer> getWeeksByYear(Integer year) {
-		return issueStatisticsDao.getWeeksByYear(year);
-	}
+	List<Status> getAllStatus();
 
-	public boolean checkUserName(String username) {
-		return userDao.checkUserName(username);
-	}
+	List<Issue> getIssueByStatusId(Integer statusId);
 
-	public int stickTop(Integer issueId, Integer cancel) {
-		return myBatisIssueDao.stickTop(issueId,cancel);
-	}
+	List<Issue> getIssueByDeptId(Integer deptId);
 
-	public User getUserById(int userId) {
-		return myBatisIssueDao.getUserById(userId);
-	}
+	List<Issue> getIssueByKeyword(String keyword);
+
+	List<User> getAllUsers();
+
+	List<Issue> getIssuesByUserId(Integer userId);
+
+	IssuePage getAllByPageNum(Integer pageNum, Integer pageSize);
+
+	int deleteIssue(int issueId);
+
+	List<Issue> getAllDeletedIssues();
+
+	List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType);
+
+	List<User> getUsersByDeptId(Integer id);
+
+	int addDept(String deptName);
+
+	int restoreIssue(Integer id);
+
+	List<Issue> getIssuesInRange(List<Integer> list);
+
+	List<Issue> orderIssueByType(String order, String desc);
+
+	Map<Integer, String> getColumns();
+
+	void statisticsIssue();
+
+	IssueStatistics getByWeekOfYear(int weekOfYear);
+
+	List<Integer> getAllYears();
+
+	List<Integer> getWeeksByYear(Integer year);
+
+	boolean checkUserName(String username);
+
+	int stickTop(Integer issueId, Integer cancel);
+
+	User getUserById(int userId);
+
 }

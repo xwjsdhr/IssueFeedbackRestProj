@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.Dept;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -22,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
    
     public RegisterServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
     }
 
     @Override

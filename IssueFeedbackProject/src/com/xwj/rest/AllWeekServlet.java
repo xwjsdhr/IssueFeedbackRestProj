@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.xwj.params.WeeksResult;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -23,7 +24,7 @@ public class AllWeekServlet extends HttpServlet {
 	private Gson gson;
     public AllWeekServlet() {
         super();
-        businessService = new BusinessService();
+        businessService = new BusinessServiceImpl();
         gson = new Gson();
     }
 

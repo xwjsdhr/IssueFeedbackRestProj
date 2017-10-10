@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 
@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.User;
 import com.xwj.params.LoginError;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
- * Servlet implementation class LoginServlet
+ * µÇÂ¼ÈÏÖ¤
+ * @author Administrator
+ * @createTime ÉÏÎç9:17:28
  */
 @WebServlet("/Auth")
 public class AuthServlet extends HttpServlet {
@@ -23,7 +26,7 @@ public class AuthServlet extends HttpServlet {
 
 	public AuthServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

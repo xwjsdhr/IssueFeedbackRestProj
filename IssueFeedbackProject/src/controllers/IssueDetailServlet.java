@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.Status;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -28,7 +29,7 @@ public class IssueDetailServlet extends HttpServlet {
 	 */
 	public IssueDetailServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

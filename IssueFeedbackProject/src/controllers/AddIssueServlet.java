@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.Issue;
 import com.xwj.entity.User;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -25,7 +26,7 @@ public class AddIssueServlet extends HttpServlet {
 
 	public AddIssueServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 		calendar = Calendar.getInstance(Locale.CHINA);
 	}
 

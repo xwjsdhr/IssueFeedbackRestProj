@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.xwj.entity.IssueStatistics;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 @WebServlet("/AllIssueRest")
@@ -23,7 +24,7 @@ public class AllIssueRestServlet extends HttpServlet {
 
 	public AllIssueRestServlet() {
 		super();
-		businessService = new BusinessService();
+		businessService = new BusinessServiceImpl();
 		gson = new Gson();
 		calendar =Calendar.getInstance(Locale.CHINA);
 	}

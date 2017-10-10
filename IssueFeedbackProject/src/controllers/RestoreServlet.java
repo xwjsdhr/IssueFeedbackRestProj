@@ -1,4 +1,4 @@
-package com.xwj;
+package controllers;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xwj.entity.User;
+import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
 
 /**
@@ -21,7 +22,7 @@ public class RestoreServlet extends HttpServlet {
     
     public RestoreServlet() {
         super();
-        businessService=  new BusinessService();
+        businessService=  new BusinessServiceImpl();
     }
 
 	

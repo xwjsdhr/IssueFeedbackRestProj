@@ -18,7 +18,11 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 import com.xwj.util.DbUtils;
-
+/**
+ * 普通的jdbc实现类
+ * @author 夏伟佳
+ *
+ */
 public class IssueDaoImpl implements IssueDao {
 
 	private DbUtils dbUtils;

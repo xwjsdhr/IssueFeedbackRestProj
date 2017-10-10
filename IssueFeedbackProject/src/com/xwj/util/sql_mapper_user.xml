@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwj.util.sql_mapper_user">
+
+	<sql id="userTable">t_user tu</sql>
+	<!-- 获取指定id的用户 -->
+	<select id="getUserById" parameterType="Integer" resultMap="userResultMap">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId
+		 FROM 
+		 <include refid="userTable"/>
+		  WHERE tu.id = #{id}
+	</select>
+	
+	<!-- 检查用户名是否存在 -->
+	<select id="checkUsername" parameterType="String" resultMap="userResultMap">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId
+		 FROM 
+		 <include refid="userTable"/>
+		  WHERE tu.user_name = #{username}
+	</select>
+	
+	<resultMap type="com.xwj.entity.User" id="userResultMap">
+		<result column="userName" property="username" />
+		<result column="password" property="password" />
+		<result column="realName" property="realName" />
+		<association property="dept" javaType="com.xwj.entity.Dept">
+			<id column="pkDeptId" property="id" />
+			<result column="deptId" property="id" />
+			<result column="deptName" property="deptName" />
+		</association>
+	</resultMap>
+
+</mapper>
