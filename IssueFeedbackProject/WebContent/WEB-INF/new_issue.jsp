@@ -97,18 +97,19 @@
 		    		<div class="mdl-cell mdl-cell--10-col " style="margin-top: 20px">
 						<form action="${pageContext.request.contextPath }/AddIssue" method="post" >
 							<div class="form-group">
-								<label for="inputIssueTitle">问题标题</label> <input
-									
+								
+								<label for="inputIssueTitle">问题标题</label> 
+								<input
 									id="inputIssueTitle" type="text" class="form-control"
 									placeholder="请输入标题"
-									name="title" required="required"/> <label style="margin-top: 20px"
+									name="title" required="required" /> <label style="margin-top: 20px"
 									for="textareaIssueContent">问题描述</label>
 		
 								<textarea name="content" class="form-control"
-									id="textareaIssueContent" placeholder="请输入问题描述" rows="20" required="required"></textarea>
+									id="textareaIssueContent" placeholder="请输入问题描述" rows="20" required="required" ></textarea>
 		
 								<input style="margin-top: 20px" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-									type="submit" value="提交" />
+									type="submit" value="提交"  />
 							</div>
 		
 						</form>

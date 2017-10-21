@@ -1,5 +1,11 @@
 @charset "UTF-8";
-.loginPanel{
-	margin-top: 40px
+
+.loginPanel {
+	margin-top: 40px;
 }
 
+.card {
+	margin: 10px;
+	height: 320px;
+	width: 320px;
+}

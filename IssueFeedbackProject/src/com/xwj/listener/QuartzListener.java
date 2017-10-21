@@ -9,7 +9,7 @@ import org.quartz.ee.servlet.QuartzInitializerListener;
  * Application Lifecycle Listener implementation class QuartzListener
  *
  */
-@WebListener
+
 public class QuartzListener extends QuartzInitializerListener  {
 	 @Override
 	    public void contextInitialized(ServletContextEvent sce) {

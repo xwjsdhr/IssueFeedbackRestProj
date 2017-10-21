@@ -11,9 +11,11 @@
 <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
 	rel="stylesheet" />
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -71,10 +73,10 @@
 							class="ion-ios-people"></i> 部门管理
 						</a>
 
-						<a class="mdl-navigation__link"
+						<%-- <a class="mdl-navigation__link"
 							href="${pageContext.request.contextPath }/Statistics"> <i
 							class="ion-stats-bars"></i> 统计管理
-						</a>
+						</a> --%>
 					</c:if>
 
 						
@@ -304,7 +306,7 @@
 									</c:choose> 
 									<span class="badge badge-pill badge-info">${issue.comments.size()}</span>
 								</td>
-								<td style="font-size: 14px">${issue.title }</td>
+								<td style="font-size: 14px;font-weight: bolder;">${issue.title }</td>
 
 								<td class="submit_time_td">${issue.submitTime}</td>
 								<td class="last_update_time_td">${issue.lastUpdateTime }</td>
