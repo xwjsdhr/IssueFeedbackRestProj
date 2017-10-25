@@ -33,20 +33,18 @@ public class AddCommentRestServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String isResovled = request.getParameter("is_resovled");
+//		String isResovled = request.getParameter("is_resovled");
 		Integer issueId = Integer.parseInt(request.getParameter("issue_id"));
-		String commentStr = request.getParameter("comment");
-		Integer userId = Integer.parseInt(request.getParameter("user_id"));
-
-		Comment comment = new Comment();
-		comment.setContent(commentStr);
-		if (isResovled != null) {
-			comment.setIsResovleIssue(isResovled.equals("on") ? 1 : 0);
-		}
-		User user = new User();
-		user.setId(userId);
+//		String commentStr = request.getParameter("comment");
+//		Integer userId = Integer.parseInt(request.getParameter("user_id"));
+		
+		String jsonStr = request.getParameter("comm");
+		System.out.println("comm:"+jsonStr);
+		Comment comment =gson.fromJson(jsonStr, Comment.class);
+		User user = (User) request.getSession().getAttribute("user_session");
 
 		comment.setUser(user);
+		System.out.println(comment);
 		int res = businessService.addCommentToIssue(issueId, comment);
 		MyError error = null;
 		if (res > 0) {
@@ -55,7 +53,7 @@ public class AddCommentRestServlet extends HttpServlet {
 			error = new MyError("add failed", 1, null);
 		}
 		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().append(gson.toJson(error));
+		response.getWriter().append(gson.toJson(comment));
 		
 
 	}

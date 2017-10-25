@@ -163,7 +163,7 @@
 
 				<p class="card-text">${issue_detail.content }</p>
 			</div>
-			<div class="list-group list-group-flush">
+			<div class="list-group list-group-flush" id="comment_list_div">
 
 				<c:forEach items="${comments }" var="comment">
 
@@ -193,12 +193,13 @@
 				<div class="col-lg-12">
 					<!--  -->
 					<c:if test="${issue_detail.status.id != 3 }">
-						<form action="${pageContext.request.contextPath }/AddComment"
+					<!-- action="${pageContext.request.contextPath }/AddComment" -->
+						<form id="formReply"
 							method="get">
-							<input type="hidden" name="issue_id" value="${issue_detail.id }" />
+							<input type="hidden" name="issue_id" id="issueDetailId" value="${issue_detail.id }" />
 							<input type="hidden" name="user_id" value="${user_session.id }" />
 							<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>
-							<textarea name="comment" class="form-control"
+							<textarea name="comment"  class="form-control"
 								id="textareaIssueContent" rows="20"></textarea>
 
 							<c:if test="${user_session.dept.id==3 }">
@@ -246,7 +247,8 @@
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/ckeditor/ckeditor.js"></script>
+
 <script type="text/javascript" src="lib/js/app/issue_details.js"></script>
-<script type="text/javascript"  src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/app/ckeditor/ckeditor.js"></script>
 </html>
