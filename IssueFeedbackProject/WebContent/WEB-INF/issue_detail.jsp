@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,13 +195,15 @@
 					<!--  -->
 					<c:if test="${issue_detail.status.id != 3 }">
 					<!-- action="${pageContext.request.contextPath }/AddComment" -->
+					
+					
 						<form id="formReply"
 							method="get">
 							<input type="hidden" name="issue_id" id="issueDetailId" value="${issue_detail.id }" />
 							<input type="hidden" name="user_id" value="${user_session.id }" />
-							<label style="margin-top: 20px" for="textareaIssueContent">回复描述</label>
+							<label style="margin-top: 20px" for="textareaCommentContent">回复描述</label>
 							<textarea name="comment"  class="form-control"
-								id="textareaIssueContent" rows="20"></textarea>
+								id="textareaCommentContent" rows="20"></textarea>
 
 							<c:if test="${user_session.dept.id==3 }">
 								<c:if
@@ -209,7 +212,7 @@
 										<label style="margin-top: 20px" class="form-check-label"
 											for="checkboxResovled"> <input type="checkbox"
 											class="form-check-input" id="checkboxResovled"
-											name="is_resovled" /> 标记为已解决
+											name="is_resovled"  /> 标记为已解决
 										</label>
 									</div>
 								</c:if>
@@ -226,7 +229,10 @@
 
 							</c:if>
 							<input style="margin-top: 20px; clear: left; float: none;"
+								id="btnSubmitAddComment"
 								class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="回复">
+							<div class="mdl-spinner mdl-js-spinner is-active" hidden="true" id="pbAddComment"></div>
+						
 						</form>
 
 					</c:if>
@@ -236,19 +242,17 @@
 
 		</div>
 	</div>
-	    
-	    </div>
-	    </main>
-	</div>
-
+   </div>
+   </main>
+</div>
 
 	
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="lib/js/app/issue_details.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
 <script type="text/javascript" src="lib/js/app/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="lib/js/app/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="lib/js/app/issue_details.js"></script>
 </html>

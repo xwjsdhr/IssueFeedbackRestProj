@@ -95,27 +95,34 @@
 	    		<div class="mdl-grid">
 	    			<div class="mdl-cell mdl-cell--1-col "> </div>
 		    		<div class="mdl-cell mdl-cell--10-col " style="margin-top: 20px">
-						<form action="${pageContext.request.contextPath }/AddIssue" method="post" >
+		    		<!-- action="${pageContext.request.contextPath }/AddIssue" -->
+						<form  id="formAddIssue" >
 							<div class="form-group">
 								
 								<label for="inputIssueTitle">问题标题</label> 
 								<input
 									id="inputIssueTitle" type="text" class="form-control"
 									placeholder="请输入标题"
-									name="title" required="required" /> <label style="margin-top: 20px"
-									for="textareaIssueContent">问题描述</label>
+									name="title" required="required" /> 
+									<label style="margin-top: 20px"
+											for="textareaIssueContent">问题描述</label>
 		
 								<textarea name="content" class="form-control"
 									id="textareaIssueContent" placeholder="请输入问题描述" rows="20" required="required" ></textarea>
-		
-								<input style="margin-top: 20px" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-									type="submit" value="提交"  />
+								
+								<div class="mdl-grid">
+									<div class="mdl-cell mdl-cell--10-col">
+										<input style="margin-top: 20px" id="submitAddIssue"
+										 class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit" value="提交"  />
+										<div class="mdl-spinner mdl-js-spinner is-active" hidden="true" id="pbAddIssue"></div>
+									</div>
+								</div>
+								
 							</div>
 		
 						</form>
 					</div>
 					<div class="mdl-cell mdl-cell--1-col "> </div>
-	    		
 	    		</div>
 
 	    </div>
@@ -143,4 +150,6 @@
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 <script type="text/javascript"  src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/app/ckeditor/ckeditor.js"></script>
+<script type="text/javascript"  src="lib/js/app/new_issue.js"></script>
 </html>
