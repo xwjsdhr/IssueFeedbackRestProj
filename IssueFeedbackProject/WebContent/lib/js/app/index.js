@@ -9,8 +9,7 @@ $(document).ready(function() {
 	});
 	
 	$(".clickableRow").on('click',function(event){
-		console.log(event.currentTarget);
-		window.location.href="http://localhost:8080/IssueFeedbackProject/IssueDetail?id="+event.currentTarget.id;
+		window.location.href="/IssueFeedbackProject/IssueDetail?id="+event.currentTarget.id;
 	});
 	
 	$("#btnSearch").click(function(event){

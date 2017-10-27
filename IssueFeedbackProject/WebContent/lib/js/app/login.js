@@ -26,7 +26,7 @@ function setListener() {
 									if (data.username != null) {
 										btnLogin.val("登录成功，正在跳转...");
 										setTimeout(function(){
-											window.location.href = "http://localhost:8080/IssueFeedbackProject/Index";
+											window.location.href = "/IssueFeedbackProject/Index";
 										},1000);
 										
 									}else{

@@ -18,9 +18,38 @@
 
 </head>
 <body>
+
+				<div class="float-over-bottom">
+					<button type="button" id="btnAddDept" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
+					 data-toggle="modal" >
+					   添加部门
+					</button>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-dismiss="modal">Close</button>
+				        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Save changes</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
+			
+			
 				<!-- Title -->
 				<span class="mdl-layout-title">组长问题提交</span>
 				<!-- Add spacer, to align navigation to the right -->
@@ -97,6 +126,8 @@
 		
 		<div class="page-content">
 			
+		
+			
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--1-col"></div>
 				<table
@@ -105,9 +136,9 @@
 
 						<tr>
 
-							<td></td>
+							<td>编号</td>
 							<td>项目</td>
-
+							<td>管理部门</td>
 						</tr>
 
 					</thead>
@@ -118,12 +149,14 @@
 							<tr >
 								<td>${project.id }</td>
 								<td>${project.projectName }</td>
+								<td>${project.dept.deptName}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 
+			
 		</div>
 		
 		</main>
@@ -136,6 +169,7 @@
 <script type="text/javascript" src="lib/js/moment.js"></script>
 <script type="text/javascript" src="lib/js/zh-cn.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/app/project_management.js"></script>
 
 
 </html>

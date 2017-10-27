@@ -128,13 +128,15 @@
 		t_dept tdproj
 		ON tpj.dept_id = tdproj.id
 		WHERE
-		<include refid="isNotDelete" /> AND 
-		tpj.dept_id = #{id}
+		<include refid="isNotDelete" /> 
 	</sql>
+	
 
 	<!-- 获取全部问题 -->
 	<select id="selectAllIssues" parameterType="Integer" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
+		AND 
+		tpj.dept_id = #{id}
 		<include refid="orderByLastUptTime" />
 	</select>
 	

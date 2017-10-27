@@ -11,7 +11,6 @@
 <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
 	rel="stylesheet" />
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
@@ -39,19 +38,15 @@
 					<ul
 						class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 						for="demo-menu-lower-issue">
-						<li >
-							<a class="mdl-menu__item"
-								href="${pageContext.request.contextPath }/NewIssue"> <i
-									class="ion-plus"></i> 添加问题
-							</a>
-						</li>
+						<li><a class="mdl-menu__item"
+							href="${pageContext.request.contextPath }/NewIssue"> <i
+								class="ion-plus"></i> 添加问题
+						</a></li>
 						<c:if test="${user_session.dept.id == 4 }">
-							<li >
-								<a class="mdl-menu__item"
-									href="${pageContext.request.contextPath }/TrashBin"> 
-									<i class="ion-trash-a"></i> 回收站
-								</a>
-							</li>
+							<li><a class="mdl-menu__item"
+								href="${pageContext.request.contextPath }/TrashBin"> <i
+									class="ion-trash-a"></i> 回收站
+							</a></li>
 						</c:if>
 					</ul>
 					<c:if test="${user_session.dept.id == 4 }">
@@ -62,7 +57,7 @@
 						<ul
 							class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 							for="demo-menu-lower-user">
-							<li ><a class="mdl-menu__item"
+							<li><a class="mdl-menu__item"
 								href="${pageContext.request.contextPath }/Register"> <i
 									class="ion-plus"></i> 添加用户
 							</a></li>
@@ -77,14 +72,14 @@
 							href="${pageContext.request.contextPath }/Statistics"> <i
 							class="ion-stats-bars"></i> 统计管理
 						</a> --%>
-						
+
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/ProjectManagement"> <i
-							class="ion-stats-bars"></i> 项目管理
+							href="${pageContext.request.contextPath }/ProjectManagement">
+							<i class="ion-stats-bars"></i> 项目管理
 						</a>
 					</c:if>
 
-						
+
 					<a class="mdl-navigation__link"
 						href="${pageContext.request.contextPath }/UserInfo"> <i
 						class="ion-person"></i> ${user_session.realName}
@@ -99,76 +94,64 @@
 		</header>
 
 		<main class="mdl-layout__content">
-		
 		<div class="page-content">
 			<div class="float-over-bottom">
 				<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-				href="${pageContext.request.contextPath }/NewIssue">
-				  添加问题
-				</a>
+					href="${pageContext.request.contextPath }/NewIssue"> 添加问题 </a>
 			</div>
-					<div class="mdl-grid">
+
+
+				<div class="mdl-grid">
 						 <div class="mdl-cell mdl-cell--2-col"></div>
+						 
 						<form action="${pageContext.request.contextPath }/Index" class="form-inline">
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<div class="input-group-addon">部门</div>
-								<select name="dept_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
+							<div class="mdl-grid">
+								<ul name="dept_id" class="list mb-2 mr-sm-2 mb-sm-0"
 									id="inlineSelectDepts">
 									<c:if test="${dept_id == dept.id }">
-										<option value="-1" selected="selected">全部部门</option>
+										<li class="list-item" value="-1">全部部门</li>
 									</c:if>
 									<c:if test="${dept_id != dept.id }">
-										<option value="-1">全部部门</option>
+										<li class="list-item" value="-1">全部部门</li>
 									</c:if>
 									<c:forEach items="${all_depts }" var="dept">
 	
 										<c:if test="${dept_id == dept.id }">
-											<option value="${dept.id }" selected="selected">${dept.deptName}</option>
+											<li class="list-item" value="${dept.id }" >${dept.deptName}</li>
 										</c:if>
 										<c:if test="${dept_id != dept.id }">
-											<option value="${dept.id }">${dept.deptName}</option>
+											<li class="list-item" value="${dept.id }">${dept.deptName}</li>
 										</c:if>
 	
 									</c:forEach>
-								</select>
+								</ul>
 							</div>
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<div class="input-group-addon">用户</div>
-								<select name="user_id" class="form-control mb-2 mr-sm-2 mb-sm-0"
-									id="selectUsers">
-									<c:if test="${user_id == user.id }">
-										<option value="-1" selected="selected">全部用户</option>
-									</c:if>
-									<c:if test="${user_id != user.id }">
-										<option value="-1">全部用户</option>
-									</c:if>
-								</select>
-							</div>
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<div class="input-group-addon">状态</div>
-								<select name="status_id"
-									class="form-control mb-2 mr-sm-2 mb-sm-0"
+							
+							<div class="mdl-grid">
+							
+								<ul name="status_id"
+									class="list mb-2 mr-sm-2 mb-sm-0"
 									id="inlineFormInputName2">
 									<c:if test="${status_id == status.id }">
-										<option value="-1" selected="selected">全部状态</option>
+										<li value="-1" class="list-item">全部状态</li>
 									</c:if>
 	
 									<c:if test="${status_id != status.id }">
-										<option value="-1">全部状态</option>
+										<li value="-1" class="list-item">全部状态</li>
 									</c:if>
 	
 	
 									<c:forEach items="${all_status }" var="status">
 										<c:if test="${status_id == status.id }">
-											<option value="${status.id }" selected="selected">${status.statusName }</option>
+											<li value="${status.id }" class="list-item">${status.statusName }</li>
 										</c:if>
 	
 										<c:if test="${status_id != status.id }">
-											<option value="${status.id }">${status.statusName }</option>
+											<li value="${status.id }" class="list-item">${status.statusName }</li>
 										</c:if>
 	
 									</c:forEach>
-								</select>
+								</ul>
 							</div>
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">排序</div>
@@ -237,9 +220,9 @@
 							</button>
 						</form>
 					</div>
-				
+		
 
-			
+
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--1-col"></div>
 				<table
@@ -254,7 +237,7 @@
 							<td colspan="2"></td>
 							<td colspan="3"></td>
 							<td></td>
-
+							<td></td>
 						</tr>
 					</thead>
 
@@ -283,8 +266,7 @@
 							<tr class="clickableRow" id="${issue.id }">
 								<td><input id="chb_${issue.id }" type="checkbox"
 									value="${issue.id }" class="selectedCheckbox" /></td>
-								<td>
-								<c:choose>
+								<td><c:choose>
 										<c:when test="${issue.status.id == 1 }">
 											<span class="mdl-chip mdl-chip-unsovled"> <span
 												class="mdl-chip__text ">${issue.status.statusName }</span>
@@ -307,10 +289,9 @@
 												class="mdl-chip__text ">${issue.status.statusName }</span>
 											</span>
 										</c:when>
-									</c:choose> 
-									<span class="badge badge-pill badge-info">${issue.comments.size()}</span>
+									</c:choose> <span class="badge badge-pill badge-info">${issue.comments.size()}</span>
 								</td>
-								<td style="font-size: 14px;font-weight: bolder;">${issue.title }</td>
+								<td style="font-size: 14px; font-weight: bolder;">${issue.title }</td>
 
 								<td class="submit_time_td">${issue.submitTime}</td>
 								<td class="last_update_time_td">${issue.lastUpdateTime }</td>
@@ -318,30 +299,26 @@
 								<td>${issue.project.projectName }</td>
 								<td>${issue.project.dept.deptName}</td>
 								<td>
-								<button id="demo-menu-lower-more_${issue.id }" class="mdl-button mdl-js-button"
-									>
-									<i class="ion-android-more-vertical"></i>
-								</button>
-								<ul
-									class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-									for="demo-menu-lower-more_${issue.id }">
-									
-									<c:if test="${user_session.dept.id == 4 }">
-										<li >
-											<a class="mdl-menu__item"
-											 href="${pageContext.request.contextPath }/DeleteIssue?issue_id=${issue.id }">
-												 删除 <i class="ion-trash-a"></i>
-											</a>
-										</li>
-										
-									</c:if>
-									<li>
-										<a  class="mdl-menu__item" href="${pageContext.request.contextPath }/IssueDetail?id=${issue.id }"
-											>查看
-											<i class="ion-arrow-right-a"></i>
-										</a>
-									</li>
-								</ul>
+									<button id="demo-menu-lower-more_${issue.id }"
+										class="mdl-button mdl-js-button">
+										<i class="ion-android-more-vertical"></i>
+									</button>
+									<ul
+										class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+										for="demo-menu-lower-more_${issue.id }">
+
+										<c:if test="${user_session.dept.id == 4 }">
+											<li><a class="mdl-menu__item"
+												href="${pageContext.request.contextPath }/DeleteIssue?issue_id=${issue.id }">
+													删除 <i class="ion-trash-a"></i>
+											</a></li>
+
+										</c:if>
+										<li><a class="mdl-menu__item"
+											href="${pageContext.request.contextPath }/IssueDetail?id=${issue.id }">查看
+												<i class="ion-arrow-right-a"></i>
+										</a></li>
+									</ul>
 								</td>
 							</tr>
 						</c:forEach>
@@ -350,7 +327,8 @@
 			</div>
 
 		</div>
-		
+</div>
+
 		</main>
 	</div>
 

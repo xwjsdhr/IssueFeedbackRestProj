@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,9 +17,6 @@
 <link href="lib/css/app/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
-
-
 
 	<div class="container">
 
@@ -34,17 +32,13 @@
 				class="btn btn-lg btn-primary btn-block" />
 		</form>
 
-
 	</div>
-
-
-
-
 
 </body>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-
+ <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>  
+  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>  
 <script type="text/javascript" src="lib/js/app/login.js"></script>
 </html>

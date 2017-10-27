@@ -43,7 +43,7 @@ $(document).ready(function() {
 				pbAddIssue.attr("hidden",true);
 				submitAddIssue.attr("hidden",false);
 				
-				window.location.href = "http://localhost:8080/IssueFeedbackProject/Index";
+				window.location.href = "/IssueFeedbackProject/Index";
 			}
 		});
 		
