@@ -23,7 +23,7 @@ public class TrashBinServlet extends HttpServlet {
     
     public TrashBinServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
 
 	

@@ -18,7 +18,7 @@ public interface IssueDao {
 	 * 获取全部问题
 	 * @return 全部问题列表
 	 */
-	List<Issue> getAllIssues();
+	List<Issue> getAllIssues(int deptId);
 
 	/**
 	 * 添加问题

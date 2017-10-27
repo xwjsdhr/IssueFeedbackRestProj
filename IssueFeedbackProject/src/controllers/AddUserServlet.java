@@ -26,7 +26,7 @@ public class AddUserServlet extends HttpServlet {
      */
     public AddUserServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService =BusinessServiceImpl.newInstance();
     }
 
 

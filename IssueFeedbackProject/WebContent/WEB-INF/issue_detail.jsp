@@ -144,7 +144,13 @@
  -->
 		
 		<div class="card" style="margin-top: 20px">
-			<div class="card-header">${issue_detail.title }
+			<div class="card-header">${issue_detail.title } 
+			
+			<span class="mdl-chip"  style="background-color: #FFC107;">
+			
+			 <span class="mdl-chip__text ">${issue_detail.project.projectName}</span>
+			 
+			 </span>
 				<c:choose>
 					<c:when test="${issue_detail.status.id == 1 }">
 						<span class="badge badge-pill badge-secondary">${issue_detail.status.statusName }</span>

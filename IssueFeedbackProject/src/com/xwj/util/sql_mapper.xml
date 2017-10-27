@@ -15,6 +15,7 @@
 		ti.is_top as isTop,
 		ti.status_id AS statusId,
 		ti.user_id AS issueUserId,
+		ti.project_id AS projectId,
 	</sql>
 
 	<sql id="statusColumns">
@@ -53,8 +54,14 @@
 	</sql>
 	<sql id="commentUserDeptColumn">
 		tdc.id AS pkDeptIdC,
-		tdc.dept_name AS deptNameC
+		tdc.dept_name AS deptNameC,
 
+	</sql>
+	<sql id="projectColumn">
+		tpj.id AS ppid,
+		tpj.project_name as projectName,
+		tpj.dept_id as projDeptId,
+		tdproj.dept_name as deptNameProj
 	</sql>
 
 	<sql id="issueTable">t_issue ti </sql>
@@ -74,7 +81,7 @@
 
 	<sql id="orderByLastUptTime">ORDER BY ti.is_top, ti.last_update_time desc</sql>
 
-	<sql id="IssueSelect">
+	<sql id="IssueSelect" >
 		SELECT
 		<include refid="issueColumns" />
 		<include refid="statusColumns" />
@@ -83,6 +90,7 @@
 		<include refid="commentColumn" />
 		<include refid="commentUserColumn" />
 		<include refid="commentUserDeptColumn" />
+		<include refid="projectColumn"/>
 		FROM
 		<include refid="issueTable" />
 		LEFT JOIN
@@ -113,12 +121,19 @@
 		t_dept tdc
 		ON
 		tuc.dept_id = tdc.id
+		LEFT JOIN 
+		t_project tpj
+		ON tpj.id = ti.project_id
+		LEFT JOIN 
+		t_dept tdproj
+		ON tpj.dept_id = tdproj.id
 		WHERE
-		<include refid="isNotDelete" />
+		<include refid="isNotDelete" /> AND 
+		tpj.dept_id = #{id}
 	</sql>
 
 	<!-- 获取全部问题 -->
-	<select id="selectAllIssues" resultMap="issueResultMap">
+	<select id="selectAllIssues" parameterType="Integer" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
 		<include refid="orderByLastUptTime" />
 	</select>
@@ -134,10 +149,21 @@
 		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO t_issue
-		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top)
+		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top,project_id)
 		VALUES
-		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop})
+		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop},#{project.id})
 	</insert>
+	
+	<select id="selectAllProjects" resultMap="projectResultMap">
+		SELECT 
+		tpj.id AS ppid, 
+		tpj.project_name AS projectName,
+		td.id AS deptId,
+		td.dept_name AS deptNameProj
+		 FROM t_project tpj 
+		 LEFT JOIN t_dept td 
+		 ON tpj.dept_id = td.id
+	</select>
 	
 	<!-- 为指定的问题插入评论 -->
 	<insert id="insertComment" parameterType="com.xwj.entity.Comment" useGeneratedKeys="true"
@@ -192,7 +218,16 @@
 
 		<association property="user" javaType="com.xwj.entity.User"
 			resultMap="userResultMap" />
-
+			
+		<association property="project" javaType="com.xwj.entity.Project">
+			<result column="projectName" property="projectName" />
+			<result column="ppid" property="id" />
+			<association property="dept" javaType="com.xwj.entity.Dept">
+				<result column="projDeptId" property="id" />
+				<result column="deptNameProj" property="deptName" />
+			</association>
+			
+		</association>
 		<collection property="comments" ofType="com.xwj.entity.Comment">
 			<id column="pkCommentId" property="id" javaType="Integer" />
 			<result column="commentContent" property="content" />
@@ -223,5 +258,17 @@
 			<result column="deptId" property="id" />
 			<result column="deptName" property="deptName" />
 		</association>
+	</resultMap>
+	
+	
+	<resultMap type="com.xwj.entity.Project" id="projectResultMap">
+		<result column="projectName" property="projectName" />
+		<result column="ppid" property="id" />
+		
+		<association property="dept" javaType="com.xwj.entity.Dept">
+			<result column="projDeptId" property="id" />
+			<result column="deptNameProj" property="deptName" />
+		</association>
+		
 	</resultMap>
 </mapper>

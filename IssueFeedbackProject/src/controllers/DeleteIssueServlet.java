@@ -21,7 +21,7 @@ public class DeleteIssueServlet extends HttpServlet {
    
     public DeleteIssueServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

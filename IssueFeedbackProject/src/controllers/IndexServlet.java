@@ -26,12 +26,13 @@ public class IndexServlet extends HttpServlet {
 
 	public IndexServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getSession().getAttribute("user_session") == null) {
+		User user = (User) req.getSession().getAttribute("user_session");
+		if (user == null) {
 			resp.sendRedirect("/IssueFeedbackProject/Login");
 		} else {
 			String statusIdStr = req.getParameter("status_id");
@@ -78,9 +79,8 @@ public class IndexServlet extends HttpServlet {
 				req.setAttribute("issue_quantity", issues.size());
 				req.setAttribute("keyword", keyword);
 			} else if (userIdStr == null && deptIdStr == null && statusIdStr == null && order == null) {
-
-				List<Issue> issues = businessService.getAllIssues();
 				
+				List<Issue> issues = businessService.getAllIssues(user.getDept().getId());
 				req.setAttribute("list", issues);
 				req.setAttribute("issue_quantity", issues.size());
 
@@ -131,8 +131,6 @@ public class IndexServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("post");
-		
 		doGet(req,resp);
 	}
 }

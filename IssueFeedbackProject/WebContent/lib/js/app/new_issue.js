@@ -5,13 +5,29 @@ var pbAddIssue = $("#pbAddIssue");
 $(document).ready(function() {
 	CKEDITOR.replace('textareaIssueContent');
 
+	$.ajax({
+		url:"/IssueFeedbackProject/AllProjectsAjax",
+		method:"get",
+		dataType:"json",
+		success:function(data){
+			$(data).each(function(index,data){
+				var option = $("<option>").text(data.projectName).val(data.id);
+				$("#projectSelector").append(option);
+			});
+		}
+	});
+	
+	
 	$("#formAddIssue").submit(function(event) {
 		event.preventDefault();
 		var issueTitle = $("#inputIssueTitle").val();
 		var issueContent = CKEDITOR.instances['textareaIssueContent'].getData();
 		var issue = {
 			title:issueTitle,
-			content:issueContent
+			content:issueContent,
+			project:{
+				id:$("#projectSelector").val()
+			}
 		};
 		console.log(issue);
 		pbAddIssue.attr("hidden",false);

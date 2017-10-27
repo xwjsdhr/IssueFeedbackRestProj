@@ -28,9 +28,15 @@ public class Issue implements Serializable{
 	private int weekOfYear;
 	private int year;
 	private int isTop;
+	private Project project;
 	
 	
-	
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
 	public int getIsTop() {
 		return isTop;
 	}
@@ -127,8 +133,10 @@ public class Issue implements Serializable{
 	public String toString() {
 		return "Issue [id=" + id + ", title=" + title + ", content=" + content + ", user=" + user + ", submitTime="
 				+ submitTime + ", status=" + status + ", comments=" + comments + ", createTimestamp=" + createTimestamp
-				+ ", lastUpdateTime=" + lastUpdateTime + ", isDeleted=" + isDeleted + ", commentsNum=" + commentsNum
-				+ "]";
+				+ ", lastUpdateTime=" + lastUpdateTime + ", isDeleted=" + isDeleted + ", resolvedTime=" + resolvedTime
+				+ ", weekOfYear=" + weekOfYear + ", year=" + year + ", isTop=" + isTop + ", project=" + project
+				+ ", commentsNum=" + commentsNum + "]";
 	}
+	
 	
 }

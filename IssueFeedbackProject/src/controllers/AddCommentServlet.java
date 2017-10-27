@@ -20,7 +20,7 @@ public class AddCommentServlet extends HttpServlet {
 	
 	public AddCommentServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +38,6 @@ public class AddCommentServlet extends HttpServlet {
 			comment.setIsResovleIssue(isResovled.equals("on") ? 1 : 0);
 		}
 		if (isProblem != null) {
-			System.out.println("is problem :" + isProblem);
 			comment.setIsProblem(isProblem.equals("on") ? 1 : 0);
 		}
 		User user = new User();

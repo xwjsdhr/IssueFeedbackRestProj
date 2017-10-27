@@ -18,5 +18,6 @@
     <mapper resource="com/xwj/util/sql_mapper.xml"/>
     <mapper resource="com/xwj/util/sql_mapper_user.xml"/>
     <mapper resource="com/xwj/util/sql_mapper_dept.xml"/>
+    <mapper resource="com/xwj/util/sql_mapper_proj.xml"/>
   </mappers>
 </configuration>

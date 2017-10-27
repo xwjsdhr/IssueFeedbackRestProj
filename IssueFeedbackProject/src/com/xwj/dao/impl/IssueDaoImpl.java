@@ -1,4 +1,4 @@
-package com.xwj.dao;
+package com.xwj.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.xwj.dao.IssueDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
@@ -38,7 +39,7 @@ public class IssueDaoImpl implements IssueDao {
 	 * @see com.xwj.dao.IssueDao#getAllIssues()
 	 */
 	@Override
-	public List<Issue> getAllIssues() {
+	public List<Issue> getAllIssues(int deptId) {
 		String allSql = 
 				"select ti.id,ti.title,ti.content,ti.submit_time,ti.last_update_time,ti.resolved_time,ti.week_of_year,ts.id,ts.status_name,tu.user_name,tu.password,tu.id,tu.dept_id,tu.real_name,td.id,td.dept_name"
 				+ " from t_issue ti , t_status ts, t_user tu , t_dept td  where ti.status_id = ts.id and ti.user_id = tu.id and tu.dept_id = td.id  and ti.is_deleted = 1  order by submit_time desc";

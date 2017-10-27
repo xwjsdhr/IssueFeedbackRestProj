@@ -23,7 +23,7 @@ public class CheckUserNameServlet extends HttpServlet {
        
     public CheckUserNameServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService =  BusinessServiceImpl.newInstance();
         gson = new Gson();
     }
 

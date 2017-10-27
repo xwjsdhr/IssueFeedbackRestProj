@@ -80,10 +80,8 @@
 	         <a class="mdl-navigation__link"
 						href="${pageContext.request.contextPath }/Logout"> 退出 <i
 						class="ion-log-out"></i>
-					</a>
-	        
-	        
-	        
+			</a>
+
 	      </nav>
 	      	
 	    </div>
@@ -100,10 +98,20 @@
 							<div class="form-group">
 								
 								<label for="inputIssueTitle">问题标题</label> 
+								
+								
+								
+								
 								<input
 									id="inputIssueTitle" type="text" class="form-control"
 									placeholder="请输入标题"
 									name="title" required="required" /> 
+									<label style="margin-top: 20px"
+											for="projectSelector">分管系统</label>
+									<select class="form-control" id="projectSelector">
+										
+								
+									</select>
 									<label style="margin-top: 20px"
 											for="textareaIssueContent">问题描述</label>
 		
@@ -122,28 +130,12 @@
 		
 						</form>
 					</div>
-					<div class="mdl-cell mdl-cell--1-col "> </div>
+					<div class="mdl-cell mdl-cell--1-col "></div>
 	    		</div>
 
 	    </div>
 </main>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>

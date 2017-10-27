@@ -77,6 +77,11 @@
 							href="${pageContext.request.contextPath }/Statistics"> <i
 							class="ion-stats-bars"></i> 统计管理
 						</a> --%>
+						
+						<a class="mdl-navigation__link"
+							href="${pageContext.request.contextPath }/ProjectManagement"> <i
+							class="ion-stats-bars"></i> 项目管理
+						</a>
 					</c:if>
 
 						
@@ -264,9 +269,8 @@
 							<td>创建时间</td>
 							<td>上次更新时间</td>
 							<td>提交人</td>
-
-							<td><span class="badge badge-secondary">${dept_quantity }
-							</span> 部门</td>
+							<td>系统</td>
+							<td>负责部门</td>
 							<td></td>
 
 						</tr>
@@ -311,8 +315,8 @@
 								<td class="submit_time_td">${issue.submitTime}</td>
 								<td class="last_update_time_td">${issue.lastUpdateTime }</td>
 								<td>${issue.user.realName }</td>
-								<td>${issue.user.dept.deptName }</td>
-
+								<td>${issue.project.projectName }</td>
+								<td>${issue.project.dept.deptName}</td>
 								<td>
 								<button id="demo-menu-lower-more_${issue.id }" class="mdl-button mdl-js-button"
 									>
@@ -338,25 +342,6 @@
 										</a>
 									</li>
 								</ul>
-								
-										
-										<!-- 
-										<c:if test="${issue.isTop == -1 }">
-											<a style="background-color: #0069D9; color: white;"
-											 href="${pageContext.request.contextPath }/StickTop?issue_id=${issue.id}&cancel=1" 
-											class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-											取消置顶
-											</a>
-										</c:if>
-										<c:if test="${issue.isTop ==0 }">
-											<a style="background-color: #0069D9; color: white;"
-											 href="${pageContext.request.contextPath }/StickTop?issue_id=${issue.id}&cancel=0"
-											class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-											置顶
-											</a>
-										</c:if>
-										 -->
-								
 								</td>
 							</tr>
 						</c:forEach>

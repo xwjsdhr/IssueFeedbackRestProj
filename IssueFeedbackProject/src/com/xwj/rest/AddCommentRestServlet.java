@@ -31,7 +31,7 @@ public class AddCommentRestServlet extends HttpServlet {
 
 	public AddCommentRestServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 		gson = new Gson();
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA);
 	}

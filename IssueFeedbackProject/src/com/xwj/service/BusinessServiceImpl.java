@@ -5,16 +5,19 @@ import java.util.Map;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
-import com.xwj.dao.IssueDaoImpl;
 import com.xwj.dao.IssueStatisticsDao;
 import com.xwj.dao.MyBatisIssueDao;
+import com.xwj.dao.ProjectDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
+import com.xwj.dao.impl.IssueDaoImpl;
+import com.xwj.dao.impl.ProjectDaoImpl;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
 import com.xwj.entity.IssueStatistics;
+import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 
@@ -31,14 +34,22 @@ public class BusinessServiceImpl implements BusinessService {
 	private StatusDao statusDao;
 	private IssueStatisticsDao issueStatisticsDao;
 	private MyBatisIssueDao myBatisIssueDao;
-
-	public BusinessServiceImpl() {
+	private ProjectDao projectDao;
+	public static BusinessServiceImpl instance;
+	private BusinessServiceImpl() {
 		userDao = new UserDao();
 		issueDao = new IssueDaoImpl();
 		deptDao = new DeptDao();
 		statusDao = new StatusDao();
 		issueStatisticsDao = new IssueStatisticsDao();
 		myBatisIssueDao = new MyBatisIssueDao();
+		projectDao = new ProjectDaoImpl();
+	}
+	public static BusinessServiceImpl newInstance() {
+		if(instance == null) {
+			instance = new BusinessServiceImpl();
+		}
+		return instance;
 	}
 
 	@Override
@@ -47,8 +58,8 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 
 	@Override
-	public List<Issue> getAllIssues() {
-		return myBatisIssueDao.getAllIssues();
+	public List<Issue> getAllIssues(int deptId) {
+		return myBatisIssueDao.getAllIssues(deptId);
 	}
 
 	@Override
@@ -196,5 +207,10 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public User getUserById(int userId) {
 		return myBatisIssueDao.getUserById(userId);
+	}
+
+	@Override
+	public List<Project> getAllProject() {
+		return projectDao.getAll();
 	}
 }

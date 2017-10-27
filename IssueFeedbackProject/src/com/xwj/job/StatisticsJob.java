@@ -11,7 +11,7 @@ public class StatisticsJob implements Job{
 
 	private BusinessService business;
 	public StatisticsJob() {
-		business = new BusinessServiceImpl();
+		business = BusinessServiceImpl.newInstance();
 	}
 	
 	@Override

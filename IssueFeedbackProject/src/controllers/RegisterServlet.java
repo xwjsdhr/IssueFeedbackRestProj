@@ -23,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
    
     public RegisterServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
 
     @Override

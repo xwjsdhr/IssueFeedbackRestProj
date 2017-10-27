@@ -21,18 +21,18 @@ public class LoginServlet extends HttpServlet {
 	
     public LoginServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie: cookies) {
-			if(cookie.getName().equals("userId") && cookie.getValue() != null) {
-				int userId = Integer.parseInt(cookie.getValue());
-				businessService.getUserById(userId);
-				
-			}
-		}
+//		Cookie[] cookies = request.getCookies();
+//		for(Cookie cookie: cookies) {
+//			if(cookie.getName().equals("userId") && cookie.getValue() != null) {
+//				int userId = Integer.parseInt(cookie.getValue());
+//				businessService.getUserById(userId);
+//				
+//			}
+//		}
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);	
 	}
 

@@ -26,7 +26,7 @@ public class AllYearsServlet extends HttpServlet {
    
     public AllYearsServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService =  BusinessServiceImpl.newInstance();
         gson = new Gson();
     }
 

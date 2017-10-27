@@ -22,7 +22,7 @@ public class RestoreServlet extends HttpServlet {
     
     public RestoreServlet() {
         super();
-        businessService=  new BusinessServiceImpl();
+        businessService= BusinessServiceImpl.newInstance();
     }
 
 	

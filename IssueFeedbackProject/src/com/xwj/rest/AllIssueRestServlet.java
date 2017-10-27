@@ -24,7 +24,7 @@ public class AllIssueRestServlet extends HttpServlet {
 
 	public AllIssueRestServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 		gson = new Gson();
 		calendar =Calendar.getInstance(Locale.CHINA);
 	}

@@ -26,7 +26,7 @@ public class AddIssueServlet extends HttpServlet {
 
 	public AddIssueServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 		calendar = Calendar.getInstance(Locale.CHINA);
 	}
 
@@ -46,7 +46,6 @@ public class AddIssueServlet extends HttpServlet {
 		if (userSession != null) {
 			issue.setUser(userSession);
 			int res = businessService.addIssue(issue);
-			System.out.println(res);
 			if (res > 0) {
 				response.sendRedirect("/IssueFeedbackProject/Index");
 			} 

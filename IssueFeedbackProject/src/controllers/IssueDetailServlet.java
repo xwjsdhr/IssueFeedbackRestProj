@@ -29,7 +29,7 @@ public class IssueDetailServlet extends HttpServlet {
 	 */
 	public IssueDetailServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +40,6 @@ public class IssueDetailServlet extends HttpServlet {
 //			List<Comment> comments = businessService.getCommentsById(id);
 			List<Comment> comments = issue.getComments();
 			List<Status> allStatus = businessService.getAllStatus();
-			System.out.println(issue.getComments());
 			if (issue != null) {
 				request.setAttribute("issue_detail", issue);
 				request.setAttribute("comments", comments);

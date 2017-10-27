@@ -26,7 +26,7 @@ public class DeptManagementServlet extends HttpServlet {
     
     public DeptManagementServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
 
 	

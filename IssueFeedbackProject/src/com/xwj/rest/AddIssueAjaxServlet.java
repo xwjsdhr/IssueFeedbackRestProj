@@ -30,7 +30,7 @@ public class AddIssueAjaxServlet extends HttpServlet {
     public AddIssueAjaxServlet() {
     	gson = new Gson();
     	calendar = Calendar.getInstance(Locale.CHINA);
-    	bs = new BusinessServiceImpl();
+    	bs =  BusinessServiceImpl.newInstance();
     }
 
 	

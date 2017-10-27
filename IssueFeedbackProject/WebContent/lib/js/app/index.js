@@ -8,6 +8,10 @@ $(document).ready(function() {
 		$(element).text(relativeStr);
 	});
 	
+	$(".clickableRow").on('click',function(event){
+		console.log(event.currentTarget);
+		window.location.href="http://localhost:8080/IssueFeedbackProject/IssueDetail?id="+event.currentTarget.id;
+	});
 	
 	$("#btnSearch").click(function(event){
 		var input = $("#inputSearch");
@@ -19,16 +23,7 @@ $(document).ready(function() {
 	$("#inlineSelectDepts").change(function(event) {
 		getUserByDeptId(event.target.value);
 	});
-
-//	$(".clickableRow").click(function(event) {
-//		var issueId = $(this).attr("id");
-//		if ($("#chb_" + issueId).prop("checked")) {
-//			$("#chb_" + issueId).prop("checked", false).change();
-//		} else {
-//			$("#chb_" + issueId).prop("checked", true).change();
-//		}
-//
-//	});
+	
 	$("#btnClickShow").on("click", function(event) {
 		var arr = $(".selected");
 		var idArr = [];

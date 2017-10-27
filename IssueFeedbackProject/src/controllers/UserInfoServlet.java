@@ -26,7 +26,7 @@ public class UserInfoServlet extends HttpServlet {
 
 	public UserInfoServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

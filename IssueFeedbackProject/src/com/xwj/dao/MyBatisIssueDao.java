@@ -25,9 +25,9 @@ public class MyBatisIssueDao implements IssueDao{
 	}
 	
 	@Override
-	public List<Issue> getAllIssues() {
+	public List<Issue> getAllIssues(int deptId) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<Issue> issues = session.selectList("selectAllIssues");
+		List<Issue> issues = session.selectList("selectAllIssues",deptId);
 		session.close();
 		return issues;
 	}

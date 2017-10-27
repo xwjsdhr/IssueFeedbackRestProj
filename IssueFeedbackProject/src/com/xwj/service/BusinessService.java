@@ -8,6 +8,7 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
 import com.xwj.entity.IssueStatistics;
+import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 
@@ -25,7 +26,7 @@ public interface BusinessService {
 	 * 获取全部问题
 	 * @return 问题列表
 	 */
-	List<Issue> getAllIssues();
+	List<Issue> getAllIssues(int deptId);
 
 	/**
 	 * 添加问题
@@ -111,5 +112,7 @@ public interface BusinessService {
 	int stickTop(Integer issueId, Integer cancel);
 
 	User getUserById(int userId);
+
+	List<Project> getAllProject();
 
 }

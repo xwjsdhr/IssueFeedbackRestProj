@@ -25,7 +25,7 @@ public class DeptUsersServlet extends HttpServlet {
    
     public DeptUsersServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService =  BusinessServiceImpl.newInstance();
         gson = new Gson();
     }
 

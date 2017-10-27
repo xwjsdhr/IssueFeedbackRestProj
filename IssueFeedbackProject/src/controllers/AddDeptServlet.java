@@ -23,7 +23,7 @@ public class AddDeptServlet extends HttpServlet {
     
     public AddDeptServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService = BusinessServiceImpl.newInstance();
     }
 
 	

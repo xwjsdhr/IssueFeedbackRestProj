@@ -24,7 +24,7 @@ public class AllWeekServlet extends HttpServlet {
 	private Gson gson;
     public AllWeekServlet() {
         super();
-        businessService = new BusinessServiceImpl();
+        businessService =  BusinessServiceImpl.newInstance();
         gson = new Gson();
     }
 

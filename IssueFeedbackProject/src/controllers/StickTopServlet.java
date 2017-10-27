@@ -20,7 +20,7 @@ public class StickTopServlet extends HttpServlet {
 
 	public StickTopServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

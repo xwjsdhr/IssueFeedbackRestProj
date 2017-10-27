@@ -34,7 +34,7 @@ public class ExportServlet extends HttpServlet {
 
 	public ExportServlet() {
 		super();
-		businessService = new BusinessServiceImpl();
+		businessService = BusinessServiceImpl.newInstance();
 		gson = new Gson();
 	}
 
