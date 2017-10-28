@@ -2,6 +2,10 @@ $(document).ready(function() {
 	moment.locale("zh-cn");
 	var tdArr = $(".last_update_time_td");
 	
+	getIssue();
+	
+	initSearchBar();
+	
 	$.each(tdArr,function(index,element){
 		var dateStr = $(element).text();
 		var relativeStr = moment(dateStr,"YYYY-MM-DD HH:mm:ss").fromNow();
@@ -69,12 +73,127 @@ $(document).ready(function() {
 			$("#label_order_type").text("正序");
 		}
 	});
-	
-	
-	
-	
+		
 	
 });
+function initSearchBar(){
+	
+	var list = $("#list-inline-status");
+	$("#searchForm").submit(function(event){
+		event.preventDefault();
+		$.ajax({
+			url:"/IssueFeedbackProject/SearchIssueAjax",
+			method:"GET",
+			dataType:"json",
+			data:{
+				statusId :$(".selectpicker").val()
+			},
+			dataType:"json",
+			success:function(data){
+				
+			}
+		});
+	});
+	
+	$.ajax({
+		url:"/IssueFeedbackProject/AllStatusAjax",
+		method:"GET",
+		dataType:"json",
+		success:function(data){
+			var default1 = $("<option value='-1'>").text("全部");
+			$(".selectpicker").append(default1);
+			$.each(data,function(index,element){
+				var item = makeListItemForStatus(element);
+				$(".selectpicker").append(item);
+			});
+			
+			setTimeout(function(){
+				$("#issue_table").attr("hidden",false);
+				$("#pbIssues").attr("hidden",true);
+			},500);
+		}
+	});
+}
+
+function makeListItemForStatus(status){
+	var item = $("<option>").val(status.id).text(status.statusName);
+	return item;
+}
+function getIssue(){
+	$("#issue_table").attr("hidden",true);
+	$("#pbIssues").attr("hidden",false);
+	$.ajax({
+		url:"/IssueFeedbackProject/AllIssueAjax",
+		method:"GET",
+		dataType:"json",
+		success:function(data){
+			$.each(data,function(index,element){
+				var row = makeRowForIssue(element);
+				
+				$("#mybody").append(row);
+			});
+			setTimeout(function(){
+				$("#issue_table").attr("hidden",false);
+				$("#pbIssues").attr("hidden",true);
+			},500);
+		}
+	});
+}
+/**
+ 
+
+ * @param issue
+ * @returns
+ */
+function makeRowForIssue(issue){
+	var trRow = $("<tr class='clickableRow' >").attr("id",issue.id);
+	
+	var checkboxTd = $("<td>");
+	var checkbox = $("<input>").attr("id","chb_"+issue.id).attr("type","checkbox").val(issue.id).addClass("selectedCheckbox");
+	checkboxTd.append(checkbox);
+	
+	var statusTd = $("<td>");
+	
+	var statusClassArr = [
+		"",
+		 "mdl-chip mdl-chip-unsovled",
+		 "mdl-chip mdl-chip-feedback",
+		 "mdl-chip mdl-chip-sovled",
+		 "mdl-chip mdl-chip-problem"
+	];
+	
+	var spanStatus = $("<span>").addClass(statusClassArr[issue.status.id]);
+	
+	var spanStatusChild = $("<span>").addClass("mdl-chip__text").html(issue.status.statusName)
+	var spanCommentSize = $("<span class='badge badge-pill badge-info'>").text(issue.comments.length+"");
+	spanStatus.append(spanStatusChild);
+	
+	statusTd.append(spanStatus);
+	statusTd.append(spanCommentSize);
+	
+	var titleTd = $("<td>").text(issue.title);
+	var submitTimeTd =$("<td>").text(issue.submitTime);
+	var lastUpdateTimeTd = $("<td>").text(issue.lastUpdateTime);
+	var realNameTd = $("<td>").text(issue.user.realName);
+	var projectNameTd = $("<td>").text(issue.project.projectName);
+	var deptNameTd = $("<td>").text(issue.project.dept.deptName);
+	
+	var tdLink = $("<td>");
+	
+	var aLink = $("<a>").addClass("btn btn-primary").text("查看").attr("href","/IssueFeedbackProject/IssueDetail?id="+issue.id);
+	tdLink.append(aLink);
+	
+	trRow.append(checkboxTd);
+	trRow.append(statusTd);
+	trRow.append(titleTd);
+	trRow.append(submitTimeTd);
+	trRow.append(lastUpdateTimeTd);
+	trRow.append(realNameTd);
+	trRow.append(projectNameTd);
+	trRow.append(deptNameTd);
+	trRow.append(tdLink);
+	return trRow;
+}
 
 function getUserByDeptId(id) {
 	$.ajax({

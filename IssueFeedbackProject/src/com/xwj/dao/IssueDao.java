@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
+import com.xwj.params.QueryCondition;
 
 /**
  * 问题数据库dao
@@ -114,6 +115,8 @@ public interface IssueDao {
 	 * @return
 	 */
 	List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType);
+	
+	List<Issue> getAllIssuesByConditions(int deptId, int statusId, String order, String orderType);
 	
 	/**
 	 * 恢复指定被删除的问题

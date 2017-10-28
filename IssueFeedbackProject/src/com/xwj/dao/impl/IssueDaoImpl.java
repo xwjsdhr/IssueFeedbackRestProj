@@ -676,4 +676,10 @@ public class IssueDaoImpl implements IssueDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public List<Issue> getAllIssuesByConditions(int deptId, int statusId, String order, String orderType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

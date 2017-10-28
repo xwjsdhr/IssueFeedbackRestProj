@@ -58,7 +58,7 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 
 	@Override
-	public List<Issue> getAllIssues(int deptId) {
+	public List<Issue> getAllIssues(int deptId,int statusId) {
 		return myBatisIssueDao.getAllIssues(deptId);
 	}
 

@@ -24,9 +24,10 @@ public interface BusinessService {
 
 	/**
 	 * 获取全部问题
+	 * @param sid 
 	 * @return 问题列表
 	 */
-	List<Issue> getAllIssues(int deptId);
+	List<Issue> getAllIssues(int deptId, int sid);
 
 	/**
 	 * 添加问题

@@ -183,4 +183,10 @@ public class MyBatisIssueDao implements IssueDao{
 		return user;
 	}
 
+	@Override
+	public List<Issue> getAllIssuesByConditions(int deptId, int statusId, String order, String orderType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
