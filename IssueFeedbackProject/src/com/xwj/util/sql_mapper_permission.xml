@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwj.util.sql_mapper_permission">
+	<select id="selectAllPermissions" resultMap="permissionResultMap">
+		select tp.id as perId ,tp.permission_name as perName from t_permission tp
+	</select>
+
+	<resultMap type="com.xwj.entity.Permission" id="permissionResultMap">
+		<result column="perId" property="id"/>
+		<result column="perName" property="permissionName"/>
+	</resultMap>
+</mapper>

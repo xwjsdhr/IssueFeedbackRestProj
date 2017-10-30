@@ -2,4 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwj.util.sql_mapper_dept">
 
+	<select id="selectDeptById" parameterType="Integer" resultMap="deptResultMap">
+		select td.dept_name as deptName, tp.permission_name as perName, tp.id as perId  from 
+		 t_dept td left join t_dept_permission tdp on td.id = tdp.dept_id  
+		 left join t_permission tp on tdp.permission_id = tp.id 
+		 where td.id = #{id}
+		
+	</select>
+	
+	<resultMap type="com.xwj.entity.Dept" id="deptResultMap">
+		<result column="deptName" property="deptName"/>
+		<collection property="permissionsList" ofType="com.xwj.entity.Permission">
+			<result column="perId" property="id"/>
+			<result column="perName" property="permissionName"/>
+		</collection>
+	</resultMap>
 </mapper>

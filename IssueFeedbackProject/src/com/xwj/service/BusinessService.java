@@ -8,9 +8,11 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
 import com.xwj.entity.IssueStatistics;
+import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
+import com.xwj.params.SearchCondition;
 
 public interface BusinessService {
 
@@ -24,10 +26,9 @@ public interface BusinessService {
 
 	/**
 	 * 获取全部问题
-	 * @param sid 
 	 * @return 问题列表
 	 */
-	List<Issue> getAllIssues(int deptId, int sid);
+	List<Issue> getAllIssues(int deptId);
 
 	/**
 	 * 添加问题
@@ -115,5 +116,13 @@ public interface BusinessService {
 	User getUserById(int userId);
 
 	List<Project> getAllProject();
+
+	List<Issue> getIssueWithSearchCondition(SearchCondition sc);
+
+	List<Issue> getAllIssuesWithoutDept();
+
+	Dept getDeptById(Integer id);
+
+	List<Permission> getAllPermissions();
 
 }

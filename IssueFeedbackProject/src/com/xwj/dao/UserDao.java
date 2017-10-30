@@ -21,29 +21,14 @@ public class UserDao {
 
 	public User login(String username, String password) {
 
-		String loginSql = "select u.id, u.user_name,u.password,u.real_name,d.id,d.dept_name from t_user u, t_dept d where user_name = ? and password = ? and u.dept_id = d.id";
-		Object[] objects = new Object[] { username, password };
-		ResultSet resultSet = dbUtils.executeQuery(loginSql, objects);
-
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+					
 		User user = new User();
-		
-		try {
-			if (resultSet.next()) {
-				user.setId(resultSet.getInt("id"));
-				user.setUsername(resultSet.getString("user_name"));
-				user.setPassword(resultSet.getString("password"));
-				user.setRealName(resultSet.getString("real_name"));
-				Dept dept = new Dept();
-				dept.setId(resultSet.getInt("d.id"));
-				dept.setDeptName(resultSet.getString("dept_name"));
-				user.setDept(dept);
-				return user;
-			}
-			return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		user.setUsername(username);
+		user.setPassword(password);
+		User returnUser = session.selectOne("login",user);
+		System.out.println(returnUser);
+		return returnUser;
 	}
 
 	public int addUser(User user) {
@@ -51,7 +36,7 @@ public class UserDao {
 		String insertSql = "insert into t_user(user_name,password,dept_id,real_name) values(?,?,?,?)";
 		Object[] objs = new Object[] { user.getUsername(), user.getPassword(), user.getDept().getId(),
 				user.getRealName() };
-
+			
 		int res = dbUtils.executeUpdate(insertSql, objs);
 		return res;
 	}

@@ -19,7 +19,7 @@
 <body>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header">
+	  <%-- <header class="mdl-layout__header">
 	    <div class="mdl-layout__header-row">
 	      <!-- Title -->
 	      <span class="mdl-layout-title">组长问题提交</span>
@@ -86,7 +86,9 @@
 	      	
 	    </div>
 	    
-	  </header>
+	  </header> --%>
+	  
+	  <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 	  
 	  <main class="mdl-layout__content">
 	    <div class="page-content">

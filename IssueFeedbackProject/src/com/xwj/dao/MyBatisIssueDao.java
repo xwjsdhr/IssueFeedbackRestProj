@@ -11,6 +11,7 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.User;
 import com.xwj.params.IssueJointComment;
 import com.xwj.params.QueryCondition;
+import com.xwj.params.SearchCondition;
 import com.xwj.params.UpdateStatusByIssueId;
 import com.xwj.util.DbUtils;
 /**
@@ -187,6 +188,20 @@ public class MyBatisIssueDao implements IssueDao{
 	public List<Issue> getAllIssuesByConditions(int deptId, int statusId, String order, String orderType) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<Issue> getIssueWithSearchCondition( SearchCondition sc) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Issue> issues = session.selectList("searchIssue" ,sc);
+		session.close();
+		return issues;
+	}
+
+	public List<Issue> getAllIssuesWithoutDept() {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Issue> issues = session.selectList("allIssuesList");
+		session.close();
+		return issues;
 	}
 
 }

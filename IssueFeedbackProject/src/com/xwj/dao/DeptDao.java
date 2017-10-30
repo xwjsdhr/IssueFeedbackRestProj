@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
 import com.xwj.util.DbUtils;
@@ -44,5 +46,12 @@ public class DeptDao {
 		};
 		
 		return dbUtils.executeUpdate(insertSql, objects);
+	}
+
+	public Dept getDeptById(Integer id) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		Dept dept = session.selectOne("selectDeptById", id);
+		session.close();
+		return dept;
 	}
 }

@@ -17,7 +17,7 @@
 	</select>
 	
 	<!-- 检查用户名是否存在 -->
-	<select id="checkUsername" parameterType="String" resultMap="userResultMap">
+	<select id="checkUsername" parameterType="String" resultMap="userResultMap1">
 		SELECT 
 		tu.id AS userId,
 		tu.user_name AS userName,
@@ -29,15 +29,53 @@
 		  WHERE tu.user_name = #{username}
 	</select>
 	
+	<select id="login" parameterType="com.xwj.entity.User" resultMap="userResultMap">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId,
+		td.dept_name AS deptName,
+		tp.permission_name AS perName,
+		tp.id AS perId
+		 FROM 
+		 <include refid="userTable"/>
+		 LEFT JOIN 
+		 t_dept td
+		 ON 
+		 tu.dept_id = td.id
+		 LEFT JOIN 
+		 t_dept_permission tdp 
+		 ON tdp.dept_id = td.id
+		 LEFT JOIN t_permission tp
+		 ON tp.id = tdp.permission_id
+		 
+		 WHERE tu.user_name = #{username} and tu.password = #{password}
+	</select>
+	
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
+		<result column="userId" property="id"/>
+
 		<association property="dept" javaType="com.xwj.entity.Dept">
-			<id column="pkDeptId" property="id" />
 			<result column="deptId" property="id" />
 			<result column="deptName" property="deptName" />
+			<collection property="permissions" ofType="String" >
+				<result property="permission" column="perId"/>
+			</collection>
 		</association>
+	</resultMap>
+	
+	<resultMap type="com.xwj.entity.User" id="userResultMap1">
+		<result column="userName" property="username" />
+		<result column="password" property="password" />
+		<result column="realName" property="realName" />
+		<result column="userId" property="id"/>
+
+		
 	</resultMap>
 
 </mapper>

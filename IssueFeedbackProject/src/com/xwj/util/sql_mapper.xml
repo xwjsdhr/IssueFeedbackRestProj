@@ -140,6 +140,30 @@
 		<include refid="orderByLastUptTime" />
 	</select>
 	
+	<select id="allIssuesList" resultMap="issueResultMap">
+		<include refid="IssueSelect" />
+		<include refid="orderByLastUptTime" />
+	</select>
+	
+	<select id="searchIssue" parameterType="com.xwj.params.SearchCondition" resultMap="issueResultMap">
+		<include refid="IssueSelect" />
+		AND 
+		tpj.dept_id = #{id}
+		
+		<if test="statusId != -1">
+			and ti.status_id = #{statusId}
+		</if>
+		<if test="year != null">
+			and ti.year = #{year}
+		</if>
+		<if test="week != null">
+			and ti.week_of_year = #{week}
+		</if>
+		 
+		<include refid="orderByLastUptTime" />
+	</select>
+	
+	
 	<!-- 获取指定id的问题 -->
 	<select id="selectById" parameterType="Integer" resultMap="issueResultMap">
 		<include refid="IssueSelect" />

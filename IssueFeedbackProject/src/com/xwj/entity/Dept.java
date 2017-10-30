@@ -1,6 +1,7 @@
 package com.xwj.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 部门实体类
@@ -16,7 +17,22 @@ public class Dept implements Serializable{
 	private Integer id;
 	private String deptName;
 	private User leader;
+	private List<String> permissions;
 	
+	private List<Permission> permissionsList;
+
+	public List<Permission> getPermissionsList() {
+		return permissionsList;
+	}
+	public void setPermissionsList(List<Permission> permissionsList) {
+		this.permissionsList = permissionsList;
+	}
+	public List<String> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -37,8 +53,10 @@ public class Dept implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Dept [id=" + id + ", deptName=" + deptName + ", leader=" + leader + "]";
+		return "Dept [id=" + id + ", deptName=" + deptName + ", leader=" + leader + ", permissions=" + permissions
+				+ "]";
 	}
+	
 	
 	
 }

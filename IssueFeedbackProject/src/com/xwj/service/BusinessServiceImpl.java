@@ -7,6 +7,7 @@ import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
 import com.xwj.dao.IssueStatisticsDao;
 import com.xwj.dao.MyBatisIssueDao;
+import com.xwj.dao.PermissionDao;
 import com.xwj.dao.ProjectDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
@@ -17,9 +18,11 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
 import com.xwj.entity.IssueStatistics;
+import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
+import com.xwj.params.SearchCondition;
 
 /**
  * 业务逻辑实现类
@@ -35,6 +38,7 @@ public class BusinessServiceImpl implements BusinessService {
 	private IssueStatisticsDao issueStatisticsDao;
 	private MyBatisIssueDao myBatisIssueDao;
 	private ProjectDao projectDao;
+	private PermissionDao dao;
 	public static BusinessServiceImpl instance;
 	private BusinessServiceImpl() {
 		userDao = new UserDao();
@@ -44,6 +48,7 @@ public class BusinessServiceImpl implements BusinessService {
 		issueStatisticsDao = new IssueStatisticsDao();
 		myBatisIssueDao = new MyBatisIssueDao();
 		projectDao = new ProjectDaoImpl();
+		dao = new PermissionDao();
 	}
 	public static BusinessServiceImpl newInstance() {
 		if(instance == null) {
@@ -58,7 +63,7 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 
 	@Override
-	public List<Issue> getAllIssues(int deptId,int statusId) {
+	public List<Issue> getAllIssues(int deptId) {
 		return myBatisIssueDao.getAllIssues(deptId);
 	}
 
@@ -212,5 +217,21 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public List<Project> getAllProject() {
 		return projectDao.getAll();
+	}
+	@Override
+	public List<Issue> getIssueWithSearchCondition( SearchCondition sc) {
+		return myBatisIssueDao.getIssueWithSearchCondition(sc);
+	}
+	@Override
+	public List<Issue> getAllIssuesWithoutDept() {
+		return myBatisIssueDao.getAllIssuesWithoutDept();
+	}
+	@Override
+	public Dept getDeptById(Integer id) {
+		return deptDao.getDeptById(id);
+	}
+	@Override
+	public List<Permission> getAllPermissions() {
+		return dao.getAllPermissons();
 	}
 }

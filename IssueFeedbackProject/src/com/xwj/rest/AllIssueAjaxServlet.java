@@ -35,12 +35,22 @@ public class AllIssueAjaxServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user_session");
 		
 		if (user != null) {
+			List<String> permissions = user.getDept().getPermissions();
 			
+			if(!permissions.contains("1")){
+				System.out.println("not contain");
+				List<Issue> issue = businessService.getAllIssues(user.getDept().getId());
+				String str  = gson.toJson(issue);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().append(str);
+			}else if(permissions.contains("2")) {
+				System.out.println("contain");
+				List<Issue> issue = businessService.getAllIssuesWithoutDept();
+				String str  = gson.toJson(issue);
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().append(str);
+			}
 			
-			List<Issue> issue = businessService.getAllIssues(user.getDept().getId(),-1);
-			String str  = gson.toJson(issue);
-			response.setContentType("application/json; charset=UTF-8");
-			response.getWriter().append(str);
 		}
 
 	}

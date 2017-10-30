@@ -19,40 +19,41 @@
 </head>
 <body>
 
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
 		
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 
+	<div class="mdl-layout__drawer">
+	    <span class="mdl-layout-title">Title</span>
+	    <nav class="mdl-navigation">
+	      
+	    </nav>
+	  </div>
 		<main class="mdl-layout__content">
 		
 		<div class="page-content">
 			
-		
-			
 			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--1-col"></div>
+				<div class="mdl-cell mdl-cell--1-col"> 
+				<!-- Raised disabled button -->
+					<button id="btnSave" class="mdl-button mdl-js-button mdl-button--raised">
+					  保存
+					</button>
+				</div>
 				<table
 					class="mdl-cell mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 					<thead>
 
 						<tr>
-
 							<td>编号</td>
-							<td>项目</td>
-							<td>管理部门</td>
+							<td>编号</td>
 						</tr>
 
 					</thead>
 
-					<tbody>
-
-						<c:forEach items="${allProject }" var="project">
-							<tr >
-								<td>${project.id }</td>
-								<td>${project.projectName }</td>
-								<td>${project.dept.deptName}</td>
-							</tr>
-						</c:forEach>
+					<tbody id="permissionListBody">
+						
+						
 					</tbody>
 				</table>
 			</div>
@@ -70,7 +71,7 @@
 <script type="text/javascript" src="lib/js/moment.js"></script>
 <script type="text/javascript" src="lib/js/zh-cn.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
-<script type="text/javascript" src="lib/js/app/project_management.js"></script>
+<script type="text/javascript" src="lib/js/app/permission_management.js"></script>
 
 
 </html>
