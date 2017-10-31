@@ -30,11 +30,15 @@ public class GetDeptByIdAjaxServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		Dept dept = businessService.getDeptById(id);
+		String idStr = request.getParameter("id");
+		if(idStr.length()!= 0) {
+			Integer id = Integer.parseInt(idStr);
+			Dept dept = businessService.getDeptById(id);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().append(gson.toJson(dept));
+		}
 		
-		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().append(gson.toJson(dept));
 	}
 
 	

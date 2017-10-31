@@ -17,4 +17,17 @@
 			<result column="perName" property="permissionName"/>
 		</collection>
 	</resultMap>
+	
+	<insert id="updatePermissionsToDept" parameterType="com.xwj.params.UpdatePerParam">
+		<if test="!permissionIdList.empty">
+			insert into t_dept_permission(dept_id,permission_id) values
+			<foreach collection="permissionIdList" item="element" index="index" open="(" close=")" separator="),(" >
+				 #{deptId}, #{element}
+			</foreach>
+		</if>
+	</insert>
+	
+	<delete id="deletePermissionByDeptId" parameterType="Integer">
+		delete from t_dept_permission where dept_id = #{id};
+	</delete>
 </mapper>

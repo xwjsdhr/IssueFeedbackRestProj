@@ -125,4 +125,6 @@ public interface BusinessService {
 
 	List<Permission> getAllPermissions();
 
+	boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList);
+
 }

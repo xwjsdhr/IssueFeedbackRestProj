@@ -39,7 +39,7 @@ public class BusinessServiceImpl implements BusinessService {
 	private MyBatisIssueDao myBatisIssueDao;
 	private ProjectDao projectDao;
 	private PermissionDao dao;
-	public static BusinessServiceImpl instance;
+	private static BusinessServiceImpl instance;
 	private BusinessServiceImpl() {
 		userDao = new UserDao();
 		issueDao = new IssueDaoImpl();
@@ -233,5 +233,9 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public List<Permission> getAllPermissions() {
 		return dao.getAllPermissons();
+	}
+	@Override
+	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
+		return myBatisIssueDao.updatePermission2Dept(deptId,permissionIdList);
 	}
 }

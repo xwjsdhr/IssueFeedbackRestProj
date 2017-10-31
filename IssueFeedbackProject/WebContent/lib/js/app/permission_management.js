@@ -1,78 +1,130 @@
+/**
+ * 用来标记当前所选择的部门
+ */
 var curremtDeptId = -1;
-$(document).ready(function(){
-	
+var permissions = [];
+$(document).ready(function() {
+
 	initDeptDrawer();
-	
-});
-function initDeptDrawer(){
-	
-	$.ajax({
-		url:"/IssueFeedbackProject/AllDeptAjax",
-		method:"get",
-		success:function(data){
-			$.each(data,function(index,element){
-				$(".mdl-navigation").append(makeRowForDept(element));	
-			});
-			
-			setListenerForDeptItem();
-		}
-	});
-	$.ajax({
-		url:"/IssueFeedbackProject/AllPermissionAjax",
-		method:"get",
-		success:function(data){
-			$.each(data,function(index,element){
-				$("#permissionListBody").append(makeRowForPermission(element));	
-			});
-			setListenerForDeptItem();
-			
-		}
-	});
-	
-
-	
-}
-function makeRowForPermission(per){
-	var row = $("<tr>");
-	
-	var label = $("<label>").addClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect").attr("for","checkbox-"+per.id);
-	
-	var labelInput = $("<input>").attr("type","checkbox").attr("id","checkbox-"+per.id).addClass("mdl-checkbox__input");
-	label.append(labelInput);
-	var columnContent = $("<td>").append(label);
-	var column = $("<td>").text(per.permissionName);
-	row.append(columnContent);
-	row.append(column);
-	return row;
-}
-
-function setListenerForDeptItem(){
-	$(".mdl-navigation__link").on("click",function(event){
-		
+	$("#btnSave").click(function(event){
+		if(curremtDeptId == -1)return;
 		$.ajax({
-			url:"/IssueFeedbackProject/GetDeptByIdAjax",
-			method:"get",
+			url:"/IssueFeedbackProject/GrantPermissionToDept",
 			data:{
-				id:event.target.id
+				dept_id:curremtDeptId,
+				permissions:permissions
 			},
+			method:"get",
 			success:function(data){
-				curremtDeptId = event.target.id;
-				
-				$(".mdl-checkbox__input").prop("checked",false);
-				currentPermission = [];
-				$.each(data.permissionsList,function(index,element){
-					$("#checkbox-"+element.id).prop("checked",true);
-					currentPermission.push(element.id);
-				});
-				
+				if(data){
+					$('.modal').modal({
+						show:true
+					});
+				}
 			}
 		});
-		
-		
+	});
+
+});
+/**
+ * 初始化左边部门列表
+ * 
+ * @returns
+ */
+function initDeptDrawer() {
+
+	$.ajax({
+		url : "/IssueFeedbackProject/AllDeptAjax",
+		method : "get",
+		success : function(data) {
+			$.each(data, function(index, element) {
+				$(".my-drawer").append(makeRowForDept(element));
+			});
+
+			setListenerForDeptItem();
+		}
+	});
+
+	$.ajax({
+		url : "/IssueFeedbackProject/AllPermissionAjax",
+		method : "get",
+		success : function(data) {
+			$.each(data, function(index, element) {
+
+				var row = makeRowForPermission(element);
+				$("#permissionListBody").append(row);
+			});
+			setListenerForDeptItem();
+			setListenerForPermissionItem();
+		}
 	});
 }
+/**
+ * 为每一个权限对象创建一个行标签
+ * 
+ * @param per
+ * @returns
+ */
+function makeRowForPermission(per) {
 
-function makeRowForDept(dept){
-	var row = $("<a>").addClass("mdl-navigation__link").attr("href","#").attr("id",dept.id).text(dept.deptName);
+	var rowParent = $("<div>").addClass("funkyradio-success");
+	var rowChild2 = $("<label>").attr("for", "checkbox-" + per.id).text(
+			per.permissionName);
+	var rowChild1 = $("<input>").addClass("my-check").attr("type", "checkbox")
+			.attr("id", "checkbox-" + per.id);
+	rowParent.append(rowChild1).append(rowChild2);
+	return rowParent;
+}
+function setListenerForPermissionItem(){
+	$(".my-check").on("change",function(event){
+		var length = $(".my-check:checked").length;
+		permissions = [];
+		for(var i = 0 ;i<length ;i++ ){
+			permissions.push($(".my-check:checked")[i].id.split("-")[1]);
+		}
+	});
+}
+/**
+ * 为部门行标签添加点击事件 根据点击的部门记录获取指定的权限
+ * 
+ * @returns
+ */
+function setListenerForDeptItem() {
+	$(".my-dept-row").on("click", function(event) {
+		
+		// 根据点击的部门记录获取指定的权限
+		$.ajax({
+			url : "/IssueFeedbackProject/GetDeptByIdAjax",
+			method : "get",
+			data : {
+				id : event.target.id
+			},
+			success : function(data) {
+				curremtDeptId = event.target.id;
+				$("#pDeptName").text(event.target.text);
+				$(".my-check").prop("checked", false);
+				$("#raido-dept-" + event.target.id).prop("checked", true);
+
+				currentPermission = [];
+				$.each(data.permissionsList, function(index, element) {
+					$("#checkbox-" + element.id).prop("checked", true);
+					currentPermission.push(element.id);
+				});
+			}
+		});
+	});
+
+}
+/**
+ * 为每一个部门对象创建一个行标签
+ * 
+ * @param dept
+ *            部门对象
+ * @returns a 标签
+ */
+
+function makeRowForDept(dept) {
+	var row = $("<a class='mdl-navigation__link my-dept-row'>").attr("href", "#").attr("id",
+			dept.id).text(dept.deptName);
 	return row;
 }

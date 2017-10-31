@@ -12,6 +12,7 @@ import com.xwj.entity.User;
 import com.xwj.params.IssueJointComment;
 import com.xwj.params.QueryCondition;
 import com.xwj.params.SearchCondition;
+import com.xwj.params.UpdatePerParam;
 import com.xwj.params.UpdateStatusByIssueId;
 import com.xwj.util.DbUtils;
 /**
@@ -202,6 +203,18 @@ public class MyBatisIssueDao implements IssueDao{
 		List<Issue> issues = session.selectList("allIssuesList");
 		session.close();
 		return issues;
+	}
+
+	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		UpdatePerParam param = new UpdatePerParam();
+		param.setDeptId(deptId);
+		param.setPermissionIdList(permissionIdList);
+		session.delete("deletePermissionByDeptId",deptId);
+		int i = session.insert("updatePermissionsToDept",param);
+		session.commit(true);
+		session.close();
+		return i>0;
 	}
 
 }

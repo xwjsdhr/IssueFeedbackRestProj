@@ -35,11 +35,9 @@ function setListener() {
 										setTimeout(function(){
 											btnLogin.val("登录");
 											validateFormElement(false);
-										},1000);
-										
-										
+											focusPwdInput();
+										},1000);	
 									}
-									
 								},
 								error : function(error) {
 									console.log(error);
@@ -52,7 +50,10 @@ function setListener() {
 var btnLogin = $("#btnLogin");
 var usernameInputId = $("#usernameInputId");
 var passwordInputId = $("#passwordInputId");
-
+function focusPwdInput(){
+	passwordInputId.focus();
+	passwordInputId.select();
+}
 function validateFormElement(enable){
 	usernameInputId.removeAttr("disabled");
 	passwordInputId.removeAttr("disabled");

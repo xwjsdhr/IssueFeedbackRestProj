@@ -13,19 +13,38 @@
 	rel="stylesheet" />
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
 <link href="lib/css/material/material.css" rel="stylesheet" />
-<link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
-<link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/app/per_manage.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-
+	
+	<div class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>修改成功</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
 		
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 
 	<div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Title</span>
-	    <nav class="mdl-navigation">
+	    <span class="mdl-layout-title">部门列表</span>
+	    <nav class="mdl-navigation my-drawer">
 	      
 	    </nav>
 	  </div>
@@ -40,22 +59,18 @@
 					  保存
 					</button>
 				</div>
-				<table
-					class="mdl-cell mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-					<thead>
-
-						<tr>
-							<td>编号</td>
-							<td>编号</td>
-						</tr>
-
-					</thead>
-
-					<tbody id="permissionListBody">
-						
-						
-					</tbody>
-				</table>
+				
+				<div class="mdl-cell mdl-cell--11-col"> 
+				<!-- Raised disabled button -->
+					<p id="pDeptName" >
+					  
+					</p>
+					<div class="funkyradio mdl-cell mdl-cell--10-col"  id="permissionListBody">
+					
+					
+					</div>
+				</div>
+				
 			</div>
 
 			
