@@ -1,38 +1,15 @@
 package com.xwj.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.xwj.entity.Status;
-import com.xwj.util.DbUtils;
 
-public class StatusDao {
+public interface StatusDao {
 
-	private DbUtils dbUtils;
-	public StatusDao() {
-		dbUtils = DbUtils.newInstance();
-	}
-	
-	public List<Status> getAllStatus(){
-		String selectSql = "select * from t_status";
-		List<Status> list = new ArrayList<>();
-		Object [] params = new Object[] {};
-		ResultSet rs = dbUtils.executeQuery(selectSql, params);
-		try {
-			while(rs.next()) {
-				Status status = new Status();
-				status.setId(rs.getInt("id"));
-				status.setStatusName(rs.getString("status_name"));
-				list.add(status);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
-	
+	/**
+	 * 获取全部状态
+	 * @return
+	 */
+	List<Status> getAllStatus();
+
 }

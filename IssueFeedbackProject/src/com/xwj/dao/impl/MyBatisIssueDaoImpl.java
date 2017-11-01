@@ -1,10 +1,11 @@
-package com.xwj.dao;
+package com.xwj.dao.impl;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.xwj.dao.IssueDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
@@ -20,9 +21,9 @@ import com.xwj.util.DbUtils;
  * @author Administrator
  *
  */
-public class MyBatisIssueDao implements IssueDao{
+public class MyBatisIssueDaoImpl implements IssueDao{
 	private DbUtils dbUtils;
-	public MyBatisIssueDao(){
+	public MyBatisIssueDaoImpl(){
 		dbUtils = DbUtils.newInstance();
 	}
 	
@@ -43,8 +44,13 @@ public class MyBatisIssueDao implements IssueDao{
 		return i;
 	}
 
+	@Deprecated
 	@Override
 	public int deleteIssue(int id) {
+//		SqlSession session = dbUtils.getSessionFactory().openSession();
+//		int i = session.insert("deleteIssueById",id);
+//		session.commit();
+//		session.close();
 		return 0;
 	}
 

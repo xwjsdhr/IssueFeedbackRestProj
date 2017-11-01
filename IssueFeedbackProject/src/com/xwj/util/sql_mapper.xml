@@ -227,6 +227,7 @@
 		UPDATE t_issue SET status_id = #{statusId},resolved_time=now() WHERE id = #{issueId}
 	</update>
 	
+	
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
 		<result column="title" property="title" />

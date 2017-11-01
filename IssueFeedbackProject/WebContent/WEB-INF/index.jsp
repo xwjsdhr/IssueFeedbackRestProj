@@ -187,7 +187,6 @@
 
 <script type="text/javascript" src="lib/js/moment.js"></script>
 <script type="text/javascript" src="lib/js/zh-cn.js"></script>
-<script type="text/javascript" src="lib/js/NIM_Web_NIM_v4.2.0.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
 <script type="text/javascript" src="lib/js/app/index.js"></script>
 

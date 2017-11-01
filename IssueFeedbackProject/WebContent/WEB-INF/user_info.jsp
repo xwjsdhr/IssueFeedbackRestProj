@@ -22,7 +22,6 @@
 	  
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
-	   
 	    
 		<div class="mdl-grid">
 			<div class="mdl-cell mdl-cell--1-col panel "></div>
@@ -32,10 +31,9 @@
 						<label for="inputIssueTitle">用户名</label> <input
 							id="inputIssueTitle" type="text"
 							value="${user_session.username }" class="form-control"
-							name="user_name" disabled /> <label for="inputIssueTitle">密码</label>
-						<input id="inputIssueTitle" type="password"
-							value="${user_session.password }" class="form-control"
-							name="password" disabled /> <label for="inputRealName">姓名</label>
+							name="user_name" disabled /> 
+							
+							 <label for="inputRealName">姓名</label>
 						<input type="text" id="inputRealName"
 							value="${user_session.realName }" class="form-control"
 							name="real_name" disabled /> <label for="selectDept">部门</label>

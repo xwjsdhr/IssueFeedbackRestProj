@@ -5,14 +5,18 @@ import java.util.Map;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
-import com.xwj.dao.IssueStatisticsDao;
-import com.xwj.dao.MyBatisIssueDao;
 import com.xwj.dao.PermissionDao;
 import com.xwj.dao.ProjectDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
+import com.xwj.dao.impl.DeptDaoImpl;
 import com.xwj.dao.impl.IssueDaoImpl;
+import com.xwj.dao.impl.IssueStatisticsDaoImpl;
+import com.xwj.dao.impl.MyBatisIssueDaoImpl;
+import com.xwj.dao.impl.PermissionDaoImpl;
 import com.xwj.dao.impl.ProjectDaoImpl;
+import com.xwj.dao.impl.StatusDaoImpl;
+import com.xwj.dao.impl.UserDaoImpl;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
@@ -35,20 +39,20 @@ public class BusinessServiceImpl implements BusinessService {
 	private IssueDao issueDao;
 	private DeptDao deptDao;
 	private StatusDao statusDao;
-	private IssueStatisticsDao issueStatisticsDao;
-	private MyBatisIssueDao myBatisIssueDao;
+	private IssueStatisticsDaoImpl issueStatisticsDao;
+	private MyBatisIssueDaoImpl myBatisIssueDao;
 	private ProjectDao projectDao;
 	private PermissionDao dao;
 	private static BusinessServiceImpl instance;
 	private BusinessServiceImpl() {
-		userDao = new UserDao();
+		userDao = new UserDaoImpl();
 		issueDao = new IssueDaoImpl();
-		deptDao = new DeptDao();
-		statusDao = new StatusDao();
-		issueStatisticsDao = new IssueStatisticsDao();
-		myBatisIssueDao = new MyBatisIssueDao();
+		deptDao = new DeptDaoImpl();
+		statusDao = new StatusDaoImpl();
+		issueStatisticsDao = new IssueStatisticsDaoImpl();
+		myBatisIssueDao = new MyBatisIssueDaoImpl();
 		projectDao = new ProjectDaoImpl();
-		dao = new PermissionDao();
+		dao = new PermissionDaoImpl();
 	}
 	public static BusinessServiceImpl newInstance() {
 		if(instance == null) {

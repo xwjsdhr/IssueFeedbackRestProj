@@ -12,6 +12,23 @@ public class SearchCondition implements Serializable{
 	private Integer statusId;
 	private Integer year;
 	private Integer week;
+	
+	
+	
+	
+	public SearchCondition() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public SearchCondition(Integer id, Integer statusId, Integer year, Integer week) {
+		super();
+		this.id = id;
+		this.statusId = statusId;
+		this.year = year;
+		this.week = week;
+	}
+
 	public Integer getStatusId() {
 		return statusId;
 	}

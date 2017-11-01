@@ -174,7 +174,7 @@
 			</div>
 			<div class="list-group list-group-flush" id="comment_list_div">
 
-				<c:forEach items="${comments }" var="comment">
+				<c:forEach items="${issue_detail.comments }" var="comment">
 
 					<div class="media list-group-item">
 						<p class="pull-right">

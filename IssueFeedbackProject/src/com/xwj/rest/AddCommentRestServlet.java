@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.xwj.entity.Comment;
 import com.xwj.entity.User;
-import com.xwj.params.MyError;
 import com.xwj.service.BusinessService;
 import com.xwj.service.BusinessServiceImpl;
 

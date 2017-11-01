@@ -14,7 +14,7 @@ function setListener() {
 						btnLogin.val("正在登录");
 						validateFormElement(true);
 						$.ajax({
-								url : "/IssueFeedbackProject/Auth",
+								url : "/IssueFeedbackProject/auth",
 								method : "post",
 								dataType : "json",
 								data : {
@@ -26,7 +26,7 @@ function setListener() {
 									if (data.username != null) {
 										btnLogin.val("登录成功，正在跳转...");
 										setTimeout(function(){
-											window.location.href = "/IssueFeedbackProject/Index";
+											window.location.href = "/IssueFeedbackProject/index";
 										},1000);
 										
 									}else{

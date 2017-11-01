@@ -1,15 +1,12 @@
 package controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.xwj.service.BusinessServiceImpl;
-import com.xwj.service.BusinessService;
 
 /**
  * Servlet implementation class LoginServlet
@@ -17,11 +14,11 @@ import com.xwj.service.BusinessService;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BusinessService businessService;
+	//private BusinessService businessService;
 	
     public LoginServlet() {
         super();
-        businessService = BusinessServiceImpl.newInstance();
+        //businessService = BusinessServiceImpl.newInstance();
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

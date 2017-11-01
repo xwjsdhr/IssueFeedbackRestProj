@@ -101,11 +101,14 @@ function initSearchBar() {
 		$("#issue_table").attr("hidden", true);
 		$("#pbIssues").attr("hidden", false);
 		$.ajax({
-			url : "/IssueFeedbackProject/SearchIssueAjax",
+			url : "/IssueFeedbackProject/searchIssue", //SearchIssueAjax
 			method : "GET",
 			dataType : "json",
 			data : {
-				queryCondition : JSON.stringify(data)
+//				queryCondition : JSON.stringify(data)
+				statusId : $(".selectpicker").val(),
+				year: $("#yearSelector").val(),
+				week: $("#weekSelector").val()
 			},
 			dataType : "json",
 			success : function(data) {
@@ -147,7 +150,7 @@ function initSearchBar() {
 	
 	console.log(year);
 	$.ajax({
-		url : "/IssueFeedbackProject/AllStatusAjax",
+		url : "/IssueFeedbackProject/allStatus",
 		method : "GET",
 		dataType : "json",
 		success : function(data) {
@@ -174,7 +177,7 @@ function getIssue() {
 	$("#issue_table").attr("hidden", true);
 	$("#pbIssues").attr("hidden", false);
 	$.ajax({
-		url : "/IssueFeedbackProject/AllIssueAjax",
+		url : "/IssueFeedbackProject/allIssues",
 		method : "GET",
 		dataType : "json",
 		success : function(data) {
@@ -230,7 +233,7 @@ function makeRowForIssue(issue) {
 	var tdLink = $("<td>");
 
 	var aLink = $("<a>").addClass("btn btn-primary").text("查看").attr("href",
-			"/IssueFeedbackProject/IssueDetail?id=" + issue.id);
+			"/IssueFeedbackProject/issue_detail?id=" + issue.id);
 	tdLink.append(aLink);
 
 	trRow.append(checkboxTd);

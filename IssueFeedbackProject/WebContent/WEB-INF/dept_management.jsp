@@ -55,7 +55,6 @@
 							<tr>
 								<td>${dept.id }</td>
 								<td>${dept.deptName }</td>
-
 							</tr>
 						</c:forEach>
 					</tbody>

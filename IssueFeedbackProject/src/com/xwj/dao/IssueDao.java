@@ -6,7 +6,6 @@ import java.util.Map;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssuePage;
-import com.xwj.params.QueryCondition;
 
 /**
  * 问题数据库dao

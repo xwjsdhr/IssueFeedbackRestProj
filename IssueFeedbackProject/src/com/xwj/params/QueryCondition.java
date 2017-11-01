@@ -16,6 +16,14 @@ public class QueryCondition {
 		this.order = order;
 		this.orderType = orderType;
 	}
+	
+	public QueryCondition(int userId, int deptId, int statusId) {
+		super();
+		this.userId = userId;
+		this.deptId = deptId;
+		this.statusId = statusId;
+	}
+
 	public QueryCondition() {
 		super();
 		// TODO Auto-generated constructor stub

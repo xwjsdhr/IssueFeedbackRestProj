@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xwj.entity.Dept;
-import com.xwj.entity.Issue;
-import com.xwj.entity.Status;
 import com.xwj.entity.User;
-import com.xwj.service.BusinessServiceImpl;
-import com.xwj.service.BusinessService;
 
 /**
  * Index Servlet
@@ -22,11 +16,11 @@ import com.xwj.service.BusinessService;
 @WebServlet("/Index")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BusinessService businessService;
+	//private BusinessService businessService;
 
 	public IndexServlet() {
 		super();
-		businessService = BusinessServiceImpl.newInstance();
+		//businessService = BusinessServiceImpl.newInstance();
 	}
 
 	@Override

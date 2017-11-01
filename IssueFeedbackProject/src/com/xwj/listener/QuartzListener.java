@@ -1,7 +1,6 @@
 package com.xwj.listener;
 
 import javax.servlet.ServletContextEvent;
-import javax.servlet.annotation.WebListener;
 
 import org.quartz.ee.servlet.QuartzInitializerListener;
 

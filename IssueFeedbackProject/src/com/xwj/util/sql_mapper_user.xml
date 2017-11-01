@@ -3,8 +3,8 @@
 <mapper namespace="com.xwj.util.sql_mapper_user">
 
 	<sql id="userTable">t_user tu</sql>
-	<!-- 获取指定id的用户 -->
-	<select id="getUserById" parameterType="Integer" resultMap="userResultMap">
+	
+	<sql id="userSql">
 		SELECT 
 		tu.id AS userId,
 		tu.user_name AS userName,
@@ -13,7 +13,15 @@
 		tu.dept_id AS deptId
 		 FROM 
 		 <include refid="userTable"/>
+	</sql>
+	<!-- 获取指定id的用户 -->
+	<select id="getUserById" parameterType="Integer" resultMap="userResultMap">
+		 <include refid="userSql"></include>
 		  WHERE tu.id = #{id}
+	</select>
+	 <!-- 全部用户 -->
+	<select id="getAllUsers" resultMap="userResultMap">
+		<include refid="userSql"></include>
 	</select>
 	
 	<!-- 检查用户名是否存在 -->
@@ -28,7 +36,7 @@
 		 <include refid="userTable"/>
 		  WHERE tu.user_name = #{username}
 	</select>
-	
+	<!-- 登录用户 -->
 	<select id="login" parameterType="com.xwj.entity.User" resultMap="userResultMap">
 		SELECT 
 		tu.id AS userId,
@@ -53,6 +61,11 @@
 		 
 		 WHERE tu.user_name = #{username} and tu.password = #{password}
 	</select>
+	<!-- 添加用户 -->
+	<insert id="insertUser" parameterType="com.xwj.entity.User">
+		insert into t_user(user_name,password,dept_id,real_name) values(#{username}, #{password}, #{dept.id},
+				#{realName});
+	</insert>
 	
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />

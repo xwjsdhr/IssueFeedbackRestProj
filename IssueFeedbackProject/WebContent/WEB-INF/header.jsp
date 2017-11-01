@@ -51,19 +51,19 @@
 						<ul
 							class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 							for="demo-menu-lower-user">
-							<li><a class="mdl-menu__item"
-								href="${pageContext.request.contextPath }/Register"> <i
-									class="ion-plus"></i> 添加用户
-							</a></li>
+							<li>
+								<a class="mdl-menu__item"
+									href="${pageContext.request.contextPath }/Register"> <i
+										class="ion-plus"></i> 添加用户
+								</a>
+							</li>
 						</ul>
-
-						
 					</c:if>
 					
 					<c:if test="${fn:contains(user_session.dept.permissions,4)}">
 						
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/DeptManagement"> <i
+							href="${pageContext.request.contextPath }/dept_management"> <i
 							class="ion-ios-people"></i> 部门管理
 						</a>
 	
@@ -71,7 +71,7 @@
 					
 					<c:if test="${fn:contains(user_session.dept.permissions,5)}">
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/ProjectManagement">
+							href="${pageContext.request.contextPath }/project_management">
 							<i class="ion-stats-bars"></i> 项目管理
 						</a>
 					
@@ -93,7 +93,7 @@
 					</c:if>
 					
 					<a class="mdl-navigation__link"
-						href="${pageContext.request.contextPath }/UserInfo"> <i
+						href="${pageContext.request.contextPath }/user_info"> <i
 						class="ion-person"></i> ${user_session.realName}
 					</a> <a class="mdl-navigation__link"
 						href="${pageContext.request.contextPath }/Logout"> 退出 <i
