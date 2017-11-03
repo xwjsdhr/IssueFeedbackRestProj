@@ -17,7 +17,7 @@
 				<!-- Navigation. We hide it in small screens. -->
 				<nav class="mdl-navigation mdl-layout--large-screen-only">
 
-					<a class="mdl-navigation__link" href="${pageContext.request.contextPath}/Index"> <i class="ion-home"></i>
+					<a class="mdl-navigation__link" href="${pageContext.request.contextPath}/index"> <i class="ion-home"></i>
 						首页
 					</a>
 					<c:if test="${fn:contains(user_session.dept.permissions,2) }">
@@ -30,7 +30,7 @@
 							class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 							for="demo-menu-lower-issue">
 							<li><a class="mdl-menu__item"
-								href="${pageContext.request.contextPath }/NewIssue"> <i
+								href="${pageContext.request.contextPath }/new_issue"> <i
 									class="ion-plus"></i> 添加问题
 							</a></li>
 							<c:if test="${user_session.dept.id == 4 }">
@@ -53,8 +53,12 @@
 							for="demo-menu-lower-user">
 							<li>
 								<a class="mdl-menu__item"
-									href="${pageContext.request.contextPath }/Register"> <i
+									href="${pageContext.request.contextPath }/register"> <i
 										class="ion-plus"></i> 添加用户
+								</a>
+								<a class="mdl-menu__item"
+									href="${pageContext.request.contextPath }/user_management"> 
+									 用户管理
 								</a>
 							</li>
 						</ul>
@@ -87,7 +91,7 @@
 					
 					<c:if test="${fn:contains(user_session.dept.permissions,7)}">
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/PermissionManagement"> <i
+							href="${pageContext.request.contextPath }/permission_management"> <i
 							class="ion-stats-bars"></i> 权限管理
 						</a> 
 					</c:if>

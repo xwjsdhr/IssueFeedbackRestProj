@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.xwj.dao.UserDao;
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
+import com.xwj.params.ParamUpdateUserStatus;
 import com.xwj.util.DbUtils;
 
 public class UserDaoImpl implements UserDao {
@@ -107,5 +108,22 @@ public class UserDaoImpl implements UserDao {
 	public User getUserById(int userId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public User getPasswordByUserName(String username) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		User user = session.selectOne("getUserByUsername",username);
+		session.close();
+		return user;
+	}
+
+	@Override
+	public Boolean disableOrEnableUser(Integer userId, boolean b) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i  = session.update("disableOrEnableUser",new ParamUpdateUserStatus(userId,b));
+		session.commit(true);
+		session.close();
+		return i>0;
 	}
 }

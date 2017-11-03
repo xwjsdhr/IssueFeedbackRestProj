@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
-import com.xwj.service.BusinessServiceImpl;
 import com.xwj.service.BusinessService;
+import com.xwj.service.BusinessServiceImpl;
 
 /**
  * Servlet implementation class AddUserServlet
@@ -21,12 +24,14 @@ public class AddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	BusinessService businessService;
+	private PasswordEncoder encoder;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AddUserServlet() {
         super();
         businessService =BusinessServiceImpl.newInstance();
+        encoder = new BCryptPasswordEncoder();
     }
 
 
@@ -39,7 +44,7 @@ public class AddUserServlet extends HttpServlet {
 		User user = new User();
 		Dept dept = new Dept();
 		dept.setId(deptId);
-		user.setPassword(password);
+		user.setPassword(encoder.encode(password));
 		user.setRealName(realName);
 		user.setUsername(username);
 		user.setDept(dept);

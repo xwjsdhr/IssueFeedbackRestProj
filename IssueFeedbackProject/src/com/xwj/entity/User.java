@@ -18,7 +18,15 @@ public class User  implements Serializable{
 	
 	private Dept dept;
 	private String realName;
+	private Boolean status;
 	
+	
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -52,8 +60,9 @@ public class User  implements Serializable{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", dept=" + dept + ", realName="
-				+ realName + "]";
+				+ realName + ", status=" + status + "]";
 	}
+	
 	
 	
 	

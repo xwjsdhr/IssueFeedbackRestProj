@@ -21,35 +21,11 @@
 	<main class="mdl-layout__content">
 		<div class="page-content">
 		
-			<div class="row">
-				<div class="col-lg-2" style="margin-top: 20px">
-					
-	
-						<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-							<div class="input-group-addon">年</div>
-							<select class="form-control mb-2 mr-sm-2 mb-sm-0"
-								id="inlineSelectYear">
-								
-							</select>
-						</div>
-					
-				</div>
-				<div class="col-lg-2" style="margin-top: 20px">
-					
-	
-						<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-							<div class="input-group-addon">周</div>
-							<select class="form-control mb-2 mr-sm-2 mb-sm-0"
-								id="inlineSelect">
-							</select>
-						</div>
-					
-				</div>
-			</div>
+			
 			<div class="row">
 				<div class="col-lg-12">
 				
-					<canvas id="myChart" width="400" height="200"></canvas>
+					<canvas id="myChart" width="300" height="200"></canvas>
 				</div>
 			</div>
 		</div>

@@ -47,7 +47,7 @@
 	    <nav class="mdl-navigation my-drawer">
 	      
 	    </nav>
-	  </div>
+	</div>
 		<main class="mdl-layout__content">
 		
 		<div class="page-content">

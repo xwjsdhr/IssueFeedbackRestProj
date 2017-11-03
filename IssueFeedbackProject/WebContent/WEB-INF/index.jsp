@@ -9,9 +9,9 @@
 <title>组长问题提交首页</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
 
-<link
+<!-- <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" />
+	rel="stylesheet" /> -->
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
@@ -84,88 +84,10 @@
 						</tr>
 					</thead>
 
-					<thead>
-
-						<tr>
-
-							<td></td>
-							<td><span class="badge badge-secondary">${issue_quantity }</span>
-								状态</td>
-							<td width="15%">标题</td>
-							<td>创建时间</td>
-							<td>上次更新时间</td>
-							<td>提交人</td>
-							<td>系统</td>
-							<td>负责部门</td>
-							<td></td>
-
-						</tr>
-
-					</thead>
+					
 
 					<tbody id="mybody">
-<!-- 
-						<c:forEach items="${list }" var="issue">
-							<tr class="clickableRow" id="${issue.id }">
-								<td><input id="chb_${issue.id }" type="checkbox"
-									value="${issue.id }" class="selectedCheckbox" /></td>
-								<td><c:choose>
-										<c:when test="${issue.status.id == 1 }">
-											<span class="mdl-chip mdl-chip-unsovled"> 
-											<span class="mdl-chip__text ">${issue.status.statusName }</span>
-											</span>
-										</c:when>
-										<c:when test="${issue.status.id == 2 }">
-											<span class="mdl-chip mdl-chip-feedback"> <span
-												class="mdl-chip__text ">${issue.status.statusName }</span>
-											</span>
 
-										</c:when>
-										<c:when test="${issue.status.id == 3 }">
-											<span class="mdl-chip mdl-chip-sovled"> <span
-												class="mdl-chip__text ">${issue.status.statusName }</span>
-											</span>
-										</c:when>
-										<c:when test="${issue.status.id == 4 }">
-
-											<span class="mdl-chip mdl-chip-problem"> <span
-												class="mdl-chip__text ">${issue.status.statusName }</span>
-											</span>
-										</c:when>
-									</c:choose> <span class="badge badge-pill badge-info">${issue.comments.size()}</span>
-								</td>
-								<td style="font-size: 14px; font-weight: bolder;">${issue.title }</td>
-
-								<td class="submit_time_td">${issue.submitTime}</td>
-								<td class="last_update_time_td">${issue.lastUpdateTime }</td>
-								<td>${issue.user.realName }</td>
-								<td>${issue.project.projectName }</td>
-								<td>${issue.project.dept.deptName}</td>
-								<td>
-									<button id="demo-menu-lower-more_${issue.id }"
-										class="mdl-button mdl-js-button">
-										<i class="ion-android-more-vertical"></i>
-									</button>
-									<ul
-										class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-										for="demo-menu-lower-more_${issue.id }">
-
-										<c:if test="${user_session.dept.id == 4 }">
-											<li><a class="mdl-menu__item"
-												href="${pageContext.request.contextPath }/DeleteIssue?issue_id=${issue.id }">
-													删除 <i class="ion-trash-a"></i>
-											</a></li>
-
-										</c:if>
-										<li><a class="mdl-menu__item"
-											href="${pageContext.request.contextPath }/IssueDetail?id=${issue.id }">查看
-												<i class="ion-arrow-right-a"></i>
-										</a></li>
-									</ul>
-								</td>
-							</tr>
-						</c:forEach>
-						 -->
 					</tbody>
 				</table>
 				<div class="mdl-cell mdl-cell--2-col mdl-cell--5-offset" id="pbIssues">

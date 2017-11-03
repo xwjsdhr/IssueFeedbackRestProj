@@ -127,4 +127,8 @@ public interface BusinessService {
 
 	boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList);
 
+	User loginBCrypt(String username, String rawPassword);
+
+	Boolean disableOrEnableUser(Integer userId, boolean b);
+
 }

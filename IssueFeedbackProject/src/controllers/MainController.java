@@ -3,6 +3,7 @@ package controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,14 @@ import com.xwj.service.BusinessService;
 public class MainController {
 
 	@Autowired
-	private BusinessService businessService;
+	private BusinessService businessService;	
 
 	@GetMapping("/index")
 	public String index(HttpSession hs) {
 		if (hs.getAttribute("user_session") == null) {
 			return "login";
 		}
+		
 		return "index";
 	}
 
@@ -55,5 +57,24 @@ public class MainController {
 		return "issue_detail";
 	}
 	
+	@GetMapping("/permission_management")
+	public String permissionManagement() {
+		return "permission_management";
+	}
+	
+	@GetMapping("new_issue")
+	public String newIssue() {
+		return "new_issue";
+	}
+	
+	@GetMapping("/register")
+	public String register() {
+		return "register";
+	}
+	
+	@GetMapping("/user_management")
+	public String userManagement() {
+		return "user_management";
+	}
 
 }

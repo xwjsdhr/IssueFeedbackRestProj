@@ -24,24 +24,28 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	@Override
 	public List<Dept> getAllDepts(){
-		List<Dept> list = new ArrayList<>();
-		String querySql = "select td.id ,td.dept_name from t_dept td ";
-		Object params [] = new Object[] {};
-		ResultSet rs = dbUtils.executeQuery(querySql, params);
-		try {
-			while(rs.next()) {
-				User user = new User();
-				Dept dept = new Dept();
-				dept.setDeptName(rs.getString("td.dept_name"));
-				dept.setId(rs.getInt("td.id"));
-				
-				dept.setLeader(user);
-				list.add(dept);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
+//		List<Dept> list = new ArrayList<>();
+//		String querySql = "select td.id ,td.dept_name from t_dept td ";
+//		Object params [] = new Object[] {};
+//		ResultSet rs = dbUtils.executeQuery(querySql, params);
+//		try {
+//			while(rs.next()) {
+//				User user = new User();
+//				Dept dept = new Dept();
+//				dept.setDeptName(rs.getString("td.dept_name"));
+//				dept.setId(rs.getInt("td.id"));
+//				
+//				dept.setLeader(user);
+//				list.add(dept);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+		
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Dept> deptList = session.selectList("selectAllDept");
+		session.close();
+		return deptList;
 	}
 
 	/* (non-Javadoc)

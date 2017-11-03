@@ -1,6 +1,4 @@
-$(document)
-		.ready(
-				function() {
+$(document).ready(function() {
 					moment.locale("zh-cn");
 					var tdArr = $(".last_update_time_td");
 
@@ -86,6 +84,7 @@ $(document)
 					});
 
 				});
+
 function initSearchBar() {
 	var list = $("#list-inline-status");
 	$("#searchForm").submit(function(event) {

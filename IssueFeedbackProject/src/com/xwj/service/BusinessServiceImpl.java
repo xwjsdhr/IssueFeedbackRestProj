@@ -3,6 +3,10 @@ package com.xwj.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
 import com.xwj.dao.PermissionDao;
@@ -33,6 +37,7 @@ import com.xwj.params.SearchCondition;
  * @author ÏÄÎ°¼Ñ
  * @createTime ÉÏÎç9:12:30
  */
+@Component
 public class BusinessServiceImpl implements BusinessService {
 
 	private UserDao userDao;
@@ -44,6 +49,10 @@ public class BusinessServiceImpl implements BusinessService {
 	private ProjectDao projectDao;
 	private PermissionDao dao;
 	private static BusinessServiceImpl instance;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	private BusinessServiceImpl() {
 		userDao = new UserDaoImpl();
 		issueDao = new IssueDaoImpl();
@@ -241,5 +250,17 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
 		return myBatisIssueDao.updatePermission2Dept(deptId,permissionIdList);
+	}
+	@Override
+	public User loginBCrypt(String username, String rawPassword) {
+		User user = userDao.getPasswordByUserName(username);
+		if(passwordEncoder.matches(rawPassword, user.getPassword())) {
+			return user;
+		}
+		return null;
+	}
+	@Override
+	public Boolean disableOrEnableUser(Integer userId, boolean b) {
+		return userDao.disableOrEnableUser(userId,b);
 	}
 }

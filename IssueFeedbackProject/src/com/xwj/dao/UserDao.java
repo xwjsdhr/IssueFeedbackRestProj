@@ -48,4 +48,8 @@ public interface UserDao {
 	 */
 	User getUserById(int userId);
 
+	User getPasswordByUserName(String username);
+
+	Boolean disableOrEnableUser(Integer userId, boolean b);
+
 }

@@ -5,59 +5,74 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>个人信息</title>
+<title>用户管理</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
-<link href="lib/css/app/index.css" rel="stylesheet">
-<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
+<link href="lib/css/material/material.css" rel="stylesheet" />
+<link href="lib/css/app/index.css" rel="stylesheet" />
+<!-- <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+      rel="stylesheet"/> -->
 </head>
 <body>
-	<div class="container">
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">组长问题提交</a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Index">
-						<img alt="name" src="icon/ic_home_black_24px.svg">首页 <span class="sr-only">(current)</span>
-					</a></li>
+	<div class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>修改成功</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-					<li class="nav-item"><a class="nav-link"
-						href="/IssueFeedbackProject/NewIssue">添加问题</a></li>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-					<c:if test="${user_session.dept.id == 4 }">
-					
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath }/UserManagement" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						          	用户管理
-						        </a>
-						        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						          <a class="dropdown-item" href="#">添加用户</a>
-						        </div>
-							</li>
-						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath }/DeptManagement">部门管理</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath }/TrashBin">回收站</a></li>
-					</c:if>
+		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
 
-				</ul>
-				 <div class="btn-group " role="group">
-				 <a class="btn btn-link"
-						href="${pageContext.request.contextPath }/UserInfo">${user_session.realName}</a>
-						<a class="nav-link"
-						href="${pageContext.request.contextPath }/Logout">退出</a>
-				 </div>
+		<main class="mdl-layout__content">
+		
+			<div class="page-content">
+				
+				<div class="mdl-grid">
+					<table  class="mdl-cell mdl-cell--1-offset mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp table-bordered" >
+						
+						<thead>
 
+							<tr>
+								<td>用户名</td>
+								<td>部门</td>
+								<td width="15%">姓名</td>
+								<td>状态</td>
+								<td></td>
+	
+							</tr>
+
+						</thead>
+							
+						<tbody hidden="true" id="user_table">
+							
+						</tbody>
+						
+					</table>
+					<div class="mdl-cell mdl-cell--2-col mdl-cell--5-offset" id="pbUser">
+						<div class="mdl-spinner mdl-js-spinner is-active" ></div>
+					</div>
+				</div>
 			</div>
-		</nav>
-
-		<div class="row ">
-			<div class="col-md-12 panel "></div>
-		</div>
+		</main>
 	</div>
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
 <script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/app/user_management.js"></script>
 </html>

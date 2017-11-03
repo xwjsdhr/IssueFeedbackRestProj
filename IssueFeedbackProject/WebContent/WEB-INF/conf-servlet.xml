@@ -20,5 +20,8 @@
     <bean class="com.xwj.service.BusinessServiceImpl">
     	<qualifier value="businessService"></qualifier>
     </bean>
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    	<qualifier value="passwordEncoder"></qualifier>
+    </bean>
     
 </beans>

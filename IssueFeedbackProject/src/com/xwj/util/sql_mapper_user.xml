@@ -10,9 +10,22 @@
 		tu.user_name AS userName,
 		tu.real_name AS realName,
 		tu.password AS password,
-		tu.dept_id AS deptId
+		tu.dept_id AS deptId,
+		tu.status AS userStatus,
+		td.dept_name AS deptName,
+		tp.permission_name AS perName,
+		tp.id AS perId
 		 FROM 
 		 <include refid="userTable"/>
+		 LEFT JOIN 
+		 t_dept td
+		 ON 
+		 tu.dept_id = td.id
+		 LEFT JOIN 
+		 t_dept_permission tdp 
+		 ON tdp.dept_id = td.id
+		 LEFT JOIN t_permission tp
+		 ON tp.id = tdp.permission_id
 	</sql>
 	<!-- 获取指定id的用户 -->
 	<select id="getUserById" parameterType="Integer" resultMap="userResultMap">
@@ -36,6 +49,33 @@
 		 <include refid="userTable"/>
 		  WHERE tu.user_name = #{username}
 	</select>
+	
+	<select id="getUserByUsername" parameterType="String" resultMap="userResultMap">
+		SELECT 
+		tu.id AS userId,
+		tu.user_name AS userName,
+		tu.real_name AS realName,
+		tu.password AS password,
+		tu.dept_id AS deptId,
+		tu.status AS userStatus,
+		td.dept_name AS deptName,
+		tp.permission_name AS perName,
+		tp.id AS perId
+		 FROM 
+		 <include refid="userTable"/>
+		 LEFT JOIN 
+		 t_dept td
+		 ON 
+		 tu.dept_id = td.id
+		 LEFT JOIN 
+		 t_dept_permission tdp 
+		 ON tdp.dept_id = td.id
+		 LEFT JOIN t_permission tp
+		 ON tp.id = tdp.permission_id
+		 
+		 WHERE tu.user_name = #{username}
+		
+	</select>
 	<!-- 登录用户 -->
 	<select id="login" parameterType="com.xwj.entity.User" resultMap="userResultMap">
 		SELECT 
@@ -44,6 +84,7 @@
 		tu.real_name AS realName,
 		tu.password AS password,
 		tu.dept_id AS deptId,
+		tu.status AS userStatus,
 		td.dept_name AS deptName,
 		tp.permission_name AS perName,
 		tp.id AS perId
@@ -67,12 +108,18 @@
 				#{realName});
 	</insert>
 	
+	
+	<update id="disableOrEnableUser" parameterType="com.xwj.params.ParamUpdateUserStatus">
+		update t_user set status = #{userStatus} where id = ${userId}
+	</update>
+	
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
 		<result column="userId" property="id"/>
-
+		<result column="userStatus" property="status" javaType="Boolean" jdbcType="TINYINT"/>
+		
 		<association property="dept" javaType="com.xwj.entity.Dept">
 			<result column="deptId" property="id" />
 			<result column="deptName" property="deptName" />

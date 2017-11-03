@@ -17,6 +17,14 @@ public class Dept implements Serializable{
 	private Integer id;
 	private String deptName;
 	private User leader;
+	private Boolean isEmbbed;
+	
+	public Boolean getIsEmbbed() {
+		return isEmbbed;
+	}
+	public void setIsEmbbed(Boolean isEmbbed) {
+		this.isEmbbed = isEmbbed;
+	}
 	private List<String> permissions;
 	
 	private List<Permission> permissionsList;
