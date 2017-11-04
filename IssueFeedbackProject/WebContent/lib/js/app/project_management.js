@@ -5,9 +5,26 @@ $(document).ready(function(event){
 
 function setListener(){
 	
-	btnAddDept.click(function(event){
+	btnAddProject.click(function(event){
+		$("#myModal").modal('show');
+	});
+	btnSaveProject.click(function(event){
+		console.log(inputProjectName.val());
+		if(inputProjectName.val().trim().length > 0 ){
+			$.ajax({
+				url:"/IssueFeedbackProject/addProject",
+				method:"get",
+				data:{
+					project_name:inputProjectName.val()
+				},
+				success:function(data){
+					console.log(data.result);
+				}
+					
+			});
+			inputProjectName.val("");
+		}
 		
-		$("#exampleModal").modal('show');
 	});
 }
 function getProjects(){
@@ -41,6 +58,8 @@ function progressBar(data){
 	}, 500);
 }
 
-var btnAddDept = $("#btnAddDept");
+var btnAddProject = $("#btnAddProject");
 var projectTable = $("#project_table");
+var btnSaveProject = $("#btnSaveProject");
+var inputProjectName = $("#inputProjectName");
 

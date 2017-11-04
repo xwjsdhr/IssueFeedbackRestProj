@@ -7,5 +7,7 @@ import com.xwj.entity.Project;
 public interface ProjectDao {
 
 	List<Project> getAll();
+
+	Boolean addProject(String projectName);
 	
 }

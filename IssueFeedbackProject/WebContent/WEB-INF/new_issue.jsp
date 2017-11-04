@@ -8,8 +8,6 @@
 <title>添加问题</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
 <link href="lib/css/app/index.css" rel="stylesheet">
-<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-      rel="stylesheet"/>
       <link href="lib/css/material/material.css" rel="stylesheet" />
       <link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -31,10 +29,6 @@
 							<div class="form-group">
 								
 								<label for="inputIssueTitle">问题标题</label> 
-								
-								
-								
-								
 								<input
 									id="inputIssueTitle" type="text" class="form-control"
 									placeholder="请输入标题"

@@ -2,5 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwj.util.sql_mapper_proj">
 
+<insert id="addProject" parameterType="String">
+	insert into t_project(project_name) values(#{projectName});
+</insert>
 
 </mapper>

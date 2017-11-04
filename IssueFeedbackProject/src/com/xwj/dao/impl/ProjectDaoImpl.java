@@ -23,5 +23,13 @@ public class ProjectDaoImpl implements ProjectDao {
 		openSession.close();
 		return projectList;
 	}
+	@Override
+	public Boolean addProject(String projectName) {
+		SqlSession openSession = dbUtils.getSessionFactory().openSession();
+		int i = openSession.insert("addProject",projectName);
+		openSession.commit();
+		openSession.close();
+		return i>0;
+	}
 
 }

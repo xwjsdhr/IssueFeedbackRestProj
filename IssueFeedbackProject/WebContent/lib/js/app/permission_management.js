@@ -56,12 +56,13 @@ function initDeptDrawer() {
 					var row = makeRowForPermission(element);
 					$("#permissionListBody").append(row);
 				});
+				setListenerForDeptItem();
+				setListenerForPermissionItem();
 				progressRoot.attr("hidden",true);
 			}, 500);
 			
 			
-			setListenerForDeptItem();
-			setListenerForPermissionItem();
+			
 		}
 	});
 }
@@ -85,6 +86,7 @@ function setListenerForPermissionItem(){
 	$(".my-check").on("change",function(event){
 		var length = $(".my-check:checked").length;
 		permissions = [];
+		console.log("aaaa");
 		for(var i = 0 ;i<length ;i++ ){
 			permissions.push($(".my-check:checked")[i].id.split("-")[1]);
 		}
