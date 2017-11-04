@@ -8,17 +8,25 @@ $(document).ready(function(event) {
 				toggleProgress(false);
 			}, 5000);
 			toggleProgress(false);
-			$.each(data, function(index, user) {
-				var row = makeRowForUser(user);
-				table.append(row);
-			});
-			
+			progress.css("width","100%");
+			if(data.result != null){
+				
+				setTimeout(() => {
+					$.each(data.result, function(index, user) {
+						var row = makeRowForUser(user);
+						table.append(row);
+					});
+					progressRoot.attr("hidden",true);
+				}, 500);
+				
+			}
+			//--------------------------------------------------
 			$(".disable-enable-btn").on("click",function(event){
 				
 				var userId = event.target.id.split("-")[1];
 				var userStatus = $(event.target).attr("data-status");
 				
-				$($.ajax({
+				$.ajax({
 					url:"/IssueFeedbackProject/disableOrEnableUser",
 					method:"get",
 					data:{
@@ -36,8 +44,8 @@ $(document).ready(function(event) {
 							alert(data.msg);
 						}
 					}
-				}));
-				;
+				});
+				
 			});
 		}
 	});

@@ -8,9 +8,9 @@
 <title>组长问题提交首页</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
 
-<link
+<!-- <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" />
+	rel="stylesheet" /> -->
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
@@ -22,12 +22,10 @@
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
-
+		
 		<main class="mdl-layout__content">
 		
 		<div class="page-content">
-			
-		
 			
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--1-col"></div>
@@ -44,15 +42,9 @@
 
 					</thead>
 
-					<tbody>
+					<tbody id="project_table">
 
-						<c:forEach items="${allProject }" var="project">
-							<tr >
-								<td>${project.id }</td>
-								<td>${project.projectName }</td>
-								<td>${project.dept.deptName}</td>
-							</tr>
-						</c:forEach>
+						
 					</tbody>
 				</table>
 			</div>

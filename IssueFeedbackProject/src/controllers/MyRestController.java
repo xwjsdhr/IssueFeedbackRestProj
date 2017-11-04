@@ -19,6 +19,7 @@ import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.User;
 import com.xwj.params.AjaxResult;
+import com.xwj.params.AjaxResult.ErrorCode;
 import com.xwj.params.SearchCondition;
 import com.xwj.service.BusinessService;
 
@@ -75,13 +76,23 @@ public class MyRestController {
 	}
 
 	@GetMapping("/allDepts")
-	public ResponseEntity<List<Dept>> allDepts() {
-		return ResponseEntity.ok(businessService.getAllDepts());
+	public ResponseEntity<AjaxResult<List<Dept>>> allDepts() {
+		AjaxResult<List<Dept>> ar = new AjaxResult.Builder<List<Dept>>()
+				.result(businessService.getAllDepts())
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功")
+				.build();
+		return ResponseEntity.ok(ar);
 	}
 
 	@GetMapping("/allProjects")
-	public ResponseEntity<List<Project>> allProject() {
-		return ResponseEntity.ok(businessService.getAllProject());
+	public ResponseEntity<AjaxResult<List<Project>>> allProject() {
+		AjaxResult<List<Project>> ar = new AjaxResult.Builder<List<Project>>()
+				.result(businessService.getAllProject())
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功")
+				.build();
+		return ResponseEntity.ok(ar);
 	}
 
 	@GetMapping("/getDeptById")
@@ -90,30 +101,71 @@ public class MyRestController {
 	}
 
 	@GetMapping("/allUser")
-	public ResponseEntity<List<User>> allUser() {
-		return ResponseEntity.ok(businessService.getAllUsers());
-	}
-
-	@GetMapping("/disableOrEnableUser")
-	public ResponseEntity<AjaxResult<Boolean>> disableOrEnableUser(HttpSession hs, @RequestParam("userId") Integer userId,
-			@RequestParam("userStatus") Boolean userStatus) {
-		System.out.println("userId" + userId + ": userStatus" + userStatus);
-		
-		User userSession = (User) hs.getAttribute("user_session");
-		AjaxResult<Boolean> ajaxResult = new AjaxResult<>();
-		System.out.println("session :"+  userSession.getId()+"    "+userId);
-		System.out.println(userSession.getId()==userId);
-		if(userSession.getId() == userId) {
-			ajaxResult.setErrorCode(110);
-			ajaxResult.setMsg("当前用户已登录，无法修改");
-			ajaxResult.setResult(false);
-		}else {
-			Boolean res = businessService.disableOrEnableUser(userId, !userStatus);
-			ajaxResult.setResult(res);
+	public ResponseEntity<AjaxResult<List<User>>> allUser(HttpSession hs) {
+		AjaxResult<List<User>> ajaxResult;
+		User user = (User) hs.getAttribute("user_session");
+		if (user == null) {
+			ajaxResult = new AjaxResult.Builder<List<User>>()
+					.errorCode(ErrorCode.ERRORCODE_NO_USER)
+					.message("无用户登录")
+					.result(null)
+					.build();
+		}else if(!user.getDept().getPermissions().contains("3")) {
+			ajaxResult = new AjaxResult.Builder<List<User>>()
+					.errorCode(ErrorCode.ERRORCODE_NO_SUCH_PERMISSION)
+					.message("当前用户无此权限")
+					.result(null)
+					.build();
+		} else  {
+			ajaxResult = new AjaxResult.Builder<List<User>>()
+					.result(businessService.getAllUsers())
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.message("获取成功")
+					.build();
 		}
-		
-		
 		return ResponseEntity.ok(ajaxResult);
 	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<AjaxResult<Boolean>> logout(HttpSession hs) {
+		User userSession = (User) hs.getAttribute("user_session");
+		AjaxResult<Boolean> ar;
+		if(userSession != null) {
+			hs.removeAttribute("user_session");
+			ar = new AjaxResult.Builder<Boolean>()
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.message("注销成功")
+					.result(true)
+					.build();
+		}else {
+			ar = new AjaxResult.Builder<Boolean>()
+					.errorCode(ErrorCode.ERRORCODE_NO_USER)
+					.message("无用户登录")
+					.result(false)
+					.build();
+		}
+		return ResponseEntity.ok(ar);
+	}
+	
+	@GetMapping("/disableOrEnableUser")
+	public ResponseEntity<AjaxResult<Boolean>> disableOrEnableUser(HttpSession hs,
+			@RequestParam("userId") Integer userId, @RequestParam("userStatus") Boolean userStatus) {
+		System.out.println("userId" + userId + ": userStatus" + userStatus);
+
+		User userSession = (User) hs.getAttribute("user_session");
+		AjaxResult<Boolean> ajaxResult; 
+		if (userSession.getId() == userId) {
+
+			ajaxResult = new AjaxResult.Builder<Boolean>().errorCode(AjaxResult.ErrorCode.ERRORCODE_USER_LOGINED)
+					.message("当前用户已登录，无法修改").result(false).build();
+		} else {
+			Boolean res = businessService.disableOrEnableUser(userId, !userStatus);
+			ajaxResult = new AjaxResult.Builder<Boolean>().errorCode(AjaxResult.ErrorCode.ERRORCODE_SUCCESS)
+					.message("成功").result(res).build();
+		}
+
+		return ResponseEntity.ok(ajaxResult);
+	}
+	
 
 }

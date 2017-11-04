@@ -49,11 +49,17 @@ function initDeptDrawer() {
 		url : "/IssueFeedbackProject/AllPermissionAjax",
 		method : "get",
 		success : function(data) {
-			$.each(data, function(index, element) {
-
-				var row = makeRowForPermission(element);
-				$("#permissionListBody").append(row);
-			});
+			progress.css("width","100%");
+			
+			setTimeout(() => {
+				$.each(data, function(index, element) {
+					var row = makeRowForPermission(element);
+					$("#permissionListBody").append(row);
+				});
+				progressRoot.attr("hidden",true);
+			}, 500);
+			
+			
 			setListenerForDeptItem();
 			setListenerForPermissionItem();
 		}

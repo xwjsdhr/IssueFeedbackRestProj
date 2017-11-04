@@ -100,7 +100,7 @@
 						href="${pageContext.request.contextPath }/user_info"> <i
 						class="ion-person"></i> ${user_session.realName}
 					</a> <a class="mdl-navigation__link"
-						href="${pageContext.request.contextPath }/Logout"> 退出 <i
+						href="#" id="btnLogout"> 退出 <i
 						class="ion-log-out"></i>
 					</a>
 				</nav>
@@ -108,4 +108,11 @@
 			</div>
 
 		</header>
+		
+		<div class="progress" id="progressRoot">
+		  <div class="progress-bar progress-bar-striped progress-bar-animated"
+		   role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 35%" id="progress"></div>
+		</div>
+		<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="lib/js/app/header.js"></script>
 </html>

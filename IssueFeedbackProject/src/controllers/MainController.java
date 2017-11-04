@@ -3,12 +3,12 @@ package controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
 
 @Controller
@@ -33,7 +33,8 @@ public class MainController {
 		}
 		return "login";
 	}
-
+	
+	
 	@GetMapping("/project_management")
 	public String projectManagement(ModelMap modelMap) {
 		modelMap.addAttribute("allProject", businessService.getAllProject());
@@ -41,8 +42,7 @@ public class MainController {
 	}
 	
 	@GetMapping("/dept_management")
-	public String deptManagement(ModelMap modelMap) {
-		modelMap.addAttribute("all_depts", businessService.getAllDepts());
+	public String deptManagement() {
 		return "dept_management";
 	}
 	

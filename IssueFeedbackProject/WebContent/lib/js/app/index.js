@@ -96,7 +96,6 @@ function initSearchBar() {
 		};
 		$("#"+week).attr("selected",true);
 		$("#"+year).attr("selected",true);
-		console.log(data);
 		$("#issue_table").attr("hidden", true);
 		$("#pbIssues").attr("hidden", false);
 		$.ajax({
@@ -104,7 +103,6 @@ function initSearchBar() {
 			method : "GET",
 			dataType : "json",
 			data : {
-//				queryCondition : JSON.stringify(data)
 				statusId : $(".selectpicker").val(),
 				year: $("#yearSelector").val(),
 				week: $("#weekSelector").val()
@@ -143,11 +141,11 @@ function initSearchBar() {
 		var optWeek = $("<option>").text(i).val(i).attr("id",i);
 		weekselector.append(optWeek);
 	}
+	
 	var week = moment().week();
 	$("#"+week).attr("selected",true);
 	$("#"+year).attr("selected",true);
 	
-	console.log(year);
 	$.ajax({
 		url : "/IssueFeedbackProject/allStatus",
 		method : "GET",
@@ -175,18 +173,31 @@ function makeListItemForStatus(status) {
 function getIssue() {
 	$("#issue_table").attr("hidden", true);
 	$("#pbIssues").attr("hidden", false);
+	progress.css("width","65%");
 	$.ajax({
 		url : "/IssueFeedbackProject/allIssues",
 		method : "GET",
 		dataType : "json",
-		success : function(data) {
+		progress: function(e){
+			 if(e.lengthComputable) {
+		            //calculate the percentage loaded
+		            var pct = (e.loaded / e.total) * 100;
+
+		            //log percentage loaded
+		            console.log("aaaaa:"+pct);
+		        }
+		},
+		success : function(data,textStatus,jqXHR) {
+			progress.css("width","100%");
 			$.each(data, function(index, element) {
 				var row = makeRowForIssue(element);
 				$("#mybody").append(row);
 			});
+			
 			setTimeout(function() {
 				$("#issue_table").attr("hidden", false);
 				$("#pbIssues").attr("hidden", true);
+				progressRoot.attr("hidden",true);
 			}, 500);
 		}
 	});
@@ -248,8 +259,7 @@ function makeRowForIssue(issue) {
 }
 
 function getUserByDeptId(id) {
-	$
-			.ajax({
+	$.ajax({
 				url : "/IssueFeedbackProject/DeptUsers",
 				data : {
 					dept_id : id

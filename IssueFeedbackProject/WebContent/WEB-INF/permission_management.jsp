@@ -8,9 +8,9 @@
 <title>组长问题提交首页</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
 
-<link
+<!-- <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" />
+	rel="stylesheet" /> -->
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/per_manage.css" rel="stylesheet" type="text/css" />

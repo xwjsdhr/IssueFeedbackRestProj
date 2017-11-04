@@ -8,9 +8,9 @@
 <title>个人信息</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
 
-<link
+<!-- <link
 	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" />
+	rel="stylesheet" /> -->
 <link href="lib/css/material/material.css" rel="stylesheet" />
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
 </head>
@@ -50,13 +50,8 @@
 
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach items="${all_depts }" var="dept">
-							<tr>
-								<td>${dept.id }</td>
-								<td>${dept.deptName }</td>
-							</tr>
-						</c:forEach>
+					<tbody id="dept_table">
+						
 					</tbody>
 				</table>
 			</div>
@@ -69,7 +64,8 @@
 
 </body>
 <script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-slim.min.js"></script>
+<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="lib/js/material/material.js"></script>
+<script type="text/javascript" src="lib/js/app/dept_management.js"></script>
 </html>
