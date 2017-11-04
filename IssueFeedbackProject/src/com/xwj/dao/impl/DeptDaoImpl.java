@@ -1,15 +1,11 @@
 package com.xwj.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.entity.Dept;
-import com.xwj.entity.User;
 import com.xwj.util.DbUtils;
 
 public class DeptDaoImpl implements DeptDao {
@@ -23,25 +19,7 @@ public class DeptDaoImpl implements DeptDao {
 	 * @see com.xwj.dao.DeptDao#getAllDepts()
 	 */
 	@Override
-	public List<Dept> getAllDepts(){
-//		List<Dept> list = new ArrayList<>();
-//		String querySql = "select td.id ,td.dept_name from t_dept td ";
-//		Object params [] = new Object[] {};
-//		ResultSet rs = dbUtils.executeQuery(querySql, params);
-//		try {
-//			while(rs.next()) {
-//				User user = new User();
-//				Dept dept = new Dept();
-//				dept.setDeptName(rs.getString("td.dept_name"));
-//				dept.setId(rs.getInt("td.id"));
-//				
-//				dept.setLeader(user);
-//				list.add(dept);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		
+	public List<Dept> getAllDepts(){		
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		List<Dept> deptList = session.selectList("selectAllDept");
 		session.close();

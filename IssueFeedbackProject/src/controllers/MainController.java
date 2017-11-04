@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
 
 @Controller
