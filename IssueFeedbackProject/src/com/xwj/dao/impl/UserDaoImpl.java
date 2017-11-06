@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.xwj.dao.UserDao;
 import com.xwj.entity.Dept;
 import com.xwj.entity.User;
+import com.xwj.params.ParamResetPwd;
 import com.xwj.params.ParamUpdateUserStatus;
 import com.xwj.util.DbUtils;
 
@@ -126,4 +127,15 @@ public class UserDaoImpl implements UserDao {
 		session.close();
 		return i>0;
 	}
+
+	@Override
+	public Boolean resetPwd(Integer userId, String pwd) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i  = session.update("resetPwd",new ParamResetPwd(userId, pwd));
+		session.commit(true);
+		session.close();
+		return i>0;
+	}
+
+	
 }

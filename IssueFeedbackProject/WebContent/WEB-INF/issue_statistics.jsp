@@ -6,9 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>组长问题提交首页</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet" />
-	<!-- <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" /> -->
-	<link href="lib/css/material/material.css" rel="stylesheet" />
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 	<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>

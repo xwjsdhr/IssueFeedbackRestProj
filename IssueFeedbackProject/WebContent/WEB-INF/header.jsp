@@ -17,7 +17,7 @@
 				<!-- Navigation. We hide it in small screens. -->
 				<nav class="mdl-navigation mdl-layout--large-screen-only">
 
-					<a class="mdl-navigation__link" href="${pageContext.request.contextPath}/index"> <i class="ion-home"></i>
+					<a class="mdl-navigation__link" href="${pageContext.request.contextPath}/index">
 						首页
 					</a>
 					<c:if test="${fn:contains(user_session.dept.permissions,2) }">
@@ -96,10 +96,26 @@
 						</a> 
 					</c:if>
 					
+					
+					<button id="demo-menu-lower-user1" class="mdl-button mdl-js-button"
+						style="color: white;">
+						${user_session.realName}
+					</button>
+					<ul
+						class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+						for="demo-menu-lower-user1">
+						<li>
+							<a class="mdl-menu__item"
+								href="${pageContext.request.contextPath }/user_info">个人信息
+							</a>
+							<%-- <a class="mdl-menu__item"
+								href="${pageContext.request.contextPath }/update_pwd"> 
+								 修改密码
+							</a> --%>
+						</li>
+					</ul>
+
 					<a class="mdl-navigation__link"
-						href="${pageContext.request.contextPath }/user_info"> <i
-						class="ion-person"></i> ${user_session.realName}
-					</a> <a class="mdl-navigation__link"
 						href="#" id="btnLogout"> 退出 <i
 						class="ion-log-out"></i>
 					</a>
@@ -108,6 +124,20 @@
 			</div>
 
 		</header>
+		<c:if test="${fn:contains(user_session.dept.permissions,11)}">
+		
+			<div class="mdl-layout__drawer">
+			    <span class="mdl-layout-title">系统设置</span>
+			    <nav class="mdl-navigation">
+			      <a class="mdl-navigation__link" href="${pageContext.request.contextPath }/sys_params">系统参数</a>
+			      <a class="mdl-navigation__link" href="">Link</a>
+			      <a class="mdl-navigation__link" href="">Link</a>
+			      <a class="mdl-navigation__link" href="">Link</a>
+			    </nav>
+			  </div>
+		
+		</c:if>
+		
 		
 		<div class="progress" id="progressRoot">
 		  <div class="progress-bar progress-bar-striped progress-bar-animated"

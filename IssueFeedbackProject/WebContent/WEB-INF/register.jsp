@@ -6,17 +6,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>注册</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet">
-<link href="lib/css/app/index.css" rel="stylesheet">
-<link
-	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" />
-	<link   href="lib/css/app/register.css" rel="stylesheet"/>
-	<link href="lib/css/material/material.css" rel="stylesheet" />
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 	<link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
+<div class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">添加用户</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>添加成功</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	  
 	  <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
@@ -28,7 +40,7 @@
 	    <div class="container">
 		<div class="row ">
 			<div class="col-md-12 panel ">
-				<form action="${pageContext.request.contextPath }/AddUser"
+				<form id="formAddUser"
 					method="post">
 					<div class="form-group">
 						<label style="margin-top: 20px" for="inputIssueTitle">用户名</label>
@@ -70,12 +82,10 @@
 						
 					</div>
 					<div class="form-group">
-						<label style="margin-top: 20px" for="selectDept">部门</label> <select
+						<label style="margin-top: 20px" for="selectDept">部门</label> 
+						<select
 							name="dept_id" id="selectDept" class="form-control">
 
-							<c:forEach items="${list_dept }" var="dept">
-								<option value="${dept.id }">${dept.deptName }</option>
-							</c:forEach>
 						</select> <input id="submitBtnReg" style="margin-top: 20px" class="btn btn-primary"
 							type="submit" value="注册" />
 					</div>
@@ -91,9 +101,6 @@
    </div>
 
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="lib/js/app/register.js"></script>
-<script type="text/javascript"  src="lib/js/material/material.js"></script>
 </html>

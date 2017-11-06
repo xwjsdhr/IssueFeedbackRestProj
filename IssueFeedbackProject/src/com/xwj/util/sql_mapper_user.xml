@@ -113,6 +113,10 @@
 		update t_user set status = #{userStatus} where id = ${userId}
 	</update>
 	
+	<update id="resetPwd" parameterType="com.xwj.params.ParamResetPwd">
+		update t_user set password = #{pwd} where id = ${userId}
+	</update>
+	
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />
 		<result column="password" property="password" />

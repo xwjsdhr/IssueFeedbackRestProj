@@ -6,15 +6,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人信息</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- <link
-	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" /> -->
-<link href="lib/css/material/material.css" rel="stylesheet" />
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">添加用户</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>添加成功</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<jsp:include page="/WEB-INF/header.jsp"></jsp:include>
@@ -24,14 +38,14 @@
 			<div class="mdl-grid" style="margin-top: 20px">
 			<div class=" mdl-cell mdl-cell--1-col "></div>
 				<div class=" mdl-cell mdl-cell--10-col ">
-					<form action="${pageContext.request.contextPath }/AddDept"
+					<form id="formAddDept"
 						class="form-inline" method="get">
 						<div class="form-group mx-sm-3">
 							<label for="inputDeptName " class="sr-only">部门名称</label> <input
-								class="form-control" id="" type="text" placeholder="部门名称"
+								class="form-control" id="inputDeptName" type="text" placeholder="部门名称"
 								name="dept_name" />
 						</div>
-						<input type="submit"
+						<input type="submit" id="btnAddDept"
 							class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
 							value="添加" />
 					</form>
@@ -45,9 +59,7 @@
 
 					<thead>
 						<tr>
-							<td>部门Id</td>
 							<td>部门名称</td>
-
 						</tr>
 					</thead>
 					<tbody id="dept_table">
@@ -63,9 +75,6 @@
 
 
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/material/material.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="lib/js/app/dept_management.js"></script>
 </html>

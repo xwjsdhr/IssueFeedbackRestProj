@@ -20,7 +20,16 @@ public class User  implements Serializable{
 	private String realName;
 	private Boolean status;
 	
-	
+	public User(String username, String password, String realName) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.realName = realName;
+	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Boolean getStatus() {
 		return status;
 	}

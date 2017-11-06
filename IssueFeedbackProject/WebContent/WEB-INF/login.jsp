@@ -12,8 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>登录</title>
-<link href="lib/css/material/material.css" rel="stylesheet" />
-<link href="lib/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 <link href="lib/css/app/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -35,10 +34,7 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/material/material.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>  
   <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>  
 <script type="text/javascript" src="lib/js/app/login.js"></script>

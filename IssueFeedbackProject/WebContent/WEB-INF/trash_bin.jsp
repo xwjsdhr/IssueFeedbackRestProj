@@ -8,8 +8,6 @@
 <title>组长问题提交首页</title>
 <link href="lib/css/bootstrap.min.css" rel="stylesheet">
 <link href="lib/css/app/index.css" rel="stylesheet">
-<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-      rel="stylesheet"/>
       
       <link href="lib/css/material/material.css" rel="stylesheet" />
       <link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
@@ -22,8 +20,6 @@
 	  
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
-	    
-		
 		<div class="row ">
 			<div class="col-md-12 panel ">
 				<table class="table table-bordered table-hover">
@@ -176,8 +172,5 @@
 
 	
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript"  src="lib/js/material/material.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 </html>

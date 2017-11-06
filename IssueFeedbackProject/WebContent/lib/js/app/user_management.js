@@ -17,36 +17,54 @@ $(document).ready(function(event) {
 						table.append(row);
 					});
 					progressRoot.attr("hidden",true);
+					
+					$(".disable-enable-btn").on("click",function(event){
+						
+						var userId = event.target.id.split("-")[1];
+						var userStatus = $(event.target).attr("data-status");
+						
+						$.ajax({
+							url:"/IssueFeedbackProject/disableOrEnableUser",
+							method:"get",
+							data:{
+								userId:userId,
+								userStatus:userStatus
+							},
+							success:function(data){
+								console.log(data);
+								if(data.result){
+									changeBtnAndBadgeStyle(event.target.id,userStatus);
+									showDialog("修改状态","修改成功");
+								}else{
+									alert(data.msg);
+								}
+							}
+						});
+						
+					});
+					
+					$(".btnReset").on("click",function(event){
+						var id = event.target.id.split("-")[1];
+						$.ajax({
+							url:"/IssueFeedbackProject/resetPwd",
+							method:"post",
+							data:{
+								user_id:id
+							},
+							success:function(data){
+								if(data.result){
+									showDialog("重置密码","重置成功");
+								}
+							}
+						})
+						
+					});
+					
 				}, 500);
 				
 			}
 			//--------------------------------------------------
-			$(".disable-enable-btn").on("click",function(event){
-				
-				var userId = event.target.id.split("-")[1];
-				var userStatus = $(event.target).attr("data-status");
-				
-				$.ajax({
-					url:"/IssueFeedbackProject/disableOrEnableUser",
-					method:"get",
-					data:{
-						userId:userId,
-						userStatus:userStatus
-					},
-					success:function(data){
-						console.log(data);
-						if(data.result){
-							changeBtnAndBadgeStyle(event.target.id,userStatus);
-							$('.modal').modal({
-								show:true
-							});
-						}else{
-							alert(data.msg);
-						}
-					}
-				});
-				
-			});
+			
 		}
 	});
 	
@@ -74,7 +92,13 @@ function changeBtnAndBadgeStyle(btnId,userStatus){
 	}
 	
 }
-
+function showDialog(title,content){
+	$(".modal-title").text(title);
+	$("#modal-content").text(content);
+	$('.modal').modal({
+		show:true
+	});
+}
 
 function makeRowForUser(user) {
 	var tdUserName = $("<td>").text(user.username);
@@ -97,11 +121,15 @@ function makeRowForUser(user) {
 	var tdOperation = $("<td>").append(btnEnableAndDisable);
 
 	var tdStatus = $("<td>").append(spanParent);
-	var tr = $("<tr>").append(tdUserName).append(tdUserDeptName).append(
-			tdRealName).append(tdStatus).append(tdOperation);
+	var btnReset = $("<button>").text("重置").attr("id","reset-"+user.id).addClass("btn btn-primary btnReset");
+	var tdResetPwd = $("<td>").append(btnReset);
+	var tr = $("<tr>").append(tdUserName).append(tdUserDeptName)
+		.append(tdRealName).append(tdStatus).append(tdOperation).append(tdResetPwd);
 
 	return tr;
 }
+
+
 function toggleProgress(visible) {
 	table.attr("hidden", visible);
 	pbUser.attr("hidden", !visible);

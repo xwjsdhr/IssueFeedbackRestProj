@@ -6,15 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>添加问题</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet">
-<link href="lib/css/app/index.css" rel="stylesheet">
-      <link href="lib/css/material/material.css" rel="stylesheet" />
+		<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
       <link href="lib/css/app/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
-
-
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	  
 	  <jsp:include page="/WEB-INF/header.jsp"></jsp:include>
@@ -65,10 +60,7 @@
 </div>
 	
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript"  src="lib/js/material/material.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="lib/js/app/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"  src="lib/js/app/new_issue.js"></script>
 </html>

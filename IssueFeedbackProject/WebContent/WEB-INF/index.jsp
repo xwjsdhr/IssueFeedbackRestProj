@@ -7,12 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>组长问题提交首页</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet" />
-
-<!-- <link
-	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" /> -->
-<link href="lib/css/material/material.css" rel="stylesheet" />
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 <link href="lib/css/app/index.css" rel="stylesheet" type="text/css" />
 <link href="lib/css/app/common.css" rel="stylesheet" type="text/css" />
 
@@ -27,7 +22,7 @@
 			<c:if test="${fn:contains(user_session.dept.permissions,2) }">
 				<div class="float-over-bottom">
 					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-						href="${pageContext.request.contextPath }/NewIssue"> 添加问题 </a>
+						href="${pageContext.request.contextPath }/new_issue"> 添加问题 </a>
 				</div>
 			</c:if>
 
@@ -39,7 +34,6 @@
 	  							<span class="input-group-addon">状态</span>
 								<select class="selectpicker form-control">
 								
-									
 								</select>
 							</div>
 							
@@ -72,15 +66,21 @@
 					class="mdl-cell mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 					<thead>
 						<tr>
-							<td colspan="2">
+							<!-- <td colspan="2">
 								<button id="btnClickShow"
 									class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 									导出</button>
-							</td>
-							<td colspan="2"></td>
-							<td colspan="3"></td>
-							<td></td>
-							<td></td>
+							</td> -->
+							<th></th>
+							<th>状态</th>
+							<th>标题</th>
+							<th>提交时间</th>
+							<th>上次更新时间</th>
+							<th>提报部门</th>
+							<th>所属项目</th>
+							<th>分管部门</th>
+							<th></th>
+							
 						</tr>
 					</thead>
 
@@ -95,22 +95,13 @@
 				</div>
 				
 			</div>
-		
 		</div>
 		</div>
 
 		</main>
-	
-
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery.ajax-progress.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="lib/js/moment.js"></script>
-<script type="text/javascript" src="lib/js/zh-cn.js"></script>
-<script type="text/javascript" src="lib/js/material/material.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="lib/js/app/index.js"></script>
 
 </html>

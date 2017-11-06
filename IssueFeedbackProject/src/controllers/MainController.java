@@ -3,7 +3,6 @@ package controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +74,15 @@ public class MainController {
 	@GetMapping("/user_management")
 	public String userManagement() {
 		return "user_management";
+	}
+	
+	@GetMapping("/sys_params")
+	public String sysParams() {
+		return "sys_params";
+	}
+	@GetMapping("/update_pwd")
+	public String updatePwd() {
+		return "update_pwd";
 	}
 
 }

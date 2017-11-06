@@ -4,6 +4,7 @@ var maxCount = 0;
 var myNewChart;
 var ctx = document.getElementById("myChart").getContext("2d");
 $(document).ready( function() {
+	progressRoot.attr("hidden",true);
 	myNewChart = new Chart(ctx, {
 		type : 'bar',
 		options : {

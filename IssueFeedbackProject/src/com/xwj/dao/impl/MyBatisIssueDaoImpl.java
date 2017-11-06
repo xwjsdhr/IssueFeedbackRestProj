@@ -16,21 +16,24 @@ import com.xwj.params.SearchCondition;
 import com.xwj.params.UpdatePerParam;
 import com.xwj.params.UpdateStatusByIssueId;
 import com.xwj.util.DbUtils;
+
 /**
  * 使用Mybatis实现数据股操作的实现类。
+ * 
  * @author Administrator
  *
  */
-public class MyBatisIssueDaoImpl implements IssueDao{
+public class MyBatisIssueDaoImpl implements IssueDao {
 	private DbUtils dbUtils;
-	public MyBatisIssueDaoImpl(){
+
+	public MyBatisIssueDaoImpl() {
 		dbUtils = DbUtils.newInstance();
 	}
-	
+
 	@Override
 	public List<Issue> getAllIssues(int deptId) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<Issue> issues = session.selectList("selectAllIssues",deptId);
+		List<Issue> issues = session.selectList("selectAllIssues", deptId);
 		session.close();
 		return issues;
 	}
@@ -38,7 +41,7 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	@Override
 	public int insertIssue(Issue issue) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		int i = session.insert("insertIssue",issue);
+		int i = session.insert("insertIssue", issue);
 		session.commit();
 		session.close();
 		return i;
@@ -47,17 +50,17 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	@Deprecated
 	@Override
 	public int deleteIssue(int id) {
-//		SqlSession session = dbUtils.getSessionFactory().openSession();
-//		int i = session.insert("deleteIssueById",id);
-//		session.commit();
-//		session.close();
+		// SqlSession session = dbUtils.getSessionFactory().openSession();
+		// int i = session.insert("deleteIssueById",id);
+		// session.commit();
+		// session.close();
 		return 0;
 	}
 
 	@Override
 	public Issue getById(int id) {
-		SqlSession session =dbUtils.getSessionFactory().openSession();
-		Issue issue = (Issue) session.selectOne("selectById",id);
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		Issue issue = (Issue) session.selectOne("selectById", id);
 		session.close();
 		return issue;
 	}
@@ -73,25 +76,25 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	@Override
 	public int addCommentToIssue(int issueId, Comment comment) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		Issue issue = session.selectOne("selectById",issueId);
-		int commentId = session.insert("insertComment",comment);
+		Issue issue = session.selectOne("selectById", issueId);
+		int commentId = session.insert("insertComment", comment);
 		session.commit();
 		System.out.println("commentId:   " + commentId);
-		
-		IssueJointComment ic = new IssueJointComment(issueId,commentId);
-		int res = session.insert("insertIssueJointComment",ic);
-		if(issue.getComments().size() == 0) {
-			if(res >0 ) {
+
+		IssueJointComment ic = new IssueJointComment(issueId, commentId);
+		int res = session.insert("insertIssueJointComment", ic);
+		if (issue.getComments().size() == 0) {
+			if (res > 0) {
 				updateIssueStatusById(issueId, 2);
 			}
-		}else {
-			if(comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
-				session.update("resolveIssueByComment",issueId);
-			}else if(comment.getIsProblem() == 1 && issue.getStatus().getId() != 4){
+		} else {
+			if (comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
+				session.update("resolveIssueByComment", issueId);
+			} else if (comment.getIsProblem() == 1 && issue.getStatus().getId() != 4) {
 				updateIssueStatusById(issueId, 4);
 			}
 		}
-		
+
 		session.update("updateLastTime", issueId);
 		session.commit();
 		session.close();
@@ -102,7 +105,7 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	public int updateIssueStatusById(int issueId, int statusId) {
 		SqlSession openSession = dbUtils.getSessionFactory().openSession();
 		UpdateStatusByIssueId byIssueId = new UpdateStatusByIssueId(issueId, statusId);
-		int res = openSession.update("updateStatusById",byIssueId);
+		int res = openSession.update("updateStatusById", byIssueId);
 		openSession.commit();
 		openSession.close();
 		return res;
@@ -123,7 +126,7 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		List<Issue> selectList = session.selectList("selectIssueByKeyword", keyword);
 		session.close();
-		
+
 		return selectList;
 	}
 
@@ -144,9 +147,9 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 
 	@Override
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		QueryCondition condition = new QueryCondition(userId,deptId,statusId,order,orderType);
+		QueryCondition condition = new QueryCondition(userId, deptId, statusId, order, orderType);
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<Issue> issues = session.selectList("selectIssueByCondition",condition);
+		List<Issue> issues = session.selectList("selectIssueByCondition", condition);
 		return issues;
 	}
 
@@ -174,10 +177,10 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	public int stickTop(int issueId, Integer cancel) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		int res = 0;
-		if(cancel == 0) {
-			res = session.update("updateIssueTop",issueId);
-		}else {
-			res = session.update("cancelIssueTop",issueId);
+		if (cancel == 0) {
+			res = session.update("updateIssueTop", issueId);
+		} else {
+			res = session.update("cancelIssueTop", issueId);
 		}
 		session.commit();
 		session.close();
@@ -186,7 +189,7 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 
 	public User getUserById(int userId) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		User user = session.selectOne("getUserById" ,userId);
+		User user = session.selectOne("getUserById", userId);
 		session.close();
 		return user;
 	}
@@ -197,9 +200,9 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 		return null;
 	}
 
-	public List<Issue> getIssueWithSearchCondition( SearchCondition sc) {
+	public List<Issue> getIssueWithSearchCondition(SearchCondition sc) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<Issue> issues = session.selectList("searchIssue" ,sc);
+		List<Issue> issues = session.selectList("searchIssue", sc);
 		session.close();
 		return issues;
 	}
@@ -214,13 +217,18 @@ public class MyBatisIssueDaoImpl implements IssueDao{
 	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		UpdatePerParam param = new UpdatePerParam();
-		param.setDeptId(deptId);
-		param.setPermissionIdList(permissionIdList);
-		session.delete("deletePermissionByDeptId",deptId);
-		int i = session.insert("updatePermissionsToDept",param);
+
+		int res = session.delete("deletePermissionByDeptId", deptId);
+		int i = 0;
+		if (!permissionIdList.isEmpty()) {
+			param.setDeptId(deptId);
+			param.setPermissionIdList(permissionIdList);
+			i = session.insert("updatePermissionsToDept", param);
+		}
+
 		session.commit(true);
 		session.close();
-		return i>0;
+		return i > 0 || res > 0;
 	}
 
 }

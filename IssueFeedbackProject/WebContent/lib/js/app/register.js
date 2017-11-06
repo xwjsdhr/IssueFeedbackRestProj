@@ -1,27 +1,33 @@
 $(document).ready(function(){
-	console.log("aaaaa");
-	var alertUserSuccess = $("#alertUserSuccess");
-	var alertUserFail = $("#alertUserFail");
+	getAllDept();
 	
-	var alertPwdSuc = $("#alertPwdSuc");
-	var alertPwdFail = $("#alertPwdFail");
+	$("#formAddUser").submit(function(event){
+		event.preventDefault();
+		$.ajax({
+			url:"/IssueFeedbackProject/addUser",
+			method:"post",
+			data:{
+				user_name:inputUserName.val(),
+				password:inputpassword.val(),
+				real_name:inputRealName.val(),
+				dept_id:selectDept.val()
+			},
+			success:function(data){
+				if(data.result){
+					$('.modal').modal({
+						show:true
+					});
+					 inputUserName.val("");
+					 inputpassword.val("");
+					 inputRealName.val("");
+				}
+			}
+		})
+		
+	});
 	
-	var alertRealSuc = $("#alertRealSuc");
-	var alertRealFail = $("#alertRealFail");
-	var a = false;
-	var b = false;
-	var c = false;
-	var submitBtn = $("#submitBtnReg");
+	init();
 	
-	alertUserFail.hide();
-	alertUserSuccess.hide();
-	
-	alertPwdSuc.hide();
-	alertPwdFail.hide();
-	
-	alertRealSuc.hide();
-	alertRealFail.hide();
-	submitBtn.attr("disabled",true);
 	setInputListener("#inputUserName",alertUserSuccess,alertUserFail,"用户名不能为空",true,function(data){
 		a = data;
 		if(a && b && c){
@@ -48,6 +54,21 @@ $(document).ready(function(){
 	});
 	
 });
+/**
+ * 获取全部部门
+ * 
+ * @returns
+ */
+function getAllDept(){
+
+	$.ajax({
+		url:"/IssueFeedbackProject/allDepts",
+		method:"get",
+		success:function(data){
+			populateSelect(selectDept,data.result);
+		}
+	});
+}
 
 function setInputListener(controlId,alertSuccessComponent,alertFailComponent ,alertText,isUserName,callback){
 	$(controlId).keyup(function(event){
@@ -59,13 +80,13 @@ function setInputListener(controlId,alertSuccessComponent,alertFailComponent ,al
 				alertSuccessComponent.hide();
 				alertFailComponent.hide();
 				$.ajax({
-					url:"/IssueFeedbackProject/CheckUserName",
+					url:"/IssueFeedbackProject/checkUserName",
 					method:"get",
 					data:{
 						userName:username
 					},
 					success:function(data){
-						if(data){
+						if(data.result){
 							alertSuccessComponent.show();
 							alertFailComponent.hide();
 						}else{
@@ -75,7 +96,7 @@ function setInputListener(controlId,alertSuccessComponent,alertFailComponent ,al
 							alertFailComponent.empty().append(element);
 							
 						}
-						callback(data);
+						callback(data.result);
 					}
 				});
 			}else{
@@ -94,3 +115,52 @@ function setInputListener(controlId,alertSuccessComponent,alertFailComponent ,al
 		}
 	});
 }
+function getRow(dept){
+	var option = $("<option>").val(dept.id).text(dept.deptName);
+	return option;
+}
+function populateSelect(selectDept,result){
+	$.each(result,function(index,element){
+		selectDept.append(getRow(element));
+	});
+	progress.css("width","100%");
+	setTimeout(() => {
+		progressRoot.attr("hidden",true);
+	}, 500);
+}
+var selectDept = $("#selectDept");
+
+var alertUserSuccess = $("#alertUserSuccess");
+var alertUserFail = $("#alertUserFail");
+
+var alertPwdSuc = $("#alertPwdSuc");
+var alertPwdFail = $("#alertPwdFail");
+
+var alertRealSuc = $("#alertRealSuc");
+var alertRealFail = $("#alertRealFail");
+var submitBtn = $("#submitBtnReg");
+
+var a = false;
+var b = false;
+var c = false;
+
+var inputUserName = $("#inputUserName");
+var inputpassword = $("#inputpassword");
+var inputRealName = $("#inputRealName");
+
+function init(){
+	alertUserFail.hide();
+	alertUserSuccess.hide();
+	
+	alertPwdSuc.hide();
+	alertPwdFail.hide();
+	
+	alertRealSuc.hide();
+	alertRealFail.hide();
+	submitBtn.attr("disabled",true);
+}
+
+
+
+
+

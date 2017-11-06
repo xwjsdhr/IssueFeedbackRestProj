@@ -6,13 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>组长问题提交首页</title>
-<link href="lib/css/bootstrap.min.css" rel="stylesheet" />
-
-<!-- <link
-	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-	rel="stylesheet" /> -->
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-amber.min.css" />
-<link href="lib/css/material/material.css" rel="stylesheet" />
+<jsp:include page="/WEB-INF/css_common.jsp"></jsp:include>
 <link href="lib/css/app/per_manage.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -80,12 +74,7 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/moment.js"></script>
-<script type="text/javascript" src="lib/js/zh-cn.js"></script>
-<script type="text/javascript" src="lib/js/material/material.js"></script>
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="lib/js/app/permission_management.js"></script>
 
 

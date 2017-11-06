@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	progressRoot.attr("hidden",true);
 //	$('#textareaCommentContent').ckeditor();
 	CKEDITOR.replace('textareaCommentContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
@@ -45,16 +46,17 @@ $(document).ready(function() {
 		btnSubmitAddComment.attr("hidden",true);
 		pbAddComment.attr("hidden",false);
 		$.ajax({
-			url : "/IssueFeedbackProject/AddCommentRest",
-			dataType : 'JSON',
+			url : "/IssueFeedbackProject/addCommentToIssue",
 			data : {
 				issue_id : issueDetailId.val(),
-				comm : JSON.stringify(comment)
+//				comm : JSON.stringify(comment)
+				content : desc,
+				isResovleIssue : checkboxResovled.prop("checked") ? 1 : 0,
+				isProblem : checkboxProblem.prop("checked") ? 1 : 0,
 			},
 			method : "get",
 			success : function(data) {
-				console.log(data);
-				addCommentToList(data);
+				addCommentToList(data.result);
 				btnSubmitAddComment.attr("hidden",false);
 				pbAddComment.attr("hidden",true);
 			}

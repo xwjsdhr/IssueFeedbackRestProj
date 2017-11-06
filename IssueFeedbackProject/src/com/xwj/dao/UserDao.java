@@ -52,4 +52,6 @@ public interface UserDao {
 
 	Boolean disableOrEnableUser(Integer userId, boolean b);
 
+	Boolean resetPwd(Integer userId, String pwd);
+
 }

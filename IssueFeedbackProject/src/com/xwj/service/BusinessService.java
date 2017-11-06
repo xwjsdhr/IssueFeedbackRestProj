@@ -131,4 +131,8 @@ public interface BusinessService {
 
 	Boolean disableOrEnableUser(Integer userId, boolean b);
 
+	Boolean resetPwd(Integer userId);
+
+	Boolean checkOldPassword(String string, String password);
+
 }

@@ -34,34 +34,34 @@ $(document).ready(function() {
 function initDeptDrawer() {
 
 	$.ajax({
-		url : "/IssueFeedbackProject/AllDeptAjax",
+		url : "/IssueFeedbackProject/allDepts",
 		method : "get",
 		success : function(data) {
-			$.each(data, function(index, element) {
+			$.each(data.result, function(index, element) {
 				$(".my-drawer").append(makeRowForDept(element));
 			});
-
 			setListenerForDeptItem();
 		}
 	});
 
 	$.ajax({
-		url : "/IssueFeedbackProject/AllPermissionAjax",
+		url : "/IssueFeedbackProject/allPermissions",
 		method : "get",
 		success : function(data) {
 			progress.css("width","100%");
-			
-			setTimeout(() => {
-				$.each(data, function(index, element) {
+			if(data.result){
+				$.each(data.result, function(index, element) {
 					var row = makeRowForPermission(element);
 					$("#permissionListBody").append(row);
 				});
 				setListenerForDeptItem();
 				setListenerForPermissionItem();
-				progressRoot.attr("hidden",true);
-			}, 500);
-			
-			
+				
+				
+				setTimeout(() => {
+					progressRoot.attr("hidden",true);
+				}, 500);
+			}
 			
 		}
 	});
@@ -99,25 +99,31 @@ function setListenerForPermissionItem(){
  */
 function setListenerForDeptItem() {
 	$(".my-dept-row").on("click", function(event) {
+		progressRoot.attr("hidden",false);
+		progress.css("width","35%");
 		
 		// 根据点击的部门记录获取指定的权限
 		$.ajax({
-			url : "/IssueFeedbackProject/GetDeptByIdAjax",
+			url : "/IssueFeedbackProject/getDeptById",
 			method : "get",
 			data : {
 				id : event.target.id
 			},
 			success : function(data) {
+				progress.css("width","100%");
 				curremtDeptId = event.target.id;
 				$("#pDeptName").text(event.target.text);
 				$(".my-check").prop("checked", false);
 				$("#raido-dept-" + event.target.id).prop("checked", true);
 
 				currentPermission = [];
-				$.each(data.permissionsList, function(index, element) {
+				$.each(data.result.permissionsList, function(index, element) {
 					$("#checkbox-" + element.id).prop("checked", true);
 					currentPermission.push(element.id);
 				});
+				setTimeout(() => {
+					progressRoot.attr("hidden",true);
+				}, 500);
 			}
 		});
 	});
@@ -132,7 +138,6 @@ function setListenerForDeptItem() {
  */
 
 function makeRowForDept(dept) {
-	var row = $("<a class='mdl-navigation__link my-dept-row'>").attr("href", "#").attr("id",
-			dept.id).text(dept.deptName);
+	var row = $("<a class='mdl-navigation__link'>").addClass("my-dept-row").attr("href", "#").attr("id", dept.id).text(dept.deptName);
 	return row;
 }

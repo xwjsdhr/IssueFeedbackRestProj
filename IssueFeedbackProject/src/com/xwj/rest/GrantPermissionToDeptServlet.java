@@ -31,14 +31,13 @@ public class GrantPermissionToDeptServlet extends HttpServlet {
 		Integer deptId = Integer.parseInt(request.getParameter("dept_id"));
 		String[] permissions = request.getParameterValues("permissions[]");
 		List<Integer> permissionIdList = new ArrayList<>();
+		boolean b = false;
 		if (permissions != null) {
 			for (String string : permissions) {
 				permissionIdList.add(Integer.parseInt(string));
 			}
 		}
-
-		boolean b = bs.updatePermission2Dept(deptId, permissionIdList);
-
+		b = bs.updatePermission2Dept(deptId, permissionIdList);
 		response.getWriter().print(b);
 
 	}

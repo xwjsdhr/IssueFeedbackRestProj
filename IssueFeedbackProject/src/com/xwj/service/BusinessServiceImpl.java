@@ -263,4 +263,12 @@ public class BusinessServiceImpl implements BusinessService {
 	public Boolean disableOrEnableUser(Integer userId, boolean b) {
 		return userDao.disableOrEnableUser(userId,b);
 	}
+	@Override
+	public Boolean resetPwd(Integer userId) {
+		return userDao.resetPwd(userId,passwordEncoder.encode("123"));
+	}
+	@Override
+	public Boolean checkOldPassword(String str, String password) {
+		return passwordEncoder.matches(password, str);
+	}
 }

@@ -6,14 +6,18 @@ $(document).ready(function() {
 	CKEDITOR.replace('textareaIssueContent');
 
 	$.ajax({
-		url:"/IssueFeedbackProject/AllProjectsAjax",
+		url:"/IssueFeedbackProject/allProjects",
 		method:"get",
 		dataType:"json",
 		success:function(data){
-			$(data).each(function(index,data){
+			$(data.result).each(function(index,data){
 				var option = $("<option>").text(data.projectName).val(data.id);
 				$("#projectSelector").append(option);
 			});
+			progress.css("width","100%");
+			setTimeout(() => {
+				progressRoot.attr("hidden",true);
+			}, 500);
 		}
 	});
 	
@@ -23,27 +27,26 @@ $(document).ready(function() {
 		var issueTitle = $("#inputIssueTitle").val();
 		var issueContent = CKEDITOR.instances['textareaIssueContent'].getData();
 		var issue = {
-			title:issueTitle,
-			content:issueContent,
-			project:{
-				id:$("#projectSelector").val()
-			}
+			
 		};
 		console.log(issue);
 		pbAddIssue.attr("hidden",false);
 		submitAddIssue.attr("hidden",true);
 		$.ajax({
-			url : "/IssueFeedbackProject/AddIssueAjax",
+			url : "/IssueFeedbackProject/addIssue",
 			method : "post",
-			dataType: 'JSON',
 			data : {
-				issue:JSON.stringify(issue)
+				title:issueTitle,
+				content:issueContent,
+				project_id:$("#projectSelector").val()
 			},
 			success : function(data) {
-				pbAddIssue.attr("hidden",true);
-				submitAddIssue.attr("hidden",false);
+				if(data.result){
+					pbAddIssue.attr("hidden",true);
+					submitAddIssue.attr("hidden",false);
+					window.location.href = "/IssueFeedbackProject/index";
+				}
 				
-				window.location.href = "/IssueFeedbackProject/Index";
 			}
 		});
 		
