@@ -3,11 +3,13 @@ package com.xwj.dao.impl;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.entity.Dept;
 import com.xwj.util.DbUtils;
 
+@Component
 public class DeptDaoImpl implements DeptDao {
 
 	private DbUtils dbUtils;
@@ -31,12 +33,10 @@ public class DeptDaoImpl implements DeptDao {
 	 */
 	@Override
 	public int addDept(String deptName) {
-		String insertSql ="insert into t_dept(dept_name) values(?)";
-		Object [] objects = new Object[] {
-				deptName
-		};
-		
-		return dbUtils.executeUpdate(insertSql, objects);
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i = session.insert("addDept",deptName);
+		session.close();
+		return i;
 	}
 
 	/* (non-Javadoc)

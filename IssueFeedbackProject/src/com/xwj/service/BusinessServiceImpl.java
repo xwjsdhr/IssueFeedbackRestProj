@@ -13,19 +13,11 @@ import com.xwj.dao.PermissionDao;
 import com.xwj.dao.ProjectDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
-import com.xwj.dao.impl.DeptDaoImpl;
-import com.xwj.dao.impl.IssueDaoImpl;
-import com.xwj.dao.impl.IssueStatisticsDaoImpl;
-import com.xwj.dao.impl.MyBatisIssueDaoImpl;
-import com.xwj.dao.impl.PermissionDaoImpl;
-import com.xwj.dao.impl.ProjectDaoImpl;
-import com.xwj.dao.impl.StatusDaoImpl;
-import com.xwj.dao.impl.UserDaoImpl;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
+import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
-import com.xwj.entity.IssueStatistics;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
@@ -40,28 +32,28 @@ import com.xwj.params.SearchCondition;
 @Component
 public class BusinessServiceImpl implements BusinessService {
 
+	@Autowired(required= true)
 	private UserDao userDao;
-	private IssueDao issueDao;
+
+	@Autowired(required= true)
 	private DeptDao deptDao;
+	@Autowired(required= true)
 	private StatusDao statusDao;
-	private IssueStatisticsDaoImpl issueStatisticsDao;
-	private MyBatisIssueDaoImpl myBatisIssueDao;
+	@Autowired(required= true)
+	private IssueDao myBatisIssueDao;
+	@Autowired(required= true)
 	private ProjectDao projectDao;
-	private PermissionDao dao;
+	@Autowired(required= true)
+	private PermissionDao permissionDao;
+	
 	private static BusinessServiceImpl instance;
+	
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	private BusinessServiceImpl() {
-		userDao = new UserDaoImpl();
-		issueDao = new IssueDaoImpl();
-		deptDao = new DeptDaoImpl();
-		statusDao = new StatusDaoImpl();
-		issueStatisticsDao = new IssueStatisticsDaoImpl();
-		myBatisIssueDao = new MyBatisIssueDaoImpl();
-		projectDao = new ProjectDaoImpl();
-		dao = new PermissionDaoImpl();
+		
 	}
 	public static BusinessServiceImpl newInstance() {
 		if(instance == null) {
@@ -92,12 +84,12 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	public List<Comment> getCommentsById(int issueid) {
-		return issueDao.getCommentsByIssueId(issueid);
+		return myBatisIssueDao.getCommentsByIssueId(issueid);
 	}
 
 	@Override
 	public int addCommentToIssue(int issueId, Comment comment) {
-		return issueDao.addCommentToIssue(issueId, comment);
+		return myBatisIssueDao.addCommentToIssue(issueId, comment);
 	}
 
 	@Override
@@ -118,17 +110,17 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public List<Issue> getIssueByStatusId(Integer statusId) {
 
-		return issueDao.getIssueByStatusId(statusId);
+		return myBatisIssueDao.getIssueByStatusId(statusId);
 	}
 
 	@Override
 	public List<Issue> getIssueByDeptId(Integer deptId) {
-		return issueDao.getIssueByDeptId(deptId);
+		return myBatisIssueDao.getIssueByDeptId(deptId);
 	}
 
 	@Override
 	public List<Issue> getIssueByKeyword(String keyword) {
-		return issueDao.getIssueByKeyword(keyword);
+		return myBatisIssueDao.getIssueByKeyword(keyword);
 	}
 
 	@Override
@@ -138,32 +130,32 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	public List<Issue> getIssuesByUserId(Integer userId) {
-		return issueDao.getIssuesByUserId(userId);
+		return myBatisIssueDao.getIssuesByUserId(userId);
 	}
 
 	@Override
 	public IssuePage getAllByPageNum(Integer pageNum, Integer pageSize) {
-		return issueDao.getAllByPageNum(pageNum, pageSize);
+		return myBatisIssueDao.getAllByPageNum(pageNum, pageSize);
 	}
 
 	@Override
 	public int deleteIssue(int issueId) {
-		return issueDao.deleteIssue(issueId);
+		return myBatisIssueDao.deleteIssue(issueId);
 	}
 
 	@Override
 	public List<Issue> getAllDeletedIssues() {
-		return issueDao.getAllDeletedIssues();
+		return myBatisIssueDao.getAllDeletedIssues();
 	}
 
 	@Override
 	public List<Issue> getIssuesByConditions(int userId, int deptId, int statusId, String order, String orderType) {
-		return issueDao.getIssuesByConditions(userId, deptId, statusId, order, orderType);
+		return myBatisIssueDao.getIssuesByConditions(userId, deptId, statusId, order, orderType);
 	}
 
 	@Override
 	public List<User> getUsersByDeptId(Integer id) {
-		return userDao.getUsersByDeptId(id);
+		return null;
 	}
 
 	@Override
@@ -173,42 +165,22 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	public int restoreIssue(Integer id) {
-		return issueDao.restoreIssue(id);
+		return myBatisIssueDao.restoreIssue(id);
 	}
 
 	@Override
 	public List<Issue> getIssuesInRange(List<Integer> list) {
-		return issueDao.getIssuesInRange(list);
+		return myBatisIssueDao.getIssuesInRange(list);
 	}
 
 	@Override
 	public List<Issue> orderIssueByType(String order, String desc) {
-		return issueDao.orderIssues(order, desc);
+		return myBatisIssueDao.orderIssues(order, desc);
 	}
 
 	@Override
 	public Map<Integer, String> getColumns() {
-		return issueDao.getColumns();
-	}
-
-	@Override
-	public void statisticsIssue() {
-		issueStatisticsDao.statisticsIssue();
-	}
-
-	@Override
-	public IssueStatistics getByWeekOfYear(int weekOfYear) {
-		return issueStatisticsDao.getByWeekOfYear(weekOfYear);
-	}
-
-	@Override
-	public List<Integer> getAllYears(){
-		return issueStatisticsDao.getAllYears();
-	}
-
-	@Override
-	public List<Integer> getWeeksByYear(Integer year) {
-		return issueStatisticsDao.getWeeksByYear(year);
+		return myBatisIssueDao.getColumns();
 	}
 
 	@Override
@@ -224,7 +196,7 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	public User getUserById(int userId) {
-		return myBatisIssueDao.getUserById(userId);
+		return userDao.getUserById(userId);
 	}
 
 	@Override
@@ -245,7 +217,7 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 	@Override
 	public List<Permission> getAllPermissions() {
-		return dao.getAllPermissons();
+		return permissionDao.getAllPermissons();
 	}
 	@Override
 	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
@@ -270,5 +242,9 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public Boolean checkOldPassword(String str, String password) {
 		return passwordEncoder.matches(password, str);
+	}
+	@Override
+	public List<IssueCount> countIssue(Integer year, Integer month, Integer week, String type) {
+		return myBatisIssueDao.countIssue(year,month,week,type);
 	}
 }

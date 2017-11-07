@@ -153,7 +153,7 @@ function initSearchBar() {
 		success : function(data) {
 			var default1 = $("<option value='-1'>").text("全部");
 			$(".selectpicker").append(default1);
-			$.each(data, function(index, element) {
+			$.each(data.result, function(index, element) {
 				var item = makeListItemForStatus(element);
 				$(".selectpicker").append(item);
 			});
@@ -173,23 +173,14 @@ function makeListItemForStatus(status) {
 function getIssue() {
 	$("#issue_table").attr("hidden", true);
 	$("#pbIssues").attr("hidden", false);
-	progress.css("width","65%");
+	progressRoot.css("width","65%");
 	$.ajax({
 		url : "/IssueFeedbackProject/allIssues",
 		method : "GET",
 		dataType : "json",
-		progress: function(e){
-			 if(e.lengthComputable) {
-		            //calculate the percentage loaded
-		            var pct = (e.loaded / e.total) * 100;
-
-		            //log percentage loaded
-		            console.log("aaaaa:"+pct);
-		        }
-		},
 		success : function(data,textStatus,jqXHR) {
-			progress.css("width","100%");
-			$.each(data, function(index, element) {
+			progressRoot.css("width","100%");
+			$.each(data.result, function(index, element) {
 				var row = makeRowForIssue(element);
 				$("#mybody").append(row);
 			});
@@ -229,13 +220,15 @@ function makeRowForIssue(issue) {
 	var spanCommentSize = $("<span class='badge badge-pill badge-info'>").text(
 			issue.comments.length + "");
 	spanStatus.append(spanStatusChild);
+	var commentIcon = $("<i>").addClass("material-icons").text("comment");
+	var commentTd = $("<td>").append(commentIcon).append(spanCommentSize);
 
 	statusTd.append(spanStatus);
-	statusTd.append(spanCommentSize);
-
+	//statusTd.append(spanCommentSize);
+	
 	var titleTd = $("<td>").text(issue.title);
-	var submitTimeTd = $("<td>").text(issue.submitTime);
-	var lastUpdateTimeTd = $("<td>").text(issue.lastUpdateTime);
+	var submitTimeTd = $("<td>").text(moment(issue.submitTime).fromNow());
+	var lastUpdateTimeTd = $("<td>").text(moment(issue.lastUpdateTime).fromNow());
 	var realNameTd = $("<td>").text(issue.user.realName);
 	var projectNameTd = $("<td>").text(issue.project.projectName);
 	var deptNameTd = $("<td>").text(issue.project.dept.deptName);
@@ -246,7 +239,9 @@ function makeRowForIssue(issue) {
 			"/IssueFeedbackProject/issue_detail?id=" + issue.id);
 	tdLink.append(aLink);
 
+	
 	trRow.append(checkboxTd);
+	trRow.append(commentTd);
 	trRow.append(statusTd);
 	trRow.append(titleTd);
 	trRow.append(submitTimeTd);

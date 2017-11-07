@@ -47,5 +47,4 @@ var alertNewPwd2 = $("#alertNewPwd2");
 var btnUpdatePwd = $("#btnUpdatePwd");
 var isOldCorrect = false;
 var btnCheckOldPwd = $("#btnCheckOldPwd");
-btnUpdatePwd.attr("disabled",true);
 progressRoot.attr("hidden",true);

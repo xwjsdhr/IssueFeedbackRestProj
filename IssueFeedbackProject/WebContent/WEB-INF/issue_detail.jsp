@@ -49,30 +49,37 @@
 			<div class="card-body">
 				<p class="card-text">${issue_detail.content }</p>
 			</div>
-			<div class="list-group list-group-flush" id="comment_list_div">
+			<ul class="list-group" id="comment_list_div">
 
 				<c:forEach items="${issue_detail.comments }" var="comment">
-
-					<div class="media list-group-item">
-						<p class="pull-right">
-							<i class="ion-clock"></i> <small>${comment.createTime }</small>
-						</p>
-						<c:if test="${comment.isResovleIssue == 1 }">
-							<span class="badge badge-pill badge-success">已解决</span>
-						</c:if>
-						<c:if test="${comment.isProblem == 1 }">
-							<span class="badge badge-pill badge-danger">疑难问题</span>
-						</c:if>
-
-						<div class="media-body">
-							<p class=" user_name">
-								<i class="ion-person"></i> ${comment.user.realName }
-							</p>
-							${comment.content }
-						</div>
-					</div>
+					
+					 <li class="list-group-item">
+						 <div class="container">
+						 	<div class="row">
+							 	<p>
+									 ${comment.createTime }
+								</p>
+						 	</div>
+						 	<div class="row">
+						 		<c:if test="${comment.isResovleIssue == 1 }">
+									<span class="badge badge-pill badge-success">已解决</span>
+								</c:if>
+								<c:if test="${comment.isProblem == 1 }">
+									<span class="badge badge-pill badge-danger">疑难问题</span>
+								</c:if>
+						 	</div>
+						 	<div class="row">
+						 		 ${comment.user.realName }
+						 	</div>
+						 	<div class="row">
+						 		 ${comment.content }	
+						 	</div>
+									
+						 </div>
+					</li> 
+					
 				</c:forEach>
-			</div>
+			</ul>
 		</div>
 		<div class="container">
 			<div class="row">

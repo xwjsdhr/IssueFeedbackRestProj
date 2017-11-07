@@ -8,7 +8,7 @@ $(document).ready(function(event) {
 				toggleProgress(false);
 			}, 5000);
 			toggleProgress(false);
-			progress.css("width","100%");
+			progressRoot.css("width","100%");
 			if(data.result != null){
 				
 				setTimeout(() => {

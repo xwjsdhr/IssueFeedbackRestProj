@@ -84,5 +84,10 @@ public class MainController {
 	public String updatePwd() {
 		return "update_pwd";
 	}
+	
+	@GetMapping("/statistics")
+	public String statistics() {
+		return "issue_statistics";
+	}
 
 }

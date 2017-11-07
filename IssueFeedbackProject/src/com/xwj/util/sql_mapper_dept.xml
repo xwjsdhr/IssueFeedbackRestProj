@@ -21,6 +21,9 @@
 		 on tdp.permission_id = tp.id 
 	</select>
 	
+	<insert id="addDept" parameterType="String">
+		insert into t_dept(dept_name) values(#{deptName})
+	</insert>
 	
 	<resultMap type="com.xwj.entity.Dept" id="deptResultMap">
 		<result column="deptName" property="deptName"/>

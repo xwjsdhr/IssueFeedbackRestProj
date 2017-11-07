@@ -28,13 +28,6 @@ public interface UserDao {
 	List<User> getAllUsers();
 	
 	/**
-	 * 根据部门获取用户
-	 * @param deptId
-	 * @return
-	 */
-	List<User> getUsersByDeptId(int deptId);
-	
-	/**
 	 * 检查用户名是否存在
 	 * @param username 用户名
 	 * @return 

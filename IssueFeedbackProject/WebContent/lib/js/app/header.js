@@ -11,5 +11,4 @@ $(document).ready(function(event){
 	});
 });
 
-var progress = $("#progress");
 var progressRoot = $("#progressRoot");

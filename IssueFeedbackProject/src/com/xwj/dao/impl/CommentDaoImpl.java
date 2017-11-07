@@ -1,7 +1,10 @@
 package com.xwj.dao.impl;
 
+import org.springframework.stereotype.Component;
+
 import com.xwj.dao.CommentDao;
 
+@Component
 public class CommentDaoImpl implements CommentDao {
 
 //	private DbUtils dbUtils;

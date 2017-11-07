@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
 
 import com.xwj.dao.IssueDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
+import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
-import com.xwj.entity.User;
 import com.xwj.params.IssueJointComment;
+import com.xwj.params.ParamStatistics;
 import com.xwj.params.QueryCondition;
 import com.xwj.params.SearchCondition;
 import com.xwj.params.UpdatePerParam;
@@ -23,6 +25,7 @@ import com.xwj.util.DbUtils;
  * @author Administrator
  *
  */
+@Component
 public class MyBatisIssueDaoImpl implements IssueDao {
 	private DbUtils dbUtils;
 
@@ -77,11 +80,10 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 	public int addCommentToIssue(int issueId, Comment comment) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		Issue issue = session.selectOne("selectById", issueId);
-		int commentId = session.insert("insertComment", comment);
+		session.insert("insertComment", comment);
 		session.commit();
-		System.out.println("commentId:   " + commentId);
-
-		IssueJointComment ic = new IssueJointComment(issueId, commentId);
+		Integer id = session.selectOne("selectInsertedKey");
+		IssueJointComment ic = new IssueJointComment(issueId, id);
 		int res = session.insert("insertIssueJointComment", ic);
 		if (issue.getComments().size() == 0) {
 			if (res > 0) {
@@ -187,19 +189,13 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		return res;
 	}
 
-	public User getUserById(int userId) {
-		SqlSession session = dbUtils.getSessionFactory().openSession();
-		User user = session.selectOne("getUserById", userId);
-		session.close();
-		return user;
-	}
-
 	@Override
 	public List<Issue> getAllIssuesByConditions(int deptId, int statusId, String order, String orderType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public List<Issue> getIssueWithSearchCondition(SearchCondition sc) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		List<Issue> issues = session.selectList("searchIssue", sc);
@@ -207,6 +203,7 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		return issues;
 	}
 
+	@Override
 	public List<Issue> getAllIssuesWithoutDept() {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		List<Issue> issues = session.selectList("allIssuesList");
@@ -214,6 +211,7 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		return issues;
 	}
 
+	@Override
 	public boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		UpdatePerParam param = new UpdatePerParam();
@@ -229,6 +227,16 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		session.commit(true);
 		session.close();
 		return i > 0 || res > 0;
+	}
+
+	@Override
+	public List<IssueCount> countIssue(Integer year, Integer month, Integer week, String type) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+
+		List<IssueCount> issueCounts = session.selectList("countIssueByYearAndMonth",
+				new ParamStatistics(year, month, week, type));
+		session.close();
+		return issueCounts;
 	}
 
 }

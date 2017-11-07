@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
+import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
 import com.xwj.entity.IssueStatistics;
 import com.xwj.entity.Permission;
@@ -101,13 +102,6 @@ public interface BusinessService {
 
 	Map<Integer, String> getColumns();
 
-	void statisticsIssue();
-
-	IssueStatistics getByWeekOfYear(int weekOfYear);
-
-	List<Integer> getAllYears();
-
-	List<Integer> getWeeksByYear(Integer year);
 
 	boolean checkUserName(String username);
 
@@ -134,5 +128,7 @@ public interface BusinessService {
 	Boolean resetPwd(Integer userId);
 
 	Boolean checkOldPassword(String string, String password);
+
+	List<IssueCount> countIssue(Integer year ,Integer month,Integer week ,String type);
 
 }

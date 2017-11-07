@@ -26,7 +26,7 @@
 											<div class="mdl-grid">
 												<div class="mdl-cell mdl-cell--10-col">
 													
-													<input type="password"  class="form-control" placeholder="请输入原密码" id="inputOldPassword">
+													<input type="password"  class="form-control" placeholder="请输入原密码" id="inputOldPassword" required="required">
 												</div>
 												<div class="mdl-cell mdl-cell--2-col">
 													<button role="button" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnCheckOldPwd">检查</button>
@@ -41,7 +41,7 @@
 											<div class="mdl-grid">
 												<div class="mdl-cell mdl-cell--10-col">
 													
-													<input type="password" class="form-control" placeholder="请输入新密码" id="inputNewPassword">
+													<input type="password" class="form-control" placeholder="请输入新密码" id="inputNewPassword"  required="required">
 												</div>
 												<div class="mdl-cell mdl-cell--2-col">
 													<button role="button" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnCheckNewPwd">检查</button>
@@ -57,7 +57,7 @@
 											
 											<div class="mdl-grid">
 												<div class="mdl-cell mdl-cell--10-col">
-													<input type="password" id="alertNewPwd2"  class="form-control" placeholder="请再次输入新密码"  id="inputNewPassword2">
+													<input type="password" id="alertNewPwd2"  class="form-control" placeholder="请再次输入新密码"  id="inputNewPassword2"  required="required">
 												</div>
 												<div class="mdl-cell mdl-cell--2-col">
 													<button role="button" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnCheckNewPwd2"></button>

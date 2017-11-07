@@ -28,9 +28,17 @@ public class Issue implements Serializable{
 	private int weekOfYear;
 	private int year;
 	private int isTop;
+	private Integer month;
 	private Project project;
 	
 	
+	
+	public Integer getMonth() {
+		return month;
+	}
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
 	public Project getProject() {
 		return project;
 	}

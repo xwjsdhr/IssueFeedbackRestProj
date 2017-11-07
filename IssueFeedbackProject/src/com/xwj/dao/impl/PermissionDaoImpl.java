@@ -3,11 +3,13 @@ package com.xwj.dao.impl;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
 
 import com.xwj.dao.PermissionDao;
 import com.xwj.entity.Permission;
 import com.xwj.util.DbUtils;
 
+@Component
 public class PermissionDaoImpl implements PermissionDao {
 	
 	

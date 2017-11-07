@@ -16,6 +16,7 @@
 		ti.status_id AS statusId,
 		ti.user_id AS issueUserId,
 		ti.project_id AS projectId,
+		ti.month AS issueMonth,
 	</sql>
 
 	<sql id="statusColumns">
@@ -175,9 +176,9 @@
 		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO t_issue
-		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top,project_id)
+		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top,project_id,month)
 		VALUES
-		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop},#{project.id})
+		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop},#{project.id},#{month})
 	</insert>
 	
 	<select id="selectAllProjects" resultMap="projectResultMap">
@@ -191,19 +192,6 @@
 		 ON tpj.dept_id = td.id
 	</select>
 	
-	<!-- 为指定的问题插入评论 -->
-	<insert id="insertComment" parameterType="com.xwj.entity.Comment" useGeneratedKeys="true"
-	keyProperty="id" keyColumn="id">
-		INSERT INTO 
-		t_comment
-		(content,user_id,create_time,is_resovled_issue,is_problem)
-		VALUES
-		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem})
-		<selectKey resultType="Integer" order="AFTER" keyProperty="id" keyColumn="id">
-        	SELECT LAST_INSERT_ID() as id;
-    	</selectKey>
-	</insert>
-	
 	<update parameterType="Integer" id="updateIssueTop">
 		UPDATE t_issue SET is_top = -1 where id = #{id};		
 	</update>
@@ -211,12 +199,7 @@
 	
 		UPDATE t_issue SET is_top = 0 where id = #{id};		
 	</update>
-	<insert id="insertIssueJointComment" parameterType="com.xwj.params.IssueJointComment">
-		INSERT INTO
-		t_issue_comments(issue_id,comment_id)
-		VALUES
-		(#{issueId},#{commentId})
-	</insert>
+	
 	<update id="resolveIssueByComment" parameterType="Integer">
 		UPDATE t_issue SET status_id = 3, resolved_time = now() WHERE id = #{issueId}
 	</update>
@@ -237,7 +220,7 @@
 		<result column="resolvedTime" property="resolvedTime" />
 		<result column="weekOfYear" property="weekOfYear" />
 		<result column="isTop" property="isTop"/>
-		
+		<result column="issueMonth" property="month"/>
 		<association property="status" javaType="com.xwj.entity.Status">
 			<id column="statusId" property="id" />
 			<result column="statusName" property="statusName" />

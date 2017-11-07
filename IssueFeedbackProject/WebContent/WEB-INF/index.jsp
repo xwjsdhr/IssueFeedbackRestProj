@@ -22,7 +22,7 @@
 			<c:if test="${fn:contains(user_session.dept.permissions,2) }">
 				<div class="float-over-bottom">
 					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-						href="${pageContext.request.contextPath }/new_issue"> 添加问题 </a>
+						href="${pageContext.request.contextPath }/new_issue"> <i class="material-icons">add</i>添加问题 </a>
 				</div>
 			</c:if>
 
@@ -52,7 +52,7 @@
 							</div>
 							<button style="margin-left: 20px" type="submit"
 								class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-								查询 <i class="ion-search"></i>
+								查询  <i class="material-icons">search</i>
 							</button>
 						</form>
 					</div>
@@ -71,6 +71,7 @@
 									class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 									导出</button>
 							</td> -->
+							<th></th>
 							<th></th>
 							<th>状态</th>
 							<th>标题</th>

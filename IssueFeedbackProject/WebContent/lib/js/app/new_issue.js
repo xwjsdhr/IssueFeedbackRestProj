@@ -14,7 +14,7 @@ $(document).ready(function() {
 				var option = $("<option>").text(data.projectName).val(data.id);
 				$("#projectSelector").append(option);
 			});
-			progress.css("width","100%");
+			progressRoot.css("width","100%");
 			setTimeout(() => {
 				progressRoot.attr("hidden",true);
 			}, 500);

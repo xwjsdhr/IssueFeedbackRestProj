@@ -21,21 +21,18 @@
 		
 			
 			<div class="row">
-				<div class="col-lg-12">
+			<div class="col-lg-1"></div>
+				<div class="col-lg-10">
 				
-					<canvas id="myChart" width="300" height="200"></canvas>
+					 <canvas id="canvas" width="55%"></canvas>
 				</div>
 			</div>
 		</div>
 	</main>
 </div>
 </body>
-<script type="text/javascript" src="lib/js/popper.min.js"></script>
-<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/moment.js"></script>
-<script type="text/javascript" src="lib/js/zh-cn.js"></script>
-<script type="text/javascript" src="lib/js/material/material.js"></script>
+
+<jsp:include page="/WEB-INF/script.jsp"></jsp:include>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
 <script type="text/javascript" src="lib/js/app/issue_staistics.js"></script>
 

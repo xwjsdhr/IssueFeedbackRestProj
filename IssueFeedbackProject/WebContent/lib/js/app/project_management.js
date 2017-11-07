@@ -49,7 +49,7 @@ function getRow(project){
 
 
 function progressBar(data){
-	$("#progress").css("width","100%");
+	$("#progressRoot").css("width","100%");
 	setTimeout(() => {
 		$.each(data.result,function(index,element){
 			projectTable.append(getRow(element));

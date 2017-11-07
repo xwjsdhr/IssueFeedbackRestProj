@@ -18,12 +18,13 @@
 				<nav class="mdl-navigation mdl-layout--large-screen-only">
 
 					<a class="mdl-navigation__link" href="${pageContext.request.contextPath}/index">
+						<i class="material-icons">home</i>
 						首页
 					</a>
 					<c:if test="${fn:contains(user_session.dept.permissions,2) }">
 						<button id="demo-menu-lower-issue" class="mdl-button mdl-js-button"
 							style="color: white;">
-							<i class="ion-help-circled"></i> 问题管理
+							<i class="material-icons">help_outline</i> 问题管理
 						</button>
 	
 						<ul
@@ -33,12 +34,6 @@
 								href="${pageContext.request.contextPath }/new_issue"> <i
 									class="ion-plus"></i> 添加问题
 							</a></li>
-							<c:if test="${user_session.dept.id == 4 }">
-								<li><a class="mdl-menu__item"
-									href="${pageContext.request.contextPath }/TrashBin"> <i
-										class="ion-trash-a"></i> 回收站
-								</a></li>
-							</c:if>
 						</ul>
 					
 					</c:if>
@@ -46,16 +41,18 @@
 					<c:if test="${fn:contains(user_session.dept.permissions,3)}">
 						<button id="demo-menu-lower-user" class="mdl-button mdl-js-button"
 							style="color: white;">
-							<i class="ion-person-stalker"></i> 用户管理
+							<i class="material-icons">person_outline</i> 用户管理
 						</button>
 						<ul
 							class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 							for="demo-menu-lower-user">
 							<li>
 								<a class="mdl-menu__item"
-									href="${pageContext.request.contextPath }/register"> <i
-										class="ion-plus"></i> 添加用户
+									href="${pageContext.request.contextPath }/register">  添加用户
 								</a>
+								
+							</li>
+							<li>
 								<a class="mdl-menu__item"
 									href="${pageContext.request.contextPath }/user_management"> 
 									 用户管理
@@ -67,8 +64,7 @@
 					<c:if test="${fn:contains(user_session.dept.permissions,4)}">
 						
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/dept_management"> <i
-							class="ion-ios-people"></i> 部门管理
+							href="${pageContext.request.contextPath }/dept_management"><i class="material-icons">people_outline</i> 部门管理
 						</a>
 	
 					</c:if>
@@ -76,29 +72,28 @@
 					<c:if test="${fn:contains(user_session.dept.permissions,5)}">
 						<a class="mdl-navigation__link"
 							href="${pageContext.request.contextPath }/project_management">
-							<i class="ion-stats-bars"></i> 项目管理
+							<i class="material-icons">assignment</i> 项目管理
 						</a>
 					
 					</c:if>
 					
 					<c:if test="${fn:contains(user_session.dept.permissions,6)}">
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/Statistics"> <i
-							class="ion-stats-bars"></i> 统计管理
+							href="${pageContext.request.contextPath }/Statistics"> <i class="material-icons">insert_chart</i> 统计管理
 						</a> 
 					
 					</c:if>
 					
 					<c:if test="${fn:contains(user_session.dept.permissions,7)}">
 						<a class="mdl-navigation__link"
-							href="${pageContext.request.contextPath }/permission_management"> <i
-							class="ion-stats-bars"></i> 权限管理
+							href="${pageContext.request.contextPath }/permission_management"><i class="material-icons">pan_tool</i> 权限管理
 						</a> 
 					</c:if>
 					
 					
 					<button id="demo-menu-lower-user1" class="mdl-button mdl-js-button"
 						style="color: white;">
+						<i class="material-icons">person</i>
 						${user_session.realName}
 					</button>
 					<ul
@@ -116,8 +111,7 @@
 					</ul>
 
 					<a class="mdl-navigation__link"
-						href="#" id="btnLogout"> 退出 <i
-						class="ion-log-out"></i>
+						href="#" id="btnLogout"> 退出 <i class="material-icons">exit_to_app</i>
 					</a>
 				</nav>
 
@@ -139,10 +133,12 @@
 		</c:if>
 		
 		
-		<div class="progress" id="progressRoot">
+		<!-- <div class="progress" id="progressRoot">
 		  <div class="progress-bar progress-bar-striped progress-bar-animated"
 		   role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 35%" id="progress"></div>
-		</div>
+		</div> -->
+		
+		<div id="progressRoot" class="mdl-progress mdl-js-progress" style="height: 10px"></div>
 		<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="lib/js/app/header.js"></script>
 </html>

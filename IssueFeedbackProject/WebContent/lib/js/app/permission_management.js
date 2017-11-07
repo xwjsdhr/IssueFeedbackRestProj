@@ -48,7 +48,7 @@ function initDeptDrawer() {
 		url : "/IssueFeedbackProject/allPermissions",
 		method : "get",
 		success : function(data) {
-			progress.css("width","100%");
+			progressRoot.css("width","100%");
 			if(data.result){
 				$.each(data.result, function(index, element) {
 					var row = makeRowForPermission(element);
@@ -100,7 +100,7 @@ function setListenerForPermissionItem(){
 function setListenerForDeptItem() {
 	$(".my-dept-row").on("click", function(event) {
 		progressRoot.attr("hidden",false);
-		progress.css("width","35%");
+		progressRoot.css("width","35%");
 		
 		// 根据点击的部门记录获取指定的权限
 		$.ajax({
@@ -110,7 +110,7 @@ function setListenerForDeptItem() {
 				id : event.target.id
 			},
 			success : function(data) {
-				progress.css("width","100%");
+				progressRoot.css("width","100%");
 				curremtDeptId = event.target.id;
 				$("#pDeptName").text(event.target.text);
 				$(".my-check").prop("checked", false);

@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -9,6 +10,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
+import com.xwj.entity.IssueCount;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
@@ -34,6 +37,8 @@ public class MyRestController {
 
 	@Autowired
 	public BusinessService businessService;
+	@Autowired
+	public Calendar calendar;
 
 	@PostMapping("/auth")
 	public ResponseEntity<User> auth(@RequestParam("user_name") String username,
@@ -41,6 +46,7 @@ public class MyRestController {
 
 		User user = businessService.loginBCrypt(username, password);
 		if (user != null) {
+			hs.setAttribute("user_session_id", user.getId());
 			hs.setAttribute("user_session", user);
 			return ResponseEntity.ok(user);
 		} else {
@@ -50,21 +56,35 @@ public class MyRestController {
 	}
 
 	@GetMapping("/allIssues")
-	public ResponseEntity<List<Issue>> allIssues(HttpSession hs) {
+	public ResponseEntity<AjaxResult<List<Issue>>> allIssues(HttpSession hs) {
 		User user = (User) hs.getAttribute("user_session");
-		List<String> permissions = user.getDept().getPermissions();
-		List<Issue> issues = new ArrayList<>();
-		if (!permissions.contains("1")) {
-			issues = businessService.getAllIssues(user.getDept().getId());
-		} else if (permissions.contains("2")) {
-			issues = businessService.getAllIssuesWithoutDept();
+		AjaxResult<List<Issue>> ar = null;
+		if (user != null) {
+			List<String> permissions = user.getDept().getPermissions();
+			List<Issue> issues = new ArrayList<>();
+			if (!permissions.contains("1")) {
+				issues = businessService.getAllIssues(user.getDept().getId());
+				ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS)
+						.build();
+			} else if (permissions.contains("2")) {
+				issues = businessService.getAllIssuesWithoutDept();
+				ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS)
+						.build();
+			}
+		} else {
+			ar = new AjaxResult.Builder<List<Issue>>().result(null).errorCode(ErrorCode.ERRORCODE_NO_USER)
+					.message("无用户登录").build();
 		}
-		return ResponseEntity.ok(issues);
+		return ResponseEntity.ok(ar);
 	}
 
 	@GetMapping("/allStatus")
-	public ResponseEntity<List<Status>> allStatus() {
-		return ResponseEntity.ok(businessService.getAllStatus());
+	public ResponseEntity<AjaxResult<List<Status>>> allStatus() {
+
+		AjaxResult<List<Status>> ar = new AjaxResult.Builder<List<Status>>().result(businessService.getAllStatus())
+				.message("获取成功").errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+
+		return ResponseEntity.ok(ar);
 	}
 
 	/**
@@ -198,42 +218,36 @@ public class MyRestController {
 	}
 
 	@GetMapping("/addCommentToIssue")
-	public ResponseEntity<AjaxResult<Comment>> addCommentToIssue(HttpSession hs , @RequestParam("issue_id") Integer issueId,
-			@RequestParam("content") String desc, @RequestParam("isResovleIssue") Integer isResovleIssue,
-			@RequestParam("isProblem") Integer isProblem) {
+	public ResponseEntity<AjaxResult<Comment>> addCommentToIssue(HttpSession hs,
+			@RequestParam("issue_id") Integer issueId, @RequestParam("content") String desc,
+			@RequestParam("isResovleIssue") Integer isResovleIssue, @RequestParam("isProblem") Integer isProblem) {
 		User user = (User) hs.getAttribute("user_session");
-		AjaxResult<Comment> ar  = null;
-		if(user != null) {
+		AjaxResult<Comment> ar = null;
+		if (user != null) {
 			Comment comment = new Comment();
 			comment.setContent(desc);
 			comment.setIsResovleIssue(isResovleIssue);
 			comment.setIsProblem(isProblem);
 			comment.setUser(user);
 			int i = businessService.addCommentToIssue(issueId, comment);
-			if(i>0) {
-				comment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",Locale.CHINA).format(new Date()));
+			if (i > 0) {
+				comment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA).format(new Date()));
 			}
-			ar = new AjaxResult.Builder<Comment>()
-					.result(comment)
-					.errorCode(i>0 ? ErrorCode.ERRORCODE_SUCCESS:-2)
-					.message("添加成功")
-					.build();
-		}else {
-			ar = new AjaxResult.Builder<Comment>()
-					.result(null)
-					.errorCode(ErrorCode.ERRORCODE_USER_LOGINED)
-					.message("无用户登录")
-					.build();
+			ar = new AjaxResult.Builder<Comment>().result(comment).errorCode(i > 0 ? ErrorCode.ERRORCODE_SUCCESS : -2)
+					.message("添加成功").build();
+		} else {
+			ar = new AjaxResult.Builder<Comment>().result(null).errorCode(ErrorCode.ERRORCODE_USER_LOGINED)
+					.message("无用户登录").build();
 		}
 		return ResponseEntity.ok(ar);
 	}
-	
+
 	@PostMapping("/addIssue")
-	public  ResponseEntity<AjaxResult<Boolean>> addIssue(HttpSession hs ,@RequestParam("title") String title,
-			@RequestParam("content") String content, @RequestParam("project_id") Integer projectId){
-		AjaxResult<Boolean> ar  = null;
+	public ResponseEntity<AjaxResult<Boolean>> addIssue(HttpSession hs, @RequestParam("title") String title,
+			@RequestParam("content") String content, @RequestParam("project_id") Integer projectId) {
+		AjaxResult<Boolean> ar = null;
 		User user = (User) hs.getAttribute("user_session");
-		if(user != null) {
+		if (user != null) {
 			Issue issue = new Issue();
 			issue.setTitle(title);
 			issue.setContent(content);
@@ -241,64 +255,69 @@ public class MyRestController {
 			project.setId(projectId);
 			issue.setProject(project);
 			issue.setUser(user);
-			
+			issue.setWeekOfYear(calendar.get(Calendar.WEEK_OF_YEAR));
+			issue.setMonth(calendar.get(Calendar.MONTH) + 1);
+
 			int i = businessService.addIssue(issue);
-			ar = new AjaxResult.Builder<Boolean>()
-					.result(i>0)
-					.errorCode(i>0 ?ErrorCode.ERRORCODE_SUCCESS:-2)
-					.message(i>0 ? "添加成功":"添加失败")
-					.build();
-		}else {
-			ar = new AjaxResult.Builder<Boolean>()
-					.result(null)
-					.errorCode(ErrorCode.ERRORCODE_NO_USER)
-					.message("无用户登录")
+			ar = new AjaxResult.Builder<Boolean>().result(i > 0).errorCode(i > 0 ? ErrorCode.ERRORCODE_SUCCESS : -2)
+					.message(i > 0 ? "添加成功" : "添加失败").build();
+		} else {
+			ar = new AjaxResult.Builder<Boolean>().result(null).errorCode(ErrorCode.ERRORCODE_NO_USER).message("无用户登录")
 					.build();
 		}
-		
+
 		return ResponseEntity.ok(ar);
 	}
+
 	@GetMapping("/grantPermissionToDept")
-	public ResponseEntity<AjaxResult<Boolean>> grantPermissionToDept(@RequestParam("dept_id") Integer id,@RequestParam("permissions") List<Integer>  permissions){
+	public ResponseEntity<AjaxResult<Boolean>> grantPermissionToDept(@RequestParam("dept_id") Integer id,
+			@RequestParam("permissions") List<Integer> permissions) {
 		System.out.println(id);
 		System.out.println(permissions);
 		boolean b = businessService.updatePermission2Dept(id, permissions);
-		AjaxResult<Boolean> ajaxResult = new AjaxResult.Builder<Boolean>()
-				.result(b)
-				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
-				.message("获取成功")
-				.build();
+		AjaxResult<Boolean> ajaxResult = new AjaxResult.Builder<Boolean>().result(b)
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).message("获取成功").build();
 		return ResponseEntity.ok(ajaxResult);
 	}
-	
+
 	@PostMapping("/resetPwd")
-	public ResponseEntity<AjaxResult<Boolean>> resetPwd(@RequestParam("user_id") Integer userId){
-		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
-				.result(businessService.resetPwd(userId))
-				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
-				.build();
+	public ResponseEntity<AjaxResult<Boolean>> resetPwd(@RequestParam("user_id") Integer userId) {
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(businessService.resetPwd(userId))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
-	
+
 	@PostMapping("/checkOldPassword")
-	public ResponseEntity<AjaxResult<Boolean>> checkOldPassword(HttpSession hs, @RequestParam("old_password") String password){
+	public ResponseEntity<AjaxResult<Boolean>> checkOldPassword(HttpSession hs,
+			@RequestParam("old_password") String password) {
 		User user = (User) hs.getAttribute("user_session");
 		System.out.println(user);
 		AjaxResult<Boolean> ar = null;
-		if(user!= null) {
-			 ar = new AjaxResult.Builder<Boolean>()
-					.result(businessService.checkOldPassword(user.getPassword(),password))
-					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
-					.build();
-		}else {
-			 ar = new AjaxResult.Builder<Boolean>()
-						.result(null)
-						.errorCode(ErrorCode.ERRORCODE_NO_USER)
-						.build();
+		if (user != null) {
+			ar = new AjaxResult.Builder<Boolean>()
+					.result(businessService.checkOldPassword(user.getPassword(), password))
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		} else {
+			ar = new AjaxResult.Builder<Boolean>().result(null).errorCode(ErrorCode.ERRORCODE_NO_USER).build();
 		}
-		
+
 		return ResponseEntity.ok(ar);
 	}
-	
-	
+
+	@PostMapping("/issueCount")
+	public ResponseEntity<AjaxResult<List<IssueCount>>> issueCount(@RequestParam("year") Integer year,
+			@RequestParam("month") Integer month, @RequestParam("week") Integer week,
+			@RequestParam("type") String type) {
+		System.out.println("week:" + week + "   year :" + year + "    month:" + month + "   type: " + type);
+		AjaxResult<List<IssueCount>> ar = new AjaxResult.Builder<List<IssueCount>>()
+				.result(businessService.countIssue(year, month, week, type)).errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.build();
+		return ResponseEntity.ok(ar);
+	}
+
+	@Bean
+	public Calendar getCalendar() {
+		return Calendar.getInstance(Locale.CHINA);
+	}
+
 }

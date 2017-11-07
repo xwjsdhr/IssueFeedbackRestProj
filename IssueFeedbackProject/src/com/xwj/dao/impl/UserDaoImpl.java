@@ -1,19 +1,17 @@
 package com.xwj.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
 
 import com.xwj.dao.UserDao;
-import com.xwj.entity.Dept;
 import com.xwj.entity.User;
 import com.xwj.params.ParamResetPwd;
 import com.xwj.params.ParamUpdateUserStatus;
 import com.xwj.util.DbUtils;
 
+@Component
 public class UserDaoImpl implements UserDao {
 
 	private DbUtils dbUtils;
@@ -40,15 +38,10 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public int addUser(User user) {
-		String insertSql = "insert into t_user(user_name,password,dept_id,real_name) values(?,?,?,?)";
-		Object[] objs = new Object[] { user.getUsername(), user.getPassword(), user.getDept().getId(),
-				user.getRealName() };
-			
-		int res = dbUtils.executeUpdate(insertSql, objs);
-//		SqlSession session = dbUtils.getSessionFactory().openSession();
-//		int i =  session.insert("insertUser",user);
-//		session.commit(true);
-		return res;
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i =  session.insert("insertUser",user);
+		session.commit(true);
+		return i;
 	}
 	/* (non-Javadoc)
 	 * @see com.xwj.dao.UserDao#getAllUsers()
@@ -61,35 +54,7 @@ public class UserDaoImpl implements UserDao {
 		session.close();
 		return userList;
 	}
-	/* (non-Javadoc)
-	 * @see com.xwj.dao.UserDao#getUsersByDeptId(int)
-	 */
-	@Override
-	public List<User> getUsersByDeptId(int deptId){
-		String querySql ="select u.id, u.user_name,u.password,u.real_name,d.id,d.dept_name from t_user u, t_dept d where u.dept_id = d.id and d.id=?";
-		Object [] objects = new Object[] {
-				deptId
-		};
-		List<User> users = new ArrayList<>();
-		ResultSet resultSet = dbUtils.executeQuery(querySql, objects);
-		try {
-			while (resultSet.next()) {
-				User user = new User();
-				user.setId(resultSet.getInt("id"));
-				user.setUsername(resultSet.getString("user_name"));
-				user.setPassword(resultSet.getString("password"));
-				user.setRealName(resultSet.getString("real_name"));
-				Dept dept = new Dept();
-				dept.setId(resultSet.getInt("d.id"));
-				dept.setDeptName(resultSet.getString("dept_name"));
-				user.setDept(dept);
-				users.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return users;			
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.xwj.dao.UserDao#checkUserName(java.lang.String)

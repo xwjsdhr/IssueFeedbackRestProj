@@ -5,7 +5,9 @@ import java.util.Map;
 
 import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
+import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
+import com.xwj.params.SearchCondition;
 
 /**
  * 问题数据库dao
@@ -147,5 +149,13 @@ public interface IssueDao {
 	 * @return
 	 */
 	int stickTop(int issueId, Integer cancel);
+
+	boolean updatePermission2Dept(Integer deptId, List<Integer> permissionIdList);
+
+	List<Issue> getAllIssuesWithoutDept();
+
+	List<Issue> getIssueWithSearchCondition(SearchCondition sc);
+
+	List<IssueCount> countIssue(Integer year ,Integer month,Integer week ,String type);
 
 }

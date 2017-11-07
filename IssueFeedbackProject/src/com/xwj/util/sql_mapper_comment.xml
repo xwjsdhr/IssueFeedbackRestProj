@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwj.util.sql_mapper_comment">
+
+	<insert id="insertComment" parameterType="com.xwj.entity.Comment">
+		
+		INSERT INTO 
+		t_comment
+		(content,user_id,create_time,is_resovled_issue,is_problem)
+		VALUES
+		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem})
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id" keyColumn="id">
+        	select id from t_comment order by id limit 1
+    	</selectKey> 
+	</insert>
+
+	<select id="selectInsertedKey" resultType="Integer">
+		select id from t_comment order by id limit 1
+	</select>
+	<insert id="insertIssueJointComment" parameterType="com.xwj.params.IssueJointComment">
+		INSERT INTO
+		t_issue_comments(issue_id,comment_id)
+		VALUES
+		(#{issueId},#{commentId})
+	</insert>
+</mapper>

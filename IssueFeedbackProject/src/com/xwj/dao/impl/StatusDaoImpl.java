@@ -1,14 +1,15 @@
 package com.xwj.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Component;
 
 import com.xwj.dao.StatusDao;
 import com.xwj.entity.Status;
 import com.xwj.util.DbUtils;
 
+@Component
 public class StatusDaoImpl implements StatusDao {
 
 	private DbUtils dbUtils;
@@ -21,22 +22,9 @@ public class StatusDaoImpl implements StatusDao {
 	 */
 	@Override
 	public List<Status> getAllStatus(){
-		String selectSql = "select * from t_status";
-		List<Status> list = new ArrayList<>();
-		Object [] params = new Object[] {};
-		ResultSet rs = dbUtils.executeQuery(selectSql, params);
-		try {
-			while(rs.next()) {
-				Status status = new Status();
-				status.setId(rs.getInt("id"));
-				status.setStatusName(rs.getString("status_name"));
-				list.add(status);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Status> list = session.selectList("getAllStatus");
+		session.close();
 		return list;
 	}
 	
