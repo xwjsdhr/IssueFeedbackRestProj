@@ -81,19 +81,23 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		Issue issue = session.selectOne("selectById", issueId);
 		session.insert("insertComment", comment);
-		session.commit();
 		Integer id = session.selectOne("selectInsertedKey");
 		IssueJointComment ic = new IssueJointComment(issueId, id);
 		int res = session.insert("insertIssueJointComment", ic);
+		session.commit();
 		if (issue.getComments().size() == 0) {
 			if (res > 0) {
 				updateIssueStatusById(issueId, 2);
 			}
 		} else {
-			if (comment.getIsResovleIssue() == 1 && issue.getStatus().getId() != 3) {
+			if (comment.getIsResovleIssue() == 1) {
+				System.out.println("update resolve");
 				session.update("resolveIssueByComment", issueId);
-			} else if (comment.getIsProblem() == 1 && issue.getStatus().getId() != 4) {
-				updateIssueStatusById(issueId, 4);
+			} else if (comment.getIsProblem() == 1) {
+				System.out.println("update 4");
+				UpdateStatusByIssueId byIssueId = new UpdateStatusByIssueId(issueId, 4);
+				session.update("updateStatusById", byIssueId);
+				//updateIssueStatusById(issueId, 4);
 			}
 		}
 
@@ -230,11 +234,10 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 	}
 
 	@Override
-	public List<IssueCount> countIssue(Integer year, Integer month, Integer week, String type) {
+	public List<IssueCount> countIssue(Integer year, String type) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-
 		List<IssueCount> issueCounts = session.selectList("countIssueByYearAndMonth",
-				new ParamStatistics(year, month, week, type));
+				new ParamStatistics(year , type));
 		session.close();
 		return issueCounts;
 	}

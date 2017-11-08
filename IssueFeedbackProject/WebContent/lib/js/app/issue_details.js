@@ -75,34 +75,24 @@ $(document).ready(function() {
 });
 
 function addCommentToList(comment) {
-	var item = $("<div class='media list-group-item'>");
-	var pullRight = $("<p class='pull-right'>");
+	var item = $("<div class='comment-wrap'>");
+	
+	var divUsername = $("<div>").text(comment.user.realName);
+	var divPhoto = $("<div class='photo'>").append(divUsername);
+	
 	var badge;
 	if (comment.isResovleIssue == 1) {
 		badge = $("<span class='badge badge-pill badge-success'>已解决</span>")
 	} else if (comment.isProblem == 1) {
 		badge = $("<span class='badge badge-pill badge-danger'>疑难问题</span>")
 	}
-	var small = $("<small>").append(comment.createTime);
-	var clockIcon = $("  <i class='ion-clock'>")
-	pullRight.append(clockIcon);
-	pullRight.append(small);
 
-	var mediaBody = $("<div class='media-body'>");
-	var userName = $("<p class='user_name'>");
-	var icon = $("<i class='ion-person'>");
+	var divCommentText = $("<p class='comment-text'>").html(comment.content);
+	var divCommentBottom = $("<div class='bottom-comment'>").append($("<div class='comment-date'>").text(comment.createTime));
+	var divCommentBlock = $("<div class='comment-block'>").append(badge).append(divCommentText).append(divCommentBottom);
 
-	var realName = comment.user.realName;
-	var content = comment.content;
-	console.log(content);
-	userName.append(icon);
-	userName.append(realName);
-	mediaBody.append(userName);
-	mediaBody.append(content);
-
-	item.append(pullRight);
-	item.append(badge);
-	item.append(mediaBody);
+	
+	item.append(divPhoto).append(divCommentBlock);
 
 	$("#comment_list_div").append(item);
 

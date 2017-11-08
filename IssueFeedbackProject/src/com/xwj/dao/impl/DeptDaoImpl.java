@@ -35,6 +35,7 @@ public class DeptDaoImpl implements DeptDao {
 	public int addDept(String deptName) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		int i = session.insert("addDept",deptName);
+		session.commit();
 		session.close();
 		return i;
 	}

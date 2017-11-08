@@ -6,20 +6,26 @@ var permissions = [];
 $(document).ready(function() {
 
 	initDeptDrawer();
-	$("#btnSave").click(function(event){
+	btnSave.click(function(event){
 		if(curremtDeptId == -1)return;
+		btnSave.attr("disabled",true);
+		btnSave.text("正在更新。。。");
 		$.ajax({
-			url:"/IssueFeedbackProject/GrantPermissionToDept",
+			url:"/IssueFeedbackProject/grantPermissionToDept",
 			data:{
 				dept_id:curremtDeptId,
 				permissions:permissions
 			},
 			method:"get",
 			success:function(data){
-				if(data){
-					$('.modal').modal({
-						show:true
-					});
+				if(data.result){
+					setTimeout(() => {
+						$('.modal').modal({
+							show:true
+						});
+						btnSave.attr("disabled",false);
+						btnSave.text("保存");
+					}, 500);
 				}
 			}
 		});
@@ -141,3 +147,5 @@ function makeRowForDept(dept) {
 	var row = $("<a class='mdl-navigation__link'>").addClass("my-dept-row").attr("href", "#").attr("id", dept.id).text(dept.deptName);
 	return row;
 }
+
+var btnSave = $("#btnSave");

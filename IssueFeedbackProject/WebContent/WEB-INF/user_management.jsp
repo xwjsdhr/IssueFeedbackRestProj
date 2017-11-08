@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<div class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal fade" tabindex="-1" role="dialog" id="alert_dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -24,6 +24,48 @@
 	        <p id="modal-content">修改成功</p>
 	      </div>
 	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="update_dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">用户信息</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true"></span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p id="modal-content"></p>
+	        <div class="container">
+				<div class="row">
+					<div class="col-lg-10">
+						  <div class="form-group">
+						    	<label for="exampleInputEmail1">用户名</label>
+						    	<input type="text" class="form-control" id="inputUpdateUsername">
+						  </div>
+						  <div class="form-group">
+						  	<label for="selectDept">部门</label>
+						  	<select class="form-control" id="selectDept">
+						  		
+						 	 </select>
+						  </div> 
+						  
+						  <div class="form-group">
+						    <label for="exampleInputPassword1">姓名</label>
+						    <input type="text" class="form-control" id="inputUpdateRealName" placeholder="Password">
+						  </div>
+						  
+					</div>
+				</div>	        
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" id="btnUpdateUserInfo" data-dismiss="modal">保存</button>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 	      </div>
 	    </div>

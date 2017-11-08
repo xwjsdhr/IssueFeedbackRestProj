@@ -8,6 +8,7 @@ function setListener(){
 	btnAddProject.click(function(event){
 		$("#myModal").modal('show');
 	});
+	
 	btnSaveProject.click(function(event){
 		console.log(inputProjectName.val());
 		if(inputProjectName.val().trim().length > 0 ){
@@ -18,7 +19,9 @@ function setListener(){
 					project_name:inputProjectName.val()
 				},
 				success:function(data){
-					console.log(data.result);
+					if(data.result){
+						
+					}
 				}
 					
 			});
@@ -40,10 +43,11 @@ function getProjects(){
 function getRow(project){
 	
 	var tr = $("<tr>");
-	var tColumnId = $("<td>").text(project.id);
 	var tColumnProjectName = $("<td>").text(project.projectName);
 	var tColumnDeptName = $("<td>").text(project.dept.deptName);
-	tr.append(tColumnId).append(tColumnProjectName).append(tColumnDeptName);
+	var buttonUpdate = $("<button>").addClass("btn btn-primary").text("修改");
+	var tColumnOperation = $("<td>").append(buttonUpdate);
+	tr.append(tColumnProjectName).append(tColumnDeptName).append(tColumnOperation);
 	return tr;
 }
 

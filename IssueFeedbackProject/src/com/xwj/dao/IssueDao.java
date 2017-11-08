@@ -156,6 +156,6 @@ public interface IssueDao {
 
 	List<Issue> getIssueWithSearchCondition(SearchCondition sc);
 
-	List<IssueCount> countIssue(Integer year ,Integer month,Integer week ,String type);
+	List<IssueCount> countIssue(Integer year ,String type);
 
 }

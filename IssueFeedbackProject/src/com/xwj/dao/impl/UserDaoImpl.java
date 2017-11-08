@@ -102,5 +102,26 @@ public class UserDaoImpl implements UserDao {
 		return i>0;
 	}
 
+	@Override
+	public Boolean updateUser(User user) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i  = session.update("updateUser",user);
+		session.commit(true);
+		session.close();
+		return i>0;
+	}
+
+	@Override
+	public Boolean updateUserPassword(Integer id, String password) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		User user = new User();
+		user.setId(id);
+		user.setPassword(password);
+		int i  = session.update("updateUserPassword",user);
+		session.commit(true);
+		session.close();
+		return i>0;
+	}
+
 	
 }

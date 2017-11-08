@@ -43,7 +43,6 @@ public class MyRestController {
 	@PostMapping("/auth")
 	public ResponseEntity<User> auth(@RequestParam("user_name") String username,
 			@RequestParam("password") String password, HttpSession hs) {
-
 		User user = businessService.loginBCrypt(username, password);
 		if (user != null) {
 			hs.setAttribute("user_session_id", user.getId());
@@ -222,6 +221,9 @@ public class MyRestController {
 			@RequestParam("issue_id") Integer issueId, @RequestParam("content") String desc,
 			@RequestParam("isResovleIssue") Integer isResovleIssue, @RequestParam("isProblem") Integer isProblem) {
 		User user = (User) hs.getAttribute("user_session");
+		System.out.println(issueId);
+		System.out.println(isResovleIssue);
+		System.out.println(isProblem);	
 		AjaxResult<Comment> ar = null;
 		if (user != null) {
 			Comment comment = new Comment();
@@ -271,10 +273,14 @@ public class MyRestController {
 
 	@GetMapping("/grantPermissionToDept")
 	public ResponseEntity<AjaxResult<Boolean>> grantPermissionToDept(@RequestParam("dept_id") Integer id,
-			@RequestParam("permissions") List<Integer> permissions) {
-		System.out.println(id);
-		System.out.println(permissions);
-		boolean b = businessService.updatePermission2Dept(id, permissions);
+			@RequestParam("permissions[]") String [] permissions) {
+		List<Integer> permissionIdList = new ArrayList<>();
+		if (permissions != null && permissions.length != 0) {
+			for (String string : permissions) {
+				permissionIdList.add(Integer.parseInt(string));
+			}
+		}
+		boolean b = businessService.updatePermission2Dept(id, permissionIdList);
 		AjaxResult<Boolean> ajaxResult = new AjaxResult.Builder<Boolean>().result(b)
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).message("获取成功").build();
 		return ResponseEntity.ok(ajaxResult);
@@ -305,13 +311,47 @@ public class MyRestController {
 	}
 
 	@PostMapping("/issueCount")
-	public ResponseEntity<AjaxResult<List<IssueCount>>> issueCount(@RequestParam("year") Integer year,
-			@RequestParam("month") Integer month, @RequestParam("week") Integer week,
-			@RequestParam("type") String type) {
-		System.out.println("week:" + week + "   year :" + year + "    month:" + month + "   type: " + type);
+	public ResponseEntity<AjaxResult<List<IssueCount>>> issueCount(@RequestParam("year") Integer year, @RequestParam("type") String type) {
+		System.out.println("year :" + year  + "   type: " + type);
 		AjaxResult<List<IssueCount>> ar = new AjaxResult.Builder<List<IssueCount>>()
-				.result(businessService.countIssue(year, month, week, type)).errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.result(businessService.countIssue(year, type)).errorCode(ErrorCode.ERRORCODE_SUCCESS)
 				.build();
+		return ResponseEntity.ok(ar);
+	}
+
+	@GetMapping("/updateUserById")
+	public ResponseEntity<AjaxResult<Boolean>> updateUserById(@RequestParam("username") String username,
+			@RequestParam("real_name") String realName,@RequestParam("dept_id") Integer deptId,@RequestParam("id") Integer userId){
+		User user = new User();
+		user.setId(userId);
+		user.setRealName(realName);
+		user.setUsername(username);
+		Dept dept = new Dept();
+		dept.setId(deptId);
+		user.setDept(dept);
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
+				.result(businessService.updateUser(user))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		return ResponseEntity.ok(ar);
+	}
+	
+	@PostMapping("/updatePwdById")
+	public ResponseEntity<AjaxResult<Boolean>>  updatePwdById(HttpSession hs,@RequestParam("password") String password) {
+		User user = (User) hs.getAttribute("user_session");
+		if(user == null) {
+			return null;
+		}
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
+				.result(businessService.updateUserPassword(user.getId(),password))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		return ResponseEntity.ok(ar);
+	}
+	
+	@GetMapping("/addProject")
+	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName){
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
+				.result(businessService.addProject(projectName))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
 

@@ -117,6 +117,14 @@
 		update t_user set password = #{pwd} where id = ${userId}
 	</update>
 	
+	<update id="updateUser" parameterType="com.xwj.entity.User">
+		update t_user set user_name=#{username},real_name=#{realName}, dept_id=#{dept.id} where id=#{id}
+	</update>
+	
+	<update id="updateUserPassword">
+		update t_user set password = #{password} where id=#{id}
+	</update>
+	
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />
 		<result column="password" property="password" />
@@ -138,8 +146,6 @@
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
 		<result column="userId" property="id"/>
-
-		
 	</resultMap>
 
 </mapper>

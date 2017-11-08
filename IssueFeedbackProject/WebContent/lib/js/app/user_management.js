@@ -59,7 +59,52 @@ $(document).ready(function(event) {
 						})
 						
 					});
+					$(".btnUpdate").on("click",function(event){
+						var user = $(this).data("user");
+						$("#update_dialog").modal({
+							show:true
+						});
+						btnUpdateUserInfo.data("user_id",user.id);
+						selectDept.empty();
+						$.ajax({
+							url:"/IssueFeedbackProject/allDepts",
+							method:"get",
+							success:function(data){
+								console.log(data.result);
+								$.each(data.result,function(index,element){
+									
+									var option = $("<option>").text(element.deptName).val(element.id);
+									if(element.id == user.dept.id){
+										option.attr("selected",true);
+									}
+									selectDept.append(option);
+								});
+							}
+						});
+						
+						inputUpdateUsername.val(user.username);
+						inputUpdateRealName.val(user.realName);
+					});
 					
+					btnUpdateUserInfo.click(function(event){
+						var id = $(this).data("user_id");
+						$.ajax({
+							url:"/IssueFeedbackProject/updateUserById",
+							method:"get",
+							data:{
+								username:inputUpdateUsername.val(),
+								real_name:inputUpdateRealName.val(),
+								id:id,
+								dept_id:selectDept.val()
+							},
+							success:function(data){
+								console.log(data);
+								$("#pusername-"+id).text(inputUpdateUsername.val());
+								$("#realName-"+id).text(inputUpdateRealName.val());
+								$("#deptname-"+id).text($("#selectDept option:selected").text());
+							}
+						});
+					});
 				}, 500);
 				
 			}
@@ -70,6 +115,7 @@ $(document).ready(function(event) {
 	
 
 });
+
 
 /** ************global function******* */
 function changeBtnAndBadgeStyle(btnId,userStatus){
@@ -95,15 +141,17 @@ function changeBtnAndBadgeStyle(btnId,userStatus){
 function showDialog(title,content){
 	$(".modal-title").text(title);
 	$("#modal-content").text(content);
-	$('.modal').modal({
+	$('#alert_dialog').modal({
 		show:true
 	});
 }
 
 function makeRowForUser(user) {
-	var tdUserName = $("<td>").text(user.username);
-	var tdUserDeptName = $("<td>").text(user.dept.deptName);
-	var tdRealName = $("<td>").text(user.realName);
+	
+	var pUserName = $("<p>").attr("id","pusername-"+user.id).text(user.username);
+	var tdUserName = $("<td>").append(pUserName);
+	var tdUserDeptName = $("<td>").attr("id","deptname-"+user.id).text(user.dept.deptName);
+	var tdRealName = $("<td>").attr("id","realName-"+user.id).text(user.realName);
 	var statusStr = user.status ? "启用" : "禁用";
 	var statusClass = user.status ? "mdl-chip mdl-chip-sovled"
 			: "mdl-chip mdl-chip-problem";
@@ -121,8 +169,11 @@ function makeRowForUser(user) {
 	var tdOperation = $("<td>").append(btnEnableAndDisable);
 
 	var tdStatus = $("<td>").append(spanParent);
+	
 	var btnReset = $("<button>").text("重置").attr("id","reset-"+user.id).addClass("btn btn-primary btnReset");
-	var tdResetPwd = $("<td>").append(btnReset);
+	var btnUpdate = $("<button>").text("修改").attr("id","btnupdate-"+user.id).addClass("btn btn-success btnUpdate").data("user",user);
+	var btnGroup = $("<div class='btn-group'>").append(btnReset).append(btnUpdate);
+	var tdResetPwd = $("<td>").append(btnGroup);
 	var tr = $("<tr>").append(tdUserName).append(tdUserDeptName)
 		.append(tdRealName).append(tdStatus).append(tdOperation).append(tdResetPwd);
 
@@ -139,3 +190,8 @@ function toggleProgress(visible) {
 
 var table = $("#user_table");
 var pbUser = $("#pbUser");
+var btnUpdateUserInfo = $("#btnUpdateUserInfo");
+var inputUpdateUsername = $("#inputUpdateUsername");
+var inputUpdateRealName = $("#inputUpdateRealName");
+var selectDept = $("#selectDept");
+

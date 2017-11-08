@@ -50,9 +50,9 @@
 					class="mdl-cell mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 					<thead>
 						<tr>
-							<td>编号</td>
 							<td>项目</td>
 							<td>管理部门</td>
+							<td></td>
 						</tr>
 
 					</thead>

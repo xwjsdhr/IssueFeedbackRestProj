@@ -47,4 +47,8 @@ public interface UserDao {
 
 	Boolean resetPwd(Integer userId, String pwd);
 
+	Boolean updateUser(User user);
+
+	Boolean updateUserPassword(Integer id, String password);
+
 }

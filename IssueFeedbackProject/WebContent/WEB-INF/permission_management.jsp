@@ -47,14 +47,14 @@
 		<div class="page-content">
 			
 			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--1-col"> 
+				<div class="mdl-cell mdl-cell--2-col"> 
 				<!-- Raised disabled button -->
-					<button id="btnSave" class="mdl-button mdl-js-button mdl-button--raised">
+					<button id="btnSave" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 					  保存
 					</button>
 				</div>
 				
-				<div class="mdl-cell mdl-cell--11-col"> 
+				<div class="mdl-cell mdl-cell--10-col"> 
 				<!-- Raised disabled button -->
 					<p id="pDeptName" >
 					  
@@ -63,11 +63,8 @@
 					
 					
 					</div>
-				</div>
-				
+				</div>		
 			</div>
-
-			
 		</div>
 		
 		</main>

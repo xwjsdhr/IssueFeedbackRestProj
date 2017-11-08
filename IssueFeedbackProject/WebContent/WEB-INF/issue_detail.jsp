@@ -49,38 +49,34 @@
 			<div class="card-body">
 				<p class="card-text">${issue_detail.content }</p>
 			</div>
-			<ul class="list-group" id="comment_list_div">
+		</div>
+		<div class="comments"  id="comment_list_div">
 
 				<c:forEach items="${issue_detail.comments }" var="comment">
 					
-					 <li class="list-group-item">
-						 <div class="container">
-						 	<div class="row">
-							 	<p>
-									 ${comment.createTime }
-								</p>
-						 	</div>
-						 	<div class="row">
-						 		<c:if test="${comment.isResovleIssue == 1 }">
+					<div class="comment-wrap">
+						<div class="photo">
+								<div class="avatar" style="background-image: url('')"></div>
+								<div> ${comment.user.realName }</div>
+						</div>
+						<div class="comment-block">
+								<c:if test="${comment.isResovleIssue == 1 }">
 									<span class="badge badge-pill badge-success">已解决</span>
 								</c:if>
 								<c:if test="${comment.isProblem == 1 }">
 									<span class="badge badge-pill badge-danger">疑难问题</span>
 								</c:if>
-						 	</div>
-						 	<div class="row">
-						 		 ${comment.user.realName }
-						 	</div>
-						 	<div class="row">
-						 		 ${comment.content }	
-						 	</div>
-									
-						 </div>
-					</li> 
-					
+								<p class="comment-text">
+								 ${comment.content }
+								</p>
+								<div class="bottom-comment">
+										<div class="comment-date"> ${comment.createTime }</div>
+								</div>
+						</div>
+					</div>
 				</c:forEach>
-			</ul>
-		</div>
+			</div>
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">

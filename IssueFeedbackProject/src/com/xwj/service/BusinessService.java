@@ -8,7 +8,6 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
-import com.xwj.entity.IssueStatistics;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
@@ -129,6 +128,13 @@ public interface BusinessService {
 
 	Boolean checkOldPassword(String string, String password);
 
-	List<IssueCount> countIssue(Integer year ,Integer month,Integer week ,String type);
+	List<IssueCount> countIssue(Integer year ,String type);
+
+	Boolean updateUser(User user);
+
+	Boolean updateUserPassword(Integer id, String password);
+
+	Boolean addProject(String projectName);
+	
 
 }

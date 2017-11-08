@@ -10,19 +10,21 @@ public class IssueCount  implements Serializable{
 	private static final long serialVersionUID = 5297630331753285645L;
 
 	
-	private Integer year;
-	private Integer week;
+	private String year;
+	private String  week;
 	private Integer count;
-	public Integer getYear() {
+	
+	
+	public String getYear() {
 		return year;
 	}
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
-	public Integer getWeek() {
+	public String getWeek() {
 		return week;
 	}
-	public void setWeek(Integer week) {
+	public void setWeek(String week) {
 		this.week = week;
 	}
 	public Integer getCount() {

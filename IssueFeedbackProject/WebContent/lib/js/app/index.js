@@ -232,6 +232,7 @@ function makeRowForIssue(issue) {
 	var realNameTd = $("<td>").text(issue.user.realName);
 	var projectNameTd = $("<td>").text(issue.project.projectName);
 	var deptNameTd = $("<td>").text(issue.project.dept.deptName);
+	var weekTd = $("<td>").text(issue.weekOfYear);
 
 	var tdLink = $("<td>");
 
@@ -239,17 +240,18 @@ function makeRowForIssue(issue) {
 			"/IssueFeedbackProject/issue_detail?id=" + issue.id);
 	tdLink.append(aLink);
 
-	
 	trRow.append(checkboxTd);
 	trRow.append(commentTd);
 	trRow.append(statusTd);
 	trRow.append(titleTd);
 	trRow.append(submitTimeTd);
 	trRow.append(lastUpdateTimeTd);
+	trRow.append(weekTd);
 	trRow.append(realNameTd);
 	trRow.append(projectNameTd);
 	trRow.append(deptNameTd);
 	trRow.append(tdLink);
+	
 	return trRow;
 }
 

@@ -34,7 +34,6 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Autowired(required= true)
 	private UserDao userDao;
-
 	@Autowired(required= true)
 	private DeptDao deptDao;
 	@Autowired(required= true)
@@ -204,7 +203,7 @@ public class BusinessServiceImpl implements BusinessService {
 		return projectDao.getAll();
 	}
 	@Override
-	public List<Issue> getIssueWithSearchCondition( SearchCondition sc) {
+	public List<Issue> getIssueWithSearchCondition(SearchCondition sc) {
 		return myBatisIssueDao.getIssueWithSearchCondition(sc);
 	}
 	@Override
@@ -226,7 +225,7 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public User loginBCrypt(String username, String rawPassword) {
 		User user = userDao.getPasswordByUserName(username);
-		if(passwordEncoder.matches(rawPassword, user.getPassword())) {
+		if(user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
 			return user;
 		}
 		return null;
@@ -244,7 +243,21 @@ public class BusinessServiceImpl implements BusinessService {
 		return passwordEncoder.matches(password, str);
 	}
 	@Override
-	public List<IssueCount> countIssue(Integer year, Integer month, Integer week, String type) {
-		return myBatisIssueDao.countIssue(year,month,week,type);
+	public List<IssueCount> countIssue(Integer year ,String type) {
+		return myBatisIssueDao.countIssue(year,type);
+	}
+	@Override
+	public Boolean updateUser(User user) {
+		return userDao.updateUser(user);
+	}
+	@Override
+	public Boolean updateUserPassword(Integer id, String password) {
+		// TODO Auto-generated method stub
+		return userDao.updateUserPassword(id,passwordEncoder.encode(password));
+	}
+	@Override
+	public Boolean addProject(String projectName) {
+		// TODO Auto-generated method stub
+		return projectDao.addProject(projectName);
 	}
 }

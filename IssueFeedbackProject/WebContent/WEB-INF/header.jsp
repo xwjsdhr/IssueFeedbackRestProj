@@ -7,6 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+body{
+	background-color: #E4EAF5;
+}
+</style>
 </head>
 <header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
@@ -103,10 +108,10 @@
 							<a class="mdl-menu__item"
 								href="${pageContext.request.contextPath }/user_info">个人信息
 							</a>
-							<%-- <a class="mdl-menu__item"
+							 <a class="mdl-menu__item"
 								href="${pageContext.request.contextPath }/update_pwd"> 
 								 修改密码
-							</a> --%>
+							</a> 
 						</li>
 					</ul>
 
