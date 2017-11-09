@@ -6,9 +6,9 @@ $(document).ready(function(event) {
 		success : function(data) {
 			setTimeout(function(){
 				toggleProgress(false);
-			}, 5000);
-			toggleProgress(false);
-			progressRoot.css("width","100%");
+			}, 500);
+			//toggleProgress(false);
+			progress.css("width","100%");
 			if(data.result != null){
 				
 				setTimeout(() => {
@@ -17,6 +17,8 @@ $(document).ready(function(event) {
 						table.append(row);
 					});
 					progressRoot.attr("hidden",true);
+					user_table_root.attr("hidden",false);
+					pbUser.attr("hidden",true);
 					
 					$(".disable-enable-btn").on("click",function(event){
 						
@@ -65,22 +67,6 @@ $(document).ready(function(event) {
 							show:true
 						});
 						btnUpdateUserInfo.data("user_id",user.id);
-						selectDept.empty();
-						$.ajax({
-							url:"/IssueFeedbackProject/allDepts",
-							method:"get",
-							success:function(data){
-								console.log(data.result);
-								$.each(data.result,function(index,element){
-									
-									var option = $("<option>").text(element.deptName).val(element.id);
-									if(element.id == user.dept.id){
-										option.attr("selected",true);
-									}
-									selectDept.append(option);
-								});
-							}
-						});
 						
 						inputUpdateUsername.val(user.username);
 						inputUpdateRealName.val(user.realName);
@@ -98,7 +84,6 @@ $(document).ready(function(event) {
 								dept_id:selectDept.val()
 							},
 							success:function(data){
-								console.log(data);
 								$("#pusername-"+id).text(inputUpdateUsername.val());
 								$("#realName-"+id).text(inputUpdateRealName.val());
 								$("#deptname-"+id).text($("#selectDept option:selected").text());
@@ -112,8 +97,46 @@ $(document).ready(function(event) {
 			
 		}
 	});
-	
+	btnAddUser.click(function(event){
+		$("#add_dialog").modal({
+			show:true
+		});
+	});
+	$("#formAddUser").submit(function(event){
+		$.ajax({
+			url:"/IssueFeedbackProject/addUser",
+			method:"post",
+			data:{
+				user_name:inputUserName.val(),
+				password:inputpassword.val(),
+				real_name:inputRealName.val(),
+				dept_id:selectDept.val()
+			},
+			success:function(data){
+				if(data.result){
+					 inputUserName.val("");
+					 inputpassword.val("");
+					 inputRealName.val("");
+				}
+			}
+		});
+		
+	});
+	$.ajax({
+		url:"/IssueFeedbackProject/allDepts",
+		method:"get",
+		success:function(data){
+			console.log(data.result);
+			$.each(data.result,function(index,element){
+				var option = $("<option>").val(element.id).text(element.deptName);
+				$("#selectDept").append(option);
+				$("#selectDeptUpdate").append(option);
+			});
+			
+		}
+	})
 
+	
 });
 
 
@@ -183,7 +206,7 @@ function makeRowForUser(user) {
 
 function toggleProgress(visible) {
 	table.attr("hidden", visible);
-	pbUser.attr("hidden", !visible);
+//	pbUser.attr("hidden", !visible);
 }
 
 /** *************variable************* */
@@ -193,5 +216,6 @@ var pbUser = $("#pbUser");
 var btnUpdateUserInfo = $("#btnUpdateUserInfo");
 var inputUpdateUsername = $("#inputUpdateUsername");
 var inputUpdateRealName = $("#inputUpdateRealName");
-var selectDept = $("#selectDept");
-
+var selectDept = $("#selectDeptUpdate");
+var user_table_root = $("#user_table_root");
+var btnAddUser = $("#btnAddUser");

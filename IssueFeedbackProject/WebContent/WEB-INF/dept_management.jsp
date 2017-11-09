@@ -54,7 +54,7 @@
 
 			<div class="mdl-grid" style="margin-top: 20px">
 				<div class="mdl-cell mdl-cell--1-col"></div>
-				<table
+				<table id="dept_table_root" hidden="true"
 					class="mdl-cell mdl-cell--10-col mdl-data-table mdl-js-data-table mdl-shadow--2dp table-bordered">
 
 					<thead>
@@ -66,6 +66,9 @@
 						
 					</tbody>
 				</table>
+				<div class="mdl-cell mdl-cell--2-col mdl-cell--5-offset" id="pbDept">
+					<div class="mdl-spinner mdl-js-spinner is-active" ></div>
+				</div>
 			</div>
 
 

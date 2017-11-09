@@ -148,8 +148,10 @@
 	
 	<select id="searchIssue" parameterType="com.xwj.params.SearchCondition" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
-		AND 
-		tpj.dept_id = #{id}
+		<if test="id != null">
+			AND 
+			tpj.dept_id = #{id}
+		</if>
 		
 		<if test="statusId != -1">
 			and ti.status_id = #{statusId}
@@ -186,6 +188,7 @@
 		tpj.id AS ppid, 
 		tpj.project_name AS projectName,
 		td.id AS deptId,
+		tpj.desc AS description,
 		td.dept_name AS deptNameProj
 		 FROM t_project tpj 
 		 LEFT JOIN t_dept td 
@@ -274,7 +277,7 @@
 	<resultMap type="com.xwj.entity.Project" id="projectResultMap">
 		<result column="projectName" property="projectName" />
 		<result column="ppid" property="id" />
-		
+		<result column="description" property="description"/>
 		<association property="dept" javaType="com.xwj.entity.Dept">
 			<result column="projDeptId" property="id" />
 			<result column="deptNameProj" property="deptName" />

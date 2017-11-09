@@ -29,6 +29,15 @@ public class SearchCondition implements Serializable{
 		this.week = week;
 	}
 
+	
+
+	public SearchCondition(Integer statusId, Integer year, Integer week) {
+		super();
+		this.statusId = statusId;
+		this.year = year;
+		this.week = week;
+	}
+
 	public Integer getStatusId() {
 		return statusId;
 	}

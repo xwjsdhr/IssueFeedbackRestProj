@@ -12,3 +12,4 @@ $(document).ready(function(event){
 });
 
 var progressRoot = $("#progressRoot");
+var progress = $("#progress");

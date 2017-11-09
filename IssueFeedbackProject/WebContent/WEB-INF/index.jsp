@@ -22,7 +22,8 @@
 			<c:if test="${fn:contains(user_session.dept.permissions,2) }">
 				<div class="float-over-bottom">
 					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-						href="${pageContext.request.contextPath }/new_issue"> <i class="material-icons">add</i>添加问题 </a>
+						href="${pageContext.request.contextPath }/new_issue"> 
+						<i class="material-icons">add</i>添加问题 </a>
 				</div>
 			</c:if>
 
@@ -47,7 +48,7 @@
 							<div class="input-group" style="margin-left: 20px">
 	  							<span class="input-group-addon">周</span>
 								<select class=" form-control" id="weekSelector">
-									
+									<option value="-1">全部</option>
 								</select>
 							</div>
 							<button style="margin-left: 20px" type="submit"
@@ -92,7 +93,7 @@
 
 					</tbody>
 				</table>
-				<div class="mdl-cell mdl-cell--2-col mdl-cell--5-offset" id="pbIssues">
+				<div class="mdl-cell mdl-cell--2-col mdl-cell--5-offset" id="pbIssues" hidden="false">
 					<div class="mdl-spinner mdl-js-spinner is-active" ></div>
 				</div>
 				

@@ -143,7 +143,11 @@ body{
 		   role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 35%" id="progress"></div>
 		</div> -->
 		
-		<div id="progressRoot" class="mdl-progress mdl-js-progress" style="height: 10px"></div>
+		<!-- <div id="progressRoot" class="mdl-progress mdl-js-progress" style="height: 10px"></div> -->
+		<div class="progress" id="progressRoot">
+		  <div class="progress-bar bg-warning" role="progressbar" id="progress" style="width: 25%;height: 10px" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+		
 		<script type="text/javascript" src="lib/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="lib/js/app/header.js"></script>
 </html>

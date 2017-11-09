@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao {
 		user.setUsername(username);
 		user.setPassword(password);
 		User returnUser = session.selectOne("login",user);
+		session.close();
 		return returnUser;
 	}
 
@@ -41,6 +42,7 @@ public class UserDaoImpl implements UserDao {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
 		int i =  session.insert("insertUser",user);
 		session.commit(true);
+		session.close();
 		return i;
 	}
 	/* (non-Javadoc)

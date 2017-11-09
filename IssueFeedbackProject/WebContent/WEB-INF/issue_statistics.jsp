@@ -30,9 +30,9 @@
 						<option value="year">年</option>
 						<option value="week_of_year">周</option>
 						<option value="month">月</option>
-						<option value="dept">部门</option>
+						<option value="dept_id">部门</option>
 						<option value="project">系统</option>
-						<option value="status">状态</option>
+						<option value="status_id">状态</option>
 					</select>
 				
 				</div>
@@ -55,15 +55,18 @@
 				<div class="col-lg-2">
 					&nbsp;
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="btnQuery">查询</button>
+					
 				</div>
 			</div>
 			
 			<div class="row">
 			<div class="col-lg-1"></div>
-				<div class="col-lg-10">
+			
+				<div class="col-lg-10 col-lg-offset-1">
 				
 					 <canvas id="canvas" width="55%"></canvas>
 				</div>
+				
 			</div>
 		</div>
 	</main>

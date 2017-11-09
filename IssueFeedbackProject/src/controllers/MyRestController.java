@@ -56,24 +56,24 @@ public class MyRestController {
 
 	@GetMapping("/allIssues")
 	public ResponseEntity<AjaxResult<List<Issue>>> allIssues(HttpSession hs) {
-		User user = (User) hs.getAttribute("user_session");
 		AjaxResult<List<Issue>> ar = null;
-		if (user != null) {
-			List<String> permissions = user.getDept().getPermissions();
-			List<Issue> issues = new ArrayList<>();
-			if (!permissions.contains("1")) {
-				issues = businessService.getAllIssues(user.getDept().getId());
-				ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS)
-						.build();
-			} else if (permissions.contains("2")) {
-				issues = businessService.getAllIssuesWithoutDept();
-				ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS)
-						.build();
-			}
-		} else {
-			ar = new AjaxResult.Builder<List<Issue>>().result(null).errorCode(ErrorCode.ERRORCODE_NO_USER)
-					.message("无用户登录").build();
+		User user = filterSession(hs);
+
+		if (user == null) {
+			AjaxResult<List<Issue>> ar1 = new AjaxResult.Builder<List<Issue>>().result(null)
+					.errorCode(ErrorCode.ERRORCODE_NO_USER).message("无用户登录").build();
+			return ResponseEntity.ok(ar1);
 		}
+		List<String> permissions = user.getDept().getPermissions();
+		List<Issue> issues = new ArrayList<>();
+		if (!permissions.contains("1")) {
+			issues = businessService.getAllIssues(user.getDept().getId());
+			ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		} else if (permissions.contains("2")) {
+			issues = businessService.getAllIssuesWithoutDept();
+			ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		}
+
 		return ResponseEntity.ok(ar);
 	}
 
@@ -95,7 +95,15 @@ public class MyRestController {
 	public ResponseEntity<List<Issue>> searchIssue(@RequestParam("statusId") Integer id,
 			@RequestParam("year") Integer year, @RequestParam("week") Integer week, HttpSession hs) {
 		User user = (User) hs.getAttribute("user_session");
-		SearchCondition condition = new SearchCondition(user.getDept().getId(), id, year, week);
+		List<String> permissions = user.getDept().getPermissions();
+		SearchCondition condition = null;
+		System.out.println(permissions);
+		if(permissions.contains("1")) {
+			System.out.println("contain 1");
+			condition = new SearchCondition( id, year, week == -1 ? null : week);
+		}else if(permissions.contains("2")){
+			condition = new SearchCondition(user.getDept().getId(),id, year, week == -1 ? null : week);
+		}
 		return ResponseEntity.ok(businessService.getIssueWithSearchCondition(condition));
 	}
 
@@ -223,7 +231,7 @@ public class MyRestController {
 		User user = (User) hs.getAttribute("user_session");
 		System.out.println(issueId);
 		System.out.println(isResovleIssue);
-		System.out.println(isProblem);	
+		System.out.println(isProblem);
 		AjaxResult<Comment> ar = null;
 		if (user != null) {
 			Comment comment = new Comment();
@@ -273,7 +281,7 @@ public class MyRestController {
 
 	@GetMapping("/grantPermissionToDept")
 	public ResponseEntity<AjaxResult<Boolean>> grantPermissionToDept(@RequestParam("dept_id") Integer id,
-			@RequestParam("permissions[]") String [] permissions) {
+			@RequestParam("permissions[]") String[] permissions) {
 		List<Integer> permissionIdList = new ArrayList<>();
 		if (permissions != null && permissions.length != 0) {
 			for (String string : permissions) {
@@ -311,17 +319,18 @@ public class MyRestController {
 	}
 
 	@PostMapping("/issueCount")
-	public ResponseEntity<AjaxResult<List<IssueCount>>> issueCount(@RequestParam("year") Integer year, @RequestParam("type") String type) {
-		System.out.println("year :" + year  + "   type: " + type);
+	public ResponseEntity<AjaxResult<List<IssueCount>>> issueCount(@RequestParam("year") Integer year,
+			@RequestParam("type") String type) {
+		System.out.println("year :" + year + "   type: " + type);
 		AjaxResult<List<IssueCount>> ar = new AjaxResult.Builder<List<IssueCount>>()
-				.result(businessService.countIssue(year, type)).errorCode(ErrorCode.ERRORCODE_SUCCESS)
-				.build();
+				.result(businessService.countIssue(year, type)).errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
 
 	@GetMapping("/updateUserById")
 	public ResponseEntity<AjaxResult<Boolean>> updateUserById(@RequestParam("username") String username,
-			@RequestParam("real_name") String realName,@RequestParam("dept_id") Integer deptId,@RequestParam("id") Integer userId){
+			@RequestParam("real_name") String realName, @RequestParam("dept_id") Integer deptId,
+			@RequestParam("id") Integer userId) {
 		User user = new User();
 		user.setId(userId);
 		user.setRealName(realName);
@@ -329,30 +338,33 @@ public class MyRestController {
 		Dept dept = new Dept();
 		dept.setId(deptId);
 		user.setDept(dept);
-		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
-				.result(businessService.updateUser(user))
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(businessService.updateUser(user))
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
-	
+
 	@PostMapping("/updatePwdById")
-	public ResponseEntity<AjaxResult<Boolean>>  updatePwdById(HttpSession hs,@RequestParam("password") String password) {
+	public ResponseEntity<AjaxResult<Boolean>> updatePwdById(HttpSession hs,
+			@RequestParam("password") String password) {
 		User user = (User) hs.getAttribute("user_session");
-		if(user == null) {
+		if (user == null) {
 			return null;
 		}
 		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
-				.result(businessService.updateUserPassword(user.getId(),password))
+				.result(businessService.updateUserPassword(user.getId(), password))
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
-	
+
 	@GetMapping("/addProject")
-	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName){
-		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
-				.result(businessService.addProject(projectName))
+	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName) {
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(businessService.addProject(projectName))
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
+	}
+
+	private User filterSession(HttpSession hs) {
+		return (User) hs.getAttribute("user_session");
 	}
 
 	@Bean

@@ -4,6 +4,7 @@ var month = null;
 var color = Chart.helpers.color;
 var dataset = [];
 var labels = [];
+
 window.chartColors = {
 	red : 'rgb(255, 99, 132)',
 	orange : 'rgb(255, 159, 64)',
@@ -19,12 +20,13 @@ var barChartData = {
 		label : '问题数量',
 		borderWidth : 1,
 		backgroundColor : "#18FFFF",
-		borderColor : "#00554D",
+		borderColor : "#202425",
 		data : dataset
 	} ]
 
 };
 $(document).ready(function(event) {
+	
 	var ctx = document.getElementById("canvas").getContext("2d");
 	window.myBar = new Chart(ctx, {
 		type : 'bar',
@@ -59,9 +61,9 @@ $(document).ready(function(event) {
 			colYear.attr("hidden",false);
 			break;
 		case "year":
-		case "dept":
+		case "dept_id":
 		case "project":
-		case "status":
+		case "status_id":
 			type = $(event.target).val();
 			colYear.attr("hidden",true);
 			year = null;
@@ -77,8 +79,6 @@ $(document).ready(function(event) {
 	
 	
 	btnQuery.click(function(event){
-		console.log("year: "+year);
-		console.log("type: "+type);
 		
 		
 		 $.ajax({
@@ -89,15 +89,16 @@ $(document).ready(function(event) {
 				 type:type,
 			 },
 			 success:function(data){
-				 console.log(data);
-				 
+				 	
 				 $.each(data.result,function(index,data){
 					 labels.push(data.week);
 					 dataset.push(data.count)    			
 				 });
-				 window.myBar.update(); 		
+				 console.log(data.result);
+				 window.myBar.update(); 
+				 
 				 setTimeout(() => {
-					 progressRoot.attr("width","100%");
+					progressRoot.attr("width","100%");
 				 	progressRoot.attr("hidden",true);
 				 }, 500);
 				 
@@ -107,13 +108,10 @@ $(document).ready(function(event) {
 	});
 });
 
-// window.onload = function() {
-
-
-// };
 var selectorType = $("#selectorType");
 var selectorYear = $("#selectorYear");
 var colType =$("#colType");
 var colYear = $("#colYear");
 var btnQuery = $("#btnQuery");
+var image = $("#img");
 colYear.attr("hidden",true);

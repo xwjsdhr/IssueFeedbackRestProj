@@ -4,26 +4,30 @@
 	<select id="countIssueByYearAndMonth" resultMap="issueCountResultMap"
 	 parameterType="com.xwj.params.ParamStatistics">
 	 <!-- 
-	 	type year
+	 	type month 
+	 	 year
 	  -->
 	 
 		select 
 		<if test="type!= null">
 			${type}
 		</if> as columnName ,
-		 count(*) as count_issue ,
-		<if test="type!= null">
-			${type}
-		</if> as typeName
+		 count(*) as count_issue 
+		<if test="year!= null">,
+			year  as typeName
+		</if>
 		
 		 from t_issue ti group by
 		 
 		<if test="type!= null">
 			${type}
 		</if>
-		 <if test="year != null">
+		<if test="year != null">
+			, year
+		</if>
+		<if test="year != null">
 		  having year = #{year}
-		 </if>
+		</if>
 		 
 	</select>
 	<resultMap type="com.xwj.entity.IssueCount" id="issueCountResultMap" >

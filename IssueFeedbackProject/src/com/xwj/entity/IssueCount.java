@@ -1,7 +1,11 @@
 package com.xwj.entity;
 
 import java.io.Serializable;
-
+/**
+ * 数据统计实体类
+ * @author xia weijia
+ * @createTime 下午4:06:40
+ */
 public class IssueCount  implements Serializable{
 
 	/**

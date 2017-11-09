@@ -12,13 +12,15 @@ function getAllDepts(){
 		url:"/IssueFeedbackProject/allDepts",
 		method:"get",
 		success:function(data){
-			progressRoot.css("width","100%");
+			progress.css("width","100%");
 			if(data.errorCode == -1 ){
 				setTimeout(() => {
 					$.each(data.result,function(index,element){
 						deptTable.append(getRow(element));
 					});
+					dept_table_root.attr("hidden",false);
 					progressRoot.attr("hidden",true);
+					pbDept.attr("hidden",true);
 				}, 500);
 				
 			}
@@ -39,7 +41,7 @@ function setSubmitListener(){
 				dept_name:inputDeptName.val()
 			},
 			success:function(data){
-				progressRoot.css("width","100%");
+				progress.css("width","100%");
 				if(data.result){
 					setTimeout(() => {
 						insertRow(inputDeptName.val());
@@ -75,3 +77,7 @@ function getRow(dept){
 var deptTable = $("#dept_table");
 var formAddDept = $("#formAddDept");
 var inputDeptName = $("#inputDeptName");
+var pbDept = $("#pbDept");
+var dept_table_root = $("#dept_table_root");
+
+

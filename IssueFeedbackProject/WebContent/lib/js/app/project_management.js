@@ -27,7 +27,20 @@ function setListener(){
 			});
 			inputProjectName.val("");
 		}
-		
+	});
+	$.ajax({
+		url:"/IssueFeedbackProject/allDepts",
+		method:"get",
+		success:function(data){
+			if(data.errorCode == -1){
+				
+				$.each(data.result,function(index,element){
+					var option = $("<option>").attr("id",element.id).text(element.deptName);
+					$("#selectorDept").append(option);
+				});
+				
+			}
+		}
 	});
 }
 function getProjects(){
@@ -45,20 +58,23 @@ function getRow(project){
 	var tr = $("<tr>");
 	var tColumnProjectName = $("<td>").text(project.projectName);
 	var tColumnDeptName = $("<td>").text(project.dept.deptName);
+	var tColumnDesc = $("<td>").text(project.description);
 	var buttonUpdate = $("<button>").addClass("btn btn-primary").text("修改");
 	var tColumnOperation = $("<td>").append(buttonUpdate);
-	tr.append(tColumnProjectName).append(tColumnDeptName).append(tColumnOperation);
+	tr.append(tColumnProjectName).append(tColumnDeptName).append(tColumnDesc).append(tColumnOperation);
 	return tr;
 }
 
 
 function progressBar(data){
-	$("#progressRoot").css("width","100%");
+	$("#progress").css("width","100%");
 	setTimeout(() => {
 		$.each(data.result,function(index,element){
 			projectTable.append(getRow(element));
 		});
-		$("#progressRoot").attr("hidden",true);
+		progressRoot.attr("hidden",true);
+		projectTableRoot.attr("hidden",false);
+		pbProjects.attr("hidden",true);
 	}, 500);
 }
 
@@ -66,4 +82,6 @@ var btnAddProject = $("#btnAddProject");
 var projectTable = $("#project_table");
 var btnSaveProject = $("#btnSaveProject");
 var inputProjectName = $("#inputProjectName");
+var projectTableRoot = $("#project_table_root");
+var pbProjects = $("#pbProjects");
 

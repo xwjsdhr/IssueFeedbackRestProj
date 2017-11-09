@@ -116,7 +116,7 @@ function initSearchBar() {
 				});
 				setTimeout(function() {
 					$("#issue_table").attr("hidden", false);
-					$("#pbIssues").attr("hidden", true);
+//					$("#pbIssues").attr("hidden", true);
 				}, 500);
 			}
 		});
@@ -173,21 +173,23 @@ function makeListItemForStatus(status) {
 function getIssue() {
 	$("#issue_table").attr("hidden", true);
 	$("#pbIssues").attr("hidden", false);
-	progressRoot.css("width","65%");
+	progress.css("width","65%");
 	$.ajax({
 		url : "/IssueFeedbackProject/allIssues",
 		method : "GET",
 		dataType : "json",
 		success : function(data,textStatus,jqXHR) {
-			progressRoot.css("width","100%");
+			
+			progress.css("width","100%");
 			$.each(data.result, function(index, element) {
 				var row = makeRowForIssue(element);
 				$("#mybody").append(row);
 			});
 			
 			setTimeout(function() {
+				
 				$("#issue_table").attr("hidden", false);
-				$("#pbIssues").attr("hidden", true);
+//				$("#pbIssues").attr("hidden", true);
 				progressRoot.attr("hidden",true);
 			}, 500);
 		}

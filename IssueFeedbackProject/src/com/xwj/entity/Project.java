@@ -13,7 +13,15 @@ public class Project implements Serializable {
 	private String projectDesc;
 	private Integer id;
 	private Dept dept;
+	private String description;
 	
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public Dept getDept() {
 		return dept;
 	}
