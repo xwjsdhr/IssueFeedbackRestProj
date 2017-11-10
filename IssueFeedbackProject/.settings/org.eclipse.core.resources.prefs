@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
-encoding//WebContent/WEB-INF/header.jsp=UTF-8
-encoding//WebContent/lib/css/material/material.css=UTF-8
+encoding//WebContent/WEB-INF/v1/header.jsp=UTF-8
+encoding//WebContent/WEB-INF/v2/footer.jsp=UTF-8
+encoding//WebContent/WEB-INF/v2/issue_details.jsp=UTF-8
+encoding//WebContent/WEB-INF/v2/modal_add_user.jsp=UTF-8
+encoding//WebContent/lib/css/externals/material/material.css=UTF-8

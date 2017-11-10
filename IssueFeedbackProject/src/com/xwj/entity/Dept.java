@@ -18,7 +18,15 @@ public class Dept implements Serializable{
 	private String deptName;
 	private User leader;
 	private Boolean isEmbbed;
+	private String description;
 	
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public Boolean getIsEmbbed() {
 		return isEmbbed;
 	}
