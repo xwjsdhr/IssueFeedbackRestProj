@@ -15,6 +15,12 @@
   
   <div class="content-wrapper">
     <div class="container-fluid">
+     <nav aria-label="breadcrumb" role="navigation">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">用户管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">用户列表</li>
+	  </ol>
+	</nav>
       <div class="card"> 
         <div class="card-header">
           <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;用户列表
@@ -22,7 +28,7 @@
           </div>
 	        <div class="card-body">
 		          <div class="table-responsive">
-	        		<table id="user_table" class="table table-bordered" width="100%" cellspacing="0">
+	        		<table id="user_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>用户名</th>
@@ -43,6 +49,7 @@
      
     <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/modal_add_user.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/modal_update_user.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/user_management.js"></script>

@@ -98,11 +98,11 @@ public class MyRestController {
 		List<String> permissions = user.getDept().getPermissions();
 		SearchCondition condition = null;
 		System.out.println(permissions);
-		if(permissions.contains("1")) {
+		if (permissions.contains("1")) {
 			System.out.println("contain 1");
-			condition = new SearchCondition( id, year, week == -1 ? null : week);
-		}else if(permissions.contains("2")){
-			condition = new SearchCondition(user.getDept().getId(),id, year, week == -1 ? null : week);
+			condition = new SearchCondition(id, year, week == -1 ? null : week);
+		} else if (permissions.contains("2")) {
+			condition = new SearchCondition(user.getDept().getId(), id, year, week == -1 ? null : week);
 		}
 		return ResponseEntity.ok(businessService.getIssueWithSearchCondition(condition));
 	}
@@ -189,6 +189,12 @@ public class MyRestController {
 		Dept dept = new Dept();
 		dept.setId(deptId);
 		user.setDept(dept);
+		Boolean exist = businessService.checkUserName(username);
+		if (!exist) {
+			AjaxResult<Boolean> ajaxRes = new AjaxResult.Builder<Boolean>().result(false).message("用户已存在").build();
+			return ResponseEntity.ok(ajaxRes);
+		}
+
 		int res = businessService.registerUser(user);
 		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(res > 0).message(res > 0 ? "添加成功" : "添加失败")
 				.errorCode(res > 0 ? ErrorCode.ERRORCODE_SUCCESS : -2).build();
@@ -357,9 +363,37 @@ public class MyRestController {
 	}
 
 	@GetMapping("/addProject")
-	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName) {
-		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(businessService.addProject(projectName))
+	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName,
+			@RequestParam("dept_id") Integer id, @RequestParam("project_description") String description) {
+		System.out.println("dept_id " + id);
+		System.out.println("project_description " + description);
+		System.out.println("project_name " + projectName);
+		Project project = new Project();
+		project.setProjectName(projectName);
+		Dept dept = new Dept();
+		dept.setId(id);
+		project.setDescription(description);
+		project.setDept(dept);
+
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(businessService.addProject(project))
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		return ResponseEntity.ok(ar);
+	}
+
+	@GetMapping("/updateProject")
+	public ResponseEntity<AjaxResult<Boolean>> updateProject(@RequestParam("project_id") Integer id,
+			@RequestParam("project_name") String projectName, @RequestParam("project_desc") String projectDescription,
+			@RequestParam("dept_id") Integer deptId) {
+		Project project = new Project();
+		project.setDescription(projectDescription);
+		project.setId(id);
+		project.setProjectName(projectName);
+		Dept dept = new Dept();
+		dept.setId(deptId);
+		project.setDept(dept);
+		Boolean b = businessService.updateProject(project);
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>().result(b).message(b ? "修改成功" : "修改失败")
+				.errorCode(b ? ErrorCode.ERRORCODE_SUCCESS : -1).build();
 		return ResponseEntity.ok(ar);
 	}
 

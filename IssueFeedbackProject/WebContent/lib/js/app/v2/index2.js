@@ -1,14 +1,19 @@
 /*!
  * Start Bootstrap - SB Admin v4.0.0-beta.2 (https://startbootstrap.com/template-overviews/sb-admin)
+
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-sb-admin/blob/master/LICENSE)
  */
+var inputIssueTitle = $("#inputIssueTitle");
+var inputIssueProject = $("#inputIssueProject");
+var inputIssueContent = $("#inputIssueContent");
+
 $(document).ready(function() {
 	
 	CKEDITOR.replace('inputIssueContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
 		filebrowserImageBrowseUrl: '/IssueFeedbackProject/ImageBrowser',
-		toolbar :	// Sample toolbar
+		toolbar :
 		    [
 		        { name: 'document',    items : [ 'Source' ] },
 		        { name: 'clipboard',   items : [ 'Cut','Copy','Paste','-','Undo','Redo' ] },
@@ -17,19 +22,91 @@ $(document).ready(function() {
 		        { name: 'tools',       items : [ 'Maximize' ] }
 		    ],
 	});
+	$.ajax({
+		url:"/IssueFeedbackProject/allProjects",
+		method:"get",
+		success:function(data){
+			if(data.result != null){
+				$.each(data.result,function(index,element){
+					var row = $("<option>").val(element.id).text(element.projectName);
+					inputIssueProject.append(row);
+				});
+			}
+		}
+	});
+	
+	$("#formAddIssue").validate({
+		rules:{
+			inputIssueTitle:"required",
+			inputIssueContent:"required"
+		},
+		messages:{
+			inputIssueTitle :"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题标题</div>",
+			inputIssueContent:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题描述</div>"
+		}
+	});
+	
+	$("#formAddIssue").submit(function(event){
+		event.preventDefault();
+		var content = CKEDITOR.instances['inputIssueContent'].getData();
+		$.ajax({
+			url:"/IssueFeedbackProject/addIssue",
+			method:"post",
+			data:{
+				title:inputIssueTitle.val(),
+				content:content,
+				project_id:$("#inputIssueProject").val()
+			},
+			success:function(data){
+				if(data.result){
+					
+					$("#addIssueModal").modal("hide");
+					inputIssueTitle.val("");
+					inputIssueContent.val("");
+					issueTable.ajax.reload();
+				}
+			}
+		});
+	});
 	
 	$("#btnAddIssue").click(function(event){
-		console.log("aaaa");
 		$("#addIssueModal").modal({
 			show:true
 		});
 	});
-	$("#issue_table").DataTable({
+	
+	var issueTable = $("#issue_table").DataTable({
+		dom:"Bfrtip",
 		ajax : {
 			"url" : "/IssueFeedbackProject/allIssues",
 			"dataSrc" : "result"
 		},
 		paging : true,
+		buttons:[
+			'excel'
+		],
+		"lengthMenu":[
+			[10,25,50,-1],[10,25,50,"全部"]
+		],
+		"language": {
+            "lengthMenu": "每页显示 _MENU_ 条记录",
+            "zeroRecords": "未查询到任何记录",
+            "info": "第 _PAGE_ 页 ，共  _PAGES_页",
+            "infoEmpty": "无任何问题",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "paginate":{
+            	"previous":"上一页",
+            	"next":"下一页"
+            },
+            select:{
+            	rows:{
+            		 _: "    &nbsp;&nbsp;&nbsp;&nbsp;你已经选择了  %d 行",
+                     0: "    &nbsp;&nbsp;&nbsp;&nbsp;点击一行选择",
+                     1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
+            	}
+            },
+            searchPlaceholder:"请输入查询信息"
+        },
 		columns : [
 			{
 				data : "status",
@@ -87,7 +164,11 @@ $(document).ready(function() {
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<a href='issue_detail?id="+data+"' class='btn btn-link'>查看</a>";
+					console.log(row);
+					return "<a href='issue_detail?id="+data+"' class='btn btn-primary'>查看&nbsp;" +
+							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
+							"</a>" 
+							;
 				}
 			}
 		]

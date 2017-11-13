@@ -145,6 +145,6 @@ body{
 		</div>
 		 
     
-    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/jquery-3.2.1.min.js"></script>
+     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/jquery/jquery-3.2.1.min.js"></script> 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v1/header.js"></script>	 
 </html>

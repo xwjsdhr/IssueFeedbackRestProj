@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <title>登录</title>
 <jsp:include page="/WEB-INF/v1/css_common.jsp"></jsp:include>
-<link href="lib/css/app/login.css" rel="stylesheet" type="text/css">
+<link href="/IssueFeedbackProject/lib/css/app/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -46,5 +46,5 @@
 <jsp:include page="/WEB-INF/v1/script.jsp"></jsp:include>
  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>  
   <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>  
-<script type="text/javascript" src="lib/js/app/v1/login.js"></script>
+<script type="text/javascript" src="/IssueFeedbackProject/lib/js/app/v1/login.js"></script>
 </html>

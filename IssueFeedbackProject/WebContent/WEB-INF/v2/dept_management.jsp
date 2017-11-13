@@ -14,6 +14,12 @@
   
   <div class="content-wrapper">
     <div class="container-fluid">
+     <nav aria-label="breadcrumb" role="navigation">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">部门管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">部门列表</li>
+	  </ol>
+	</nav>
       <div class="card"> 
         <div class="card-header">
           <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;部门列表
@@ -21,7 +27,7 @@
           </div>
 	        <div class="card-body">
 		          <div class="table-responsive">
-	        		<table id="dept_table" class="table table-bordered" width="100%" cellspacing="0">
+	        		<table id="dept_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>部门名称</th>

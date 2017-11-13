@@ -116,7 +116,6 @@
 								id="btnSubmitAddComment"
 								class="btn btn-primary" type="submit" value="回复">
 							<div class="mdl-spinner mdl-js-spinner is-active" hidden="true" id="pbAddComment"></div>
-						
 						</form>
 
 					</c:if>
@@ -134,7 +133,7 @@
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/index2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/issue_details.js"></script>
   </div>
 </body>
 </html>

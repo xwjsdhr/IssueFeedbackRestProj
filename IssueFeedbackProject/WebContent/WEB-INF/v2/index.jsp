@@ -15,6 +15,13 @@
   
   <div class="content-wrapper">
     <div class="container-fluid">
+    
+    <nav aria-label="breadcrumb" role="navigation">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">问题管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">问题列表</li>
+	  </ol>
+	</nav>
       <div class="card"> 
         <div class="card-header">
           <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;问题列表
@@ -23,7 +30,7 @@
           
 	        <div class="card-body">
 		          <div class="table-responsive">
-	        		<table id="issue_table" class="table table-bordered" width="100%" cellspacing="0">
+	        		<table id="issue_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>状态</th>

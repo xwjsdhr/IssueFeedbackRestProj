@@ -134,7 +134,9 @@ public interface BusinessService {
 
 	Boolean updateUserPassword(Integer id, String password);
 
-	Boolean addProject(String projectName);
+	Boolean addProject(Project project);
+
+	Boolean updateProject(Project project);
 	
 
 }

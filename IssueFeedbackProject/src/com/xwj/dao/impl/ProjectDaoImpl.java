@@ -26,9 +26,17 @@ public class ProjectDaoImpl implements ProjectDao {
 		return projectList;
 	}
 	@Override
-	public Boolean addProject(String projectName) {
+	public Boolean addProject(Project project) {
 		SqlSession openSession = dbUtils.getSessionFactory().openSession();
-		int i = openSession.insert("addProject",projectName);
+		int i = openSession.insert("addProject",project);
+		openSession.commit();
+		openSession.close();
+		return i>0;
+	}
+	@Override
+	public Boolean updateProject(Project project) {
+		SqlSession openSession = dbUtils.getSessionFactory().openSession();
+		int i = openSession.insert("updateProject",project);
 		openSession.commit();
 		openSession.close();
 		return i>0;

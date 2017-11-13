@@ -188,7 +188,7 @@
 		tpj.id AS ppid, 
 		tpj.project_name AS projectName,
 		td.id AS deptId,
-		tpj.desc AS description,
+		tpj.description AS description,
 		td.dept_name AS deptNameProj
 		 FROM t_project tpj 
 		 LEFT JOIN t_dept td 

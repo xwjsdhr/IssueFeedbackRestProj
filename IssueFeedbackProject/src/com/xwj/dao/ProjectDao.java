@@ -8,6 +8,8 @@ public interface ProjectDao {
 
 	List<Project> getAll();
 
-	Boolean addProject(String projectName);
+	Boolean addProject(Project project);
+
+	Boolean updateProject(Project project);
 	
 }

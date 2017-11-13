@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwj.util.sql_mapper_proj">
 
-<insert id="addProject" parameterType="String">
-	insert into t_project(project_name) values(#{projectName});
-</insert>
+	<insert id="addProject" parameterType="com.xwj.entity.Project">
+		INSERT INTO t_project(project_name,dept_id,description)
+		VALUES(#{projectName}, #{dept.id}, #{description});
+	</insert>
+	<update id="updateProject" parameterType="com.xwj.entity.Project">
+		update t_project set dept_id = #{dept.id} ,project_name = #{projectName}, description = #{description} where id = #{id}
+	</update>
 
 </mapper>

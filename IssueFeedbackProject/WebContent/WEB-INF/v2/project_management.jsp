@@ -15,6 +15,12 @@
   
   <div class="content-wrapper">
     <div class="container-fluid">
+    <nav aria-label="breadcrumb" role="navigation">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">项目管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">项目列表</li>
+	  </ol>
+	</nav>
       <div class="card"> 
         <div class="card-header">
           <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;项目列表
@@ -22,7 +28,7 @@
           </div>
 	        <div class="card-body">
 		          <div class="table-responsive">
-	        		<table id="project_table" class="table table-bordered" width="100%" cellspacing="0">
+	        		<table id="project_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th>项目</th>
@@ -39,6 +45,7 @@
      </div>
      
     <jsp:include page="/WEB-INF/v2/modal_add_project.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/modal_update_project.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
 	

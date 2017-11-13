@@ -6,45 +6,51 @@
 <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">添加项目</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      	<div class="container">
-      		<div class="row"> 
-      			<div class="col-lg-12">
-      				<div class="form-group">
-	      				<label for="inputProjectName">项目名</label>
-	      				<input type="text" id="inputProjectName" class="form-control" placeholder="请输入项目名" required/>
-      				</div>
-      			</div>
-      		</div>
-      		
-      		<div class="row">
-      			<div class="col-lg-12">
-	      			<div class="form-group">
-	      				<label for="selectorDept">分管部门</label>
-	      				<select id="selectorDept" class="form-control" required></select>
-	      			</div>
-      			</div>
-      		</div>
-      		<div class="row">
-      			<div class="col-lg-12">
-      				<div class="form-group">
-	      				<label for="inputProjectDesc">项目描述</label>
-	      				<input type="text" id="inputProjectDesc" class="form-control" placeholder="请输入描述" required/>
-      				</div>
-      			</div>
-      		</div>
-      	</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-        <button class="btn btn-primary" type="button" data-dismiss="modal">保存</button>
-      </div>
+    
+    <form class="cmxform" id="formAddProject">
+	    <fieldset>
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">添加项目</h5>
+		        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">×</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="container">
+		      		<div class="row"> 
+		      			<div class="col-lg-12">
+		      				<div class="form-group">
+			      				<label for="inputProjectName">项目名</label>
+			      				<input type="text" id="inputProjectName" name="inputProjectName" class="form-control" placeholder="请输入项目名" />
+		      				</div>
+		      			</div>
+		      		</div>
+		      		
+		      		<div class="row">
+		      			<div class="col-lg-12">
+			      			<div class="form-group">
+			      				<label for="selectorDept">分管部门</label>
+			      				<select id="selectorDept" class="form-control" ></select>
+			      			</div>
+		      			</div>
+		      		</div>
+		      		<div class="row">
+		      			<div class="col-lg-12">
+		      				<div class="form-group">
+			      				<label for="inputProjectDesc">项目描述</label>
+			      				<input type="text" id="inputProjectDesc" name="inputProjectDesc" class="form-control" placeholder="请输入项目描述"/>
+		      				</div>
+		      			</div>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+		        <button class="btn btn-primary" type="submit"  id="btnSaveProject">保存</button>
+		      </div>
+	      </fieldset>
+      </form>
+      
     </div>
   </div>
 </div>

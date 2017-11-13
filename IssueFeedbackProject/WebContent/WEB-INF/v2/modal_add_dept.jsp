@@ -6,28 +6,32 @@
 <div class="modal fade" id="addDeptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">添加部门</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      	<div class="container">
-      		<div class="row"> 
-      			<div class="col-lg-12">
-      				<div class="form-group">
-	      				<label for="inputDeptName">部门名称</label>
-	      				<input type="text" id="inputDeptName" class="form-control" placeholder="请输入部门名称" required/>
-      				</div>
-      			</div>
-      		</div>
-      	</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-        <button class="btn btn-primary" type="button" data-dismiss="modal">保存</button>
-      </div>
+    	<form id="formAddDept" >
+    	<fieldset>
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">添加部门</h5>
+		        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">×</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="container">
+		      		<div class="row"> 
+		      			<div class="col-lg-12">
+		      				<div class="form-group">
+			      				<label for="inputDeptName">部门名称</label>
+			      				<input type="text" id="inputDeptName" name="inputDeptName" class="form-control" placeholder="请输入部门名称"/>
+		      				</div>
+		      			</div>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+		        <button class="btn btn-primary" type="submit">保存</button>
+		      </div>
+	      </fieldset>
+      </form>
     </div>
   </div>
 </div>

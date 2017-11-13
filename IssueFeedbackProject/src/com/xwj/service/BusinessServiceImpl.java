@@ -98,6 +98,9 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	public int registerUser(User user) {
+		String rawPassword = user.getPassword();
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		user.setPassword(encodedPassword);
 		return userDao.addUser(user);
 	}
 
@@ -256,8 +259,12 @@ public class BusinessServiceImpl implements BusinessService {
 		return userDao.updateUserPassword(id,passwordEncoder.encode(password));
 	}
 	@Override
-	public Boolean addProject(String projectName) {
+	public Boolean addProject(Project project) {
 		// TODO Auto-generated method stub
-		return projectDao.addProject(projectName);
+		return projectDao.addProject(project);
+	}
+	@Override
+	public Boolean updateProject(Project project) {
+		return projectDao.updateProject(project);
 	}
 }
