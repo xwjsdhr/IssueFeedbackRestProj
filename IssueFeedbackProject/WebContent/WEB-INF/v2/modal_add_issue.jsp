@@ -20,7 +20,7 @@
 		      			<div class="col-lg-12">
 		      				<div class="form-group">
 			      				<label for="inputIssueTitle">问题标题</label>
-			      				<input type="text" id="inputIssueTitle" name="inputIssueTitle" class="form-control" placeholder="请输入标题" />
+			      				<input type="text" id="inputIssueTitle" name="inputIssueTitle" class="form-control" placeholder="请输入标题" required/>
 		      				</div>
 		      			</div>
 		      		</div>

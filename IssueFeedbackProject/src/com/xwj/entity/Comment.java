@@ -14,7 +14,7 @@ public class Comment implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 4032233724648024513L;
-	private int id;
+	private Integer id;
 	private String content;//评论内容
 	private User user;//用户
 	private String createTime;//创建时间
@@ -46,10 +46,10 @@ public class Comment implements Serializable{
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getContent() {

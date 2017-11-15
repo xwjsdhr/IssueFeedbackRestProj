@@ -8,7 +8,11 @@ var inputIssueTitle = $("#inputIssueTitle");
 var inputIssueProject = $("#inputIssueProject");
 var inputIssueContent = $("#inputIssueContent");
 
+var lclstrg = window.localStorage;
+
 $(document).ready(function() {
+	
+	
 	
 	CKEDITOR.replace('inputIssueContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
@@ -22,19 +26,17 @@ $(document).ready(function() {
 		        { name: 'tools',       items : [ 'Maximize' ] }
 		    ],
 	});
+	
 	$.ajax({
 		url:"/IssueFeedbackProject/allProjects",
 		method:"get",
 		success:function(data){
-			if(data.result != null){
-				$.each(data.result,function(index,element){
-					var row = $("<option>").val(element.id).text(element.projectName);
-					inputIssueProject.append(row);
-				});
-			}
+			$.each(data.result,function(index,element){
+				var row = $("<option>").val(element.id).text(element.projectName);
+				inputIssueProject.append(row);
+			});
 		}
 	});
-	
 	$("#formAddIssue").validate({
 		rules:{
 			inputIssueTitle:"required",
@@ -49,22 +51,24 @@ $(document).ready(function() {
 	$("#formAddIssue").submit(function(event){
 		event.preventDefault();
 		var content = CKEDITOR.instances['inputIssueContent'].getData();
+		var title = inputIssueTitle.val().trim();
+		if(title.length == 0){
+			return;
+		}
 		$.ajax({
 			url:"/IssueFeedbackProject/addIssue",
 			method:"post",
 			data:{
 				title:inputIssueTitle.val(),
 				content:content,
-				project_id:$("#inputIssueProject").val()
+				project_id:inputIssueProject.val()
 			},
 			success:function(data){
-				if(data.result){
-					
-					$("#addIssueModal").modal("hide");
-					inputIssueTitle.val("");
-					inputIssueContent.val("");
-					issueTable.ajax.reload();
-				}
+				$("#addIssueModal").modal("hide");
+				inputIssueTitle.val("");
+				inputIssueContent.val("");
+				issueTable.ajax.reload();
+				console.log(data);
 			}
 		});
 	});
@@ -74,6 +78,7 @@ $(document).ready(function() {
 			show:true
 		});
 	});
+	
 	
 	var issueTable = $("#issue_table").DataTable({
 		dom:"Bfrtip",
@@ -90,7 +95,7 @@ $(document).ready(function() {
 		],
 		"language": {
             "lengthMenu": "每页显示 _MENU_ 条记录",
-            "zeroRecords": "未查询到任何记录",
+            "zeroRecords": "未查询到任何问题",
             "info": "第 _PAGE_ 页 ，共  _PAGES_页",
             "infoEmpty": "无任何问题",
             "infoFiltered": "(filtered from _MAX_ total records)",
@@ -164,13 +169,16 @@ $(document).ready(function() {
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					console.log(row);
-					return "<a href='issue_detail?id="+data+"' class='btn btn-primary'>查看&nbsp;" +
+					/*return "<a href='issue_detail?id="+data+"' class='btn btn-primary'>查看&nbsp;" +
 							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
-							"</a>" 
-							;
+							"</a>";*/
+					
+					return "<a class='btn btn-primary' href='issue_detail?id="+data+"'>查看&nbsp;" +
+							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
+							"</a>";
 				}
 			}
 		]
 	})
 });
+

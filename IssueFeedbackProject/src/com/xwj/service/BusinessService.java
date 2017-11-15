@@ -11,6 +11,7 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
+import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
 import com.xwj.params.SearchCondition;
 
@@ -137,6 +138,9 @@ public interface BusinessService {
 	Boolean addProject(Project project);
 
 	Boolean updateProject(Project project);
+
+	void logUser(User user, String remoteAddr);
 	
+	List<TrainingRecord> getAllTrainingRecords();
 
 }

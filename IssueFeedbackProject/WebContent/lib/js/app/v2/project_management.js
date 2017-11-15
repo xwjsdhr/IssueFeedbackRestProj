@@ -110,7 +110,10 @@ function emptyDialog(){
 var projectTable = $("#project_table").DataTable({
 		ajax : {
 			"url" : "/IssueFeedbackProject/allProjects",
-			"dataSrc" : "result"
+			"dataSrc" : "result",
+			"data":function(){
+				notification("加载项目成功","success");
+			}
 		},
 		searching:false,
 		paging:false,

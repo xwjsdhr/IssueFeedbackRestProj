@@ -85,5 +85,7 @@ public class AjaxResult<T> implements Serializable{
 		public static final Integer ERRORCODE_NO_USER = 2;
 		public static final Integer ERRORCODE_NO_SUCH_PERMISSION = 3;
 		
+		public static final Integer ERRORCODE_NO_CONTENT = 4;
+		
 	}
 }

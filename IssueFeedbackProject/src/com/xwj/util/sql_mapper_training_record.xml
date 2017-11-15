@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwj.util.sql_mapper_training_record">
+	
+	<select id="selectAllRecord" resultMap="recordResultMap">
+		select 
+		ttr.id,
+		ttr.duration as recordDuration,
+	    ttr.content as recordContent,
+	    ttr.create_time as recordCreateTime,
+	    ttr.training_time as recordTrainingTime,
+	    ttr.training_type_id as trainingTypeId,
+	    ttt.training_type_name as trainingTypeName,
+	    ttr.duration as trainingDuration,
+	    ttr.prepare_duration as prepareDuration,
+	    ttr.time_unit_id as trainingTimeUnit,
+	    ttr.create_user_id,
+	    ttt.id,
+	    ttt.training_type_name,
+	    ttu.id,
+	    ttu.time_unit_name,
+	    tu.id as userId,
+	    tu.user_name as userName,
+	    tu.real_name as realName,
+	    ttu.id as timeUnitId,
+	    ttu.time_unit_name as timeUnitName,
+	    tu_teacher.id as teacher_id,
+	    tu_teacher.user_name as teacherName,
+	    ttw.id as trainingWayId,
+	    ttw.training_way_name as trainingWayName,
+	    td.id as teachDeptId,
+	    td.dept_name as teachDeptName
+	    
+		 from t_train_record ttr 
+		left join t_training_type ttt on ttr.training_type_id = ttt.id 
+		left join t_time_unit ttu on ttr.time_unit_id = ttu.id
+		left join t_training_user ttru on ttru.training_record_id = ttr.id
+		left join t_user tu on tu.id = ttru.user_id
+		left join t_user tu_teacher on tu_teacher.id = ttr.teacher_id
+		left join t_training_way ttw on ttw.id = ttr.training_way_id
+		left join t_dept td on ttr.teach_dept_id = td.id;
+	</select>
+	
+	<resultMap type="com.xwj.entity.TrainingRecord" id="recordResultMap">
+		
+		<result column="recordContent" property="content"/>
+		<result column="recordDuration" property="duration"/>
+		<result column="prepareDuration" property="prepareduration"/>
+		<result column="recordCreateTime" property="createTime"/>
+		
+		<result column="recordTrainingTime" property="trainingTime"/>
+		
+		<association property="teacher" javaType="com.xwj.entity.User">
+			<result column="teacher_id" property="id"/>
+			<result column="teacherName" property="realName"/>
+		</association>
+		<association property="trainingType" javaType="com.xwj.entity.TrainingType">
+			<result column="trainingTypeId" property="id"/>
+			<result column="trainingTypeName" property="trainingTypeName"/>
+		</association>
+		<association property="trainingWay" javaType="com.xwj.entity.TrainingWay">
+			<result column="trainingWayId" property="id"/>
+			<result column="trainingWayName" property="trainingWayName"/>
+		</association>
+		
+		<association property="timeUnit" javaType="com.xwj.entity.TimeUnit">
+			<result column="timeUnitId" property="id"/>
+			<result column="timeUnitName" property="timeUnitName"/>
+		</association>
+		<association property="teachDept" javaType="com.xwj.entity.Dept">
+			<result column="teachDeptId" property="id"/>
+			<result column="teachDeptName" property="deptName"/>
+		</association>
+		
+		<collection property="trainedUsers" ofType="com.xwj.entity.User">
+			<result column="userId" property="id" />
+			<result column="userName" property="username"/>
+			<result column="realName" property="realName"/>
+		</collection>
+		
+		
+		
+	</resultMap>
+</mapper>

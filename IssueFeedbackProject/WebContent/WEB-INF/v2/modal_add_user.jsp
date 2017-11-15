@@ -9,7 +9,7 @@
     <form id="formAddUser">
     	<fieldset>
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">添加</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">添加用户</h5>
 		        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">×</span>
 		        </button>

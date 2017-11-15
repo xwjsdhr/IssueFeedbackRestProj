@@ -2,21 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwj.util.sql_mapper_comment">
 
-	<insert id="insertComment" parameterType="com.xwj.entity.Comment">
+	<insert id="insertComment" parameterType="com.xwj.entity.Comment"
+	statementType="PREPARED"
+	 useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		
 		INSERT INTO 
 		t_comment
 		(content,user_id,create_time,is_resovled_issue,is_problem)
 		VALUES
-		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem})
-		<selectKey resultType="Integer" order="AFTER" keyProperty="id" keyColumn="id">
-        	select id from t_comment order by id limit 1
-    	</selectKey> 
+		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem});
+		
+		<selectKey
+		  keyProperty="id"
+		  resultType="Integer"
+		  order="AFTER"
+		  keyColumn="id"
+		  statementType="PREPARED">
+        	SELECT LAST_INSERT_ID();
+		  </selectKey>
+		
 	</insert>
+	<update id="unresolveIssueByComment" parameterType="Integer">
+		update t_issue set status_id = 4 where id=#{id}
+	</update>
+	<update id="replyIssueById" parameterType="Integer">
+		update t_issue set status_id = 2 where id=#{id}
+	</update>
 
 	<select id="selectInsertedKey" resultType="Integer">
 		select id from t_comment order by id desc limit 1
 	</select>
+	
 	<insert id="insertIssueJointComment" parameterType="com.xwj.params.IssueJointComment">
 		INSERT INTO
 		t_issue_comments(issue_id,comment_id)

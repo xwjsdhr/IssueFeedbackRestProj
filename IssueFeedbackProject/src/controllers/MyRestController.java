@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,33 +28,39 @@ import com.xwj.entity.IssueCount;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
+import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
 import com.xwj.params.AjaxResult;
 import com.xwj.params.AjaxResult.ErrorCode;
 import com.xwj.params.SearchCondition;
 import com.xwj.service.BusinessService;
+import com.xwj.util.CommonUtil;
 
 @Component
 @RestController
 public class MyRestController {
 
-	@Autowired
+	@NonNull
+	@Autowired(required=true)
 	public BusinessService businessService;
-	@Autowired
+	
+	@NonNull
+	@Autowired(required=true)
 	public Calendar calendar;
 
 	@PostMapping("/auth")
 	public ResponseEntity<User> auth(@RequestParam("user_name") String username,
-			@RequestParam("password") String password, HttpSession hs) {
+			@RequestParam("password") String password, HttpSession hs, ModelMap modelMap, HttpServletRequest httpRequest) {
 		User user = businessService.loginBCrypt(username, password);
 		if (user != null) {
 			hs.setAttribute("user_session_id", user.getId());
-			hs.setAttribute("user_session", user);
+			modelMap.addAttribute("user_login", user);
+			
+			businessService.logUser(user,CommonUtil.getClientIp(httpRequest));
 			return ResponseEntity.ok(user);
 		} else {
 			return ResponseEntity.noContent().build();
 		}
-
 	}
 
 	@GetMapping("/allIssues")
@@ -78,11 +87,13 @@ public class MyRestController {
 	}
 
 	@GetMapping("/allStatus")
-	public ResponseEntity<AjaxResult<List<Status>>> allStatus() {
-
-		AjaxResult<List<Status>> ar = new AjaxResult.Builder<List<Status>>().result(businessService.getAllStatus())
-				.message("获取成功").errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
-
+	public ResponseEntity<AjaxResult<List<Status>>> allStatus(HttpSession hs) {
+		User user = filterSession(hs);
+		AjaxResult<List<Status>> ar = null;
+		if (user != null) {
+			ar = new AjaxResult.Builder<List<Status>>().result(businessService.getAllStatus()).message("获取成功")
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		}
 		return ResponseEntity.ok(ar);
 	}
 
@@ -94,7 +105,8 @@ public class MyRestController {
 	@GetMapping("/searchIssue")
 	public ResponseEntity<List<Issue>> searchIssue(@RequestParam("statusId") Integer id,
 			@RequestParam("year") Integer year, @RequestParam("week") Integer week, HttpSession hs) {
-		User user = (User) hs.getAttribute("user_session");
+		User user = filterSession(hs);
+		
 		List<String> permissions = user.getDept().getPermissions();
 		SearchCondition condition = null;
 		System.out.println(permissions);
@@ -124,7 +136,7 @@ public class MyRestController {
 	@GetMapping("/allUser")
 	public ResponseEntity<AjaxResult<List<User>>> allUser(HttpSession hs) {
 		AjaxResult<List<User>> ajaxResult;
-		User user = (User) hs.getAttribute("user_session");
+		User user = filterSession(hs);
 		if (user == null) {
 			ajaxResult = new AjaxResult.Builder<List<User>>().errorCode(ErrorCode.ERRORCODE_NO_USER).message("无用户登录")
 					.result(null).build();
@@ -166,7 +178,7 @@ public class MyRestController {
 	public ResponseEntity<AjaxResult<Boolean>> disableOrEnableUser(HttpSession hs,
 			@RequestParam("userId") Integer userId, @RequestParam("userStatus") Boolean userStatus) {
 
-		User userSession = (User) hs.getAttribute("user_session");
+		User userSession = filterSession(hs);
 		AjaxResult<Boolean> ajaxResult;
 		if (userSession.getId() == userId) {
 
@@ -234,10 +246,7 @@ public class MyRestController {
 	public ResponseEntity<AjaxResult<Comment>> addCommentToIssue(HttpSession hs,
 			@RequestParam("issue_id") Integer issueId, @RequestParam("content") String desc,
 			@RequestParam("isResovleIssue") Integer isResovleIssue, @RequestParam("isProblem") Integer isProblem) {
-		User user = (User) hs.getAttribute("user_session");
-		System.out.println(issueId);
-		System.out.println(isResovleIssue);
-		System.out.println(isProblem);
+		User user = filterSession(hs);
 		AjaxResult<Comment> ar = null;
 		if (user != null) {
 			Comment comment = new Comment();
@@ -262,7 +271,7 @@ public class MyRestController {
 	public ResponseEntity<AjaxResult<Boolean>> addIssue(HttpSession hs, @RequestParam("title") String title,
 			@RequestParam("content") String content, @RequestParam("project_id") Integer projectId) {
 		AjaxResult<Boolean> ar = null;
-		User user = (User) hs.getAttribute("user_session");
+		User user = filterSession(hs);
 		if (user != null) {
 			Issue issue = new Issue();
 			issue.setTitle(title);
@@ -396,9 +405,44 @@ public class MyRestController {
 				.errorCode(b ? ErrorCode.ERRORCODE_SUCCESS : -1).build();
 		return ResponseEntity.ok(ar);
 	}
+	
+	@GetMapping("/getIssueById")
+	public ResponseEntity<AjaxResult<Issue>> getIssueById(@RequestParam("id")Integer id){
+		AjaxResult<Issue> issueAr =null;
+		if(id != null) {
+			issueAr = new AjaxResult.Builder<Issue>()
+					.result(businessService.getById(id))
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.message("获取成功")
+					.build();
+		}else {
+			issueAr = new AjaxResult.Builder<Issue>()
+					.result(null)
+					.errorCode(ErrorCode.ERRORCODE_NO_CONTENT)
+					.message("无结果，查询失败！")
+					.build();
+		}
+		return ResponseEntity.ok(issueAr);
+	}
+	
+	@GetMapping("/allTrainingRecords")
+	public ResponseEntity<AjaxResult<List<TrainingRecord>>> allTrainingRecords(){
+		AjaxResult<List<TrainingRecord>> issueAr =null;
+		
+			issueAr = new AjaxResult.Builder<List<TrainingRecord>>()
+					.result(businessService.getAllTrainingRecords())
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.message("获取成功")
+					.build();
+		return ResponseEntity.ok(issueAr);
+	}
 
 	private User filterSession(HttpSession hs) {
-		return (User) hs.getAttribute("user_session");
+		Integer userId = (Integer) hs.getAttribute("user_session_id");
+		if (userId != null) {
+			return businessService.getUserById(userId);
+		}
+		return null;
 	}
 
 	@Bean

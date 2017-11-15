@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,8 @@ import com.xwj.dao.PermissionDao;
 import com.xwj.dao.ProjectDao;
 import com.xwj.dao.StatusDao;
 import com.xwj.dao.UserDao;
+import com.xwj.dao.UserLogDao;
+import com.xwj.dao.training.TrainingRecordDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
@@ -21,6 +24,7 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
+import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
 import com.xwj.params.SearchCondition;
 
@@ -32,28 +36,49 @@ import com.xwj.params.SearchCondition;
 @Component
 public class BusinessServiceImpl implements BusinessService {
 
-	@Autowired(required= true)
+	@NonNull
+	@Autowired(required=true)
 	private UserDao userDao;
-	@Autowired(required= true)
+	@NonNull
+	@Autowired(required=true)
 	private DeptDao deptDao;
-	@Autowired(required= true)
+	
+	@NonNull
+	@Autowired(required=true)
 	private StatusDao statusDao;
-	@Autowired(required= true)
+	
+	@NonNull
+	@Autowired(required=true)
 	private IssueDao myBatisIssueDao;
-	@Autowired(required= true)
+	
+	@NonNull
+	@Autowired(required=true)
 	private ProjectDao projectDao;
-	@Autowired(required= true)
+	
+	@NonNull
+	@Autowired(required=true)
 	private PermissionDao permissionDao;
 	
 	private static BusinessServiceImpl instance;
 	
-	
-	@Autowired
+	@NonNull
+	@Autowired(required=true)
 	private PasswordEncoder passwordEncoder;
+	
+	@NonNull
+	@Autowired(required=true)
+	private UserLogDao userLogDao;
+	
+	
+	@NonNull
+	@Autowired(required=true)
+	private TrainingRecordDao trainingRecordDao;
+
 	
 	private BusinessServiceImpl() {
 		
 	}
+	
 	public static BusinessServiceImpl newInstance() {
 		if(instance == null) {
 			instance = new BusinessServiceImpl();
@@ -266,5 +291,15 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public Boolean updateProject(Project project) {
 		return projectDao.updateProject(project);
+	}
+
+	@Override
+	public void logUser(User user, String remoteAddr) {
+		userLogDao.logUser(user,remoteAddr);
+	}
+
+	@Override
+	public List<TrainingRecord> getAllTrainingRecords() {
+		return trainingRecordDao.getAll();
 	}
 }

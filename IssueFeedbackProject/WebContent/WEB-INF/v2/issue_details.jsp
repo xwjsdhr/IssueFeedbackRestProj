@@ -13,23 +13,24 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   
   <jsp:include page="/WEB-INF/v2/navbar.jsp"></jsp:include>
-  
   <div class="content-wrapper">
     <div class="container-fluid">
+	    <nav aria-label="breadcrumb" role="navigation">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">问题管理</li>
+		    <li class="breadcrumb-item active" aria-current="page">问题详情</li>
+		  </ol>
+		</nav>
+    
       <div class="card"> 
         <div class="card-header">
-          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;问题详情
+          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp; 问题详情
           </div>
           
 	        <div class="card-body">
 		          <div class="card" style="margin-top: 20px">
 			<div class="card-header">${issue_detail.title } 
-			
-			<span class="mdl-chip"  style="background-color: #FFC107;">
-			
-			 <span class="mdl-chip__text ">${issue_detail.project.projectName}</span>
-			 
-			 </span>
+			 <span class="badge badge-pill badge-secondary">${issue_detail.project.projectName}</span>
 				<c:choose>
 					<c:when test="${issue_detail.status.id == 1 }">
 						<span class="badge badge-pill badge-secondary">${issue_detail.status.statusName }</span>
@@ -55,10 +56,11 @@
 					
 					<div class="comment-wrap">
 						<div class="photo">
-								<div class="avatar" style="background-image: url('')"></div>
-								<div> ${comment.user.realName }</div>
+								<div class="avatar" style="background-image: url('https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png')"></div>
+								<br/>
+								<span class="badge badge-pill badge-success"> ${comment.user.realName }</span>
 						</div>
-						<div class="comment-block">
+						<div class="comment-block" style="margin-left: 12px">
 								<c:if test="${comment.isResovleIssue == 1 }">
 									<span class="badge badge-pill badge-success">已解决</span>
 								</c:if>
@@ -79,8 +81,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					
-					<c:if test="${fn:contains(user_session.dept.permissions,8) }">
+					<c:if test="${fn:contains(user_login.dept.permissions,8) }">
 					
 					<!-- action="${pageContext.request.contextPath }/AddComment" -->
 					
@@ -92,7 +93,7 @@
 							<textarea name="comment"  class="form-control"
 								id="textareaCommentContent" rows="10"></textarea>
 
-							<c:if test="${fn:contains(user_session.dept.permissions,9) }">
+							<c:if test="${fn:contains(user_login.dept.permissions,9) }">
 								<div class="form-check form-check-inline">
 									<label style="margin-top: 20px" class="form-check-label"
 										for="checkboxResovled"> <input type="checkbox"
@@ -102,7 +103,7 @@
 								</div>
 							</c:if>
 
-							<c:if test="${fn:contains(user_session.dept.permissions,10) }">
+							<c:if test="${fn:contains(user_login.dept.permissions,10) }">
 								<div class="form-check form-check-inline">
 									<label class="form-check-label" style="margin-top: 20px">
 										<input class="form-check-input" type="checkbox"
@@ -128,9 +129,12 @@
        	</div>
       <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
      </div>
+     
+     
     <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/modal_add_issue.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
+    
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/issue_details.js"></script>

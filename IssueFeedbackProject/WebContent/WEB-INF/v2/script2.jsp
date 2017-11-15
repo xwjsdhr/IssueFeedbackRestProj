@@ -12,9 +12,10 @@
  	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/jquery/jquery.validation.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/bootstrap/bootstrap.min.js"></script>
-	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/bootstrap/bootstrap-notify.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/moment/moment.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/moment/zh-cn.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/sb-admin.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/global.js"></script>
 	

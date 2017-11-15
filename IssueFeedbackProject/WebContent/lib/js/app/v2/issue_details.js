@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	CKEDITOR.replace('textareaCommentContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
 		filebrowserImageBrowseUrl: '/IssueFeedbackProject/ImageBrowser',
@@ -11,6 +12,7 @@ $(document).ready(function() {
 		        { name: 'tools',       items : [ 'Maximize' ] }
 		    ],
 	});
+	
 	$("#checkboxResovled").change(function(event) {
 		var element = event.target;
 		if (element.checked) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwj.util.sql_mapper_user_log">
+
+	<insert id="logUserLogin" parameterType="com.xwj.entity.UserLog">
+		insert into t_user_log(user_id,log_time,ip_addr) values(
+		#{user.id},now(),#{ipAddr});
+	</insert>
+</mapper>

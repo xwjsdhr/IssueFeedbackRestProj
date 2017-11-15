@@ -18,30 +18,33 @@
     
     <nav aria-label="breadcrumb" role="navigation">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item">问题管理</li>
-	    <li class="breadcrumb-item active" aria-current="page">问题列表</li>
+	    <li class="breadcrumb-item">培训记录管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">培训记录列表</li>
 	  </ol>
 	</nav>
       <div class="card"> 
         <div class="card-header">
-          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;问题列表
+          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;培训记录列表
           	<c:if test="${fn:contains(user_login.dept.permissions,2)}">
-          	<button class="btn btn-primary" id="btnAddIssue" style="float: right;"><i class="fa fa-plus"></i>&nbsp;添加问题</button>
+          	<button class="btn btn-primary" id="btnAddIssue" style="float: right;"><i class="fa fa-plus"></i>&nbsp;添加培训记录</button>
           	</c:if>
           </div>
           
 	        <div class="card-body">
 		          <div class="table-responsive">
-	        		<table id="issue_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+	        		<table id="train_record_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th>状态</th>
-								<th>标题</th>
+								<th>培训类型</th>
+								<th>内容</th>
 								<th>提交时间</th>
-								<th>上次更新时间</th>
-								<th>周</th>
-								<th>所属项目</th>
-								<th>详情</th>
+								<th>培训方式</th>
+								<th>发起部门</th>
+								<th>开始时间</th>
+								<th>讲师</th>
+								<th>培训用时</th>
+								<th>准备文档用时</th>
+								<th>参加培训人员</th>
 							</tr>
 						</thead>
 					</table>
@@ -55,7 +58,7 @@
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/index2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/train_record_management.js"></script>
   </div>
 </body>
 </html>

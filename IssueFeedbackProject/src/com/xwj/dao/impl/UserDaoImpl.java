@@ -74,8 +74,10 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public User getUserById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		User user = session.selectOne("getUserById",userId);
+		session.close();
+		return user;
 	}
 
 	@Override

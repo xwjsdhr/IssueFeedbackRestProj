@@ -1,27 +1,37 @@
 package com.xwj.params;
 
-public class UpdateStatusByIssueId {
+import java.io.Serializable;
 
-	private int statusId;
-	private int issueId;
-	public int getStatusId() {
+public class UpdateStatusByIssueId implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1332785425543818602L;
+	
+	private Integer statusId;
+	private Integer issueId;
+	
+	public Integer getStatusId() {
 		return statusId;
 	}
-	public void setStatusId(int statusId) {
+	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
 	}
-	public int getIssueId() {
+	public Integer getIssueId() {
 		return issueId;
 	}
-	public void setIssueId(int issueId) {
-		this.issueId = issueId;
-	}
-	public UpdateStatusByIssueId(int statusId, int issueId) {
-		super();
-		this.statusId = statusId;
+	public void setIssueId(Integer issueId) {
 		this.issueId = issueId;
 	}
 	public UpdateStatusByIssueId() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+	public UpdateStatusByIssueId(Integer statusId, Integer issueId) {
+		super();
+		this.statusId = statusId;
+		this.issueId = issueId;
+	}
+	
 }

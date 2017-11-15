@@ -51,4 +51,12 @@
     <bean class="com.xwj.dao.impl.PermissionDaoImpl">
     	<qualifier value="permissionDao"></qualifier>
     </bean>
+    <bean class="com.xwj.dao.impl.UserLogDaoImpl">
+    	<qualifier value="userLogDao"></qualifier>
+    </bean>
+    
+    
+    <bean class="com.xwj.dao.training.impl.TrainingRecordDaoImpl">
+    	<qualifier value="trainingRecordDao"></qualifier>
+    </bean>
 </beans>

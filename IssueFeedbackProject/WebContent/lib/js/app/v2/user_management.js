@@ -22,7 +22,6 @@ $(document).ready(function(event){
 		});
 	});
 	
-	
 	formAddUser.validate({
 		rules:{
 			inputUserName:"required",
@@ -57,6 +56,14 @@ $(document).ready(function(event){
 	
 	formAddUser.submit(function(event){
 		event.preventDefault();
+		var username = inputUserName.val().trim();
+		var password = inputPassword.val().trim();
+		var realName = inputRealName.val().trim();
+		if(username.length == 0 ||
+				password.length == 0 ||
+				realName.length == 0){
+			return;
+		}
 		$.ajax({
 			url:"/IssueFeedbackProject/addUser",
 			method:"post",
@@ -141,7 +148,10 @@ $(document).ready(function(event){
 var userTable = $("#user_table").DataTable({
 		ajax : {
 			"url" : "/IssueFeedbackProject/allUser",
-			"dataSrc" : "result"
+			"dataSrc" : "result",
+			"data":function(){
+				notification("加载用户成功","success");
+			}
 		},
 		searching:true,
 		paging:true,

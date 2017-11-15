@@ -15,9 +15,6 @@
 .thumbnail {
     padding:0px;
 }
-
-
-
 p {
   line-height: 1.3125rem;
 }
@@ -38,13 +35,14 @@ p {
 .photo {
   padding-top: 0.625rem;
   display: table-cell;
-  width: 3.5rem;
+  width: 5rem;
 }
 .photo .avatar {
   height: 2.25rem;
   width: 2.25rem;
   border-radius: 50%;
   background-size: contain;
+  align-content: center;
 }
 
 .comment-block {
@@ -53,7 +51,7 @@ p {
   display: table-cell;
   vertical-align: top;
   border-radius: 0.1875rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px 0 rgba(3, 3, 3, 0.5);
 }
 .comment-block textarea {
   width: 100%;
@@ -83,7 +81,7 @@ p {
 }
 .comment-actions li.complain {
   padding-right: 0.75rem;
-  border-right: 1px solid #e1e5eb;
+  border-right: 1px solid #0080ff;
 }
 .comment-actions li.reply {
   padding-left: 0.75rem;

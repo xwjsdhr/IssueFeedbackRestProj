@@ -207,10 +207,10 @@
 		UPDATE t_issue SET status_id = 3, resolved_time = now() WHERE id = #{issueId}
 	</update>
 	<update id="updateLastTime" parameterType="Integer">
-	UPDATE t_issue SET last_update_time = now() WHERE id = #{id}
+		UPDATE t_issue SET last_update_time = now() WHERE id = #{id}
 	</update>
-	<update id="updateStatusById" parameterType="com.xwj.params.UpdateStatusByIssueId">
-		UPDATE t_issue SET status_id = #{statusId},resolved_time=now() WHERE id = #{issueId}
+	<update id="updateStatusById" parameterType="com.xwj.params.UpdateStatusByIssueId" flushCache="true" >
+		UPDATE t_issue SET status_id = #{statusId} WHERE id = #{issueId}
 	</update>
 	
 	

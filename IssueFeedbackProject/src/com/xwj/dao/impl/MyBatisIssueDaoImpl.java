@@ -79,28 +79,24 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 	@Override
 	public int addCommentToIssue(int issueId, Comment comment) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		Issue issue = session.selectOne("selectById", issueId);
+//		Issue issue = session.selectOne("selectById", issueId);
 		session.insert("insertComment", comment);
+
 		Integer id = session.selectOne("selectInsertedKey");
 		IssueJointComment ic = new IssueJointComment(issueId, id);
-		int res = session.insert("insertIssueJointComment", ic);
-		session.commit();
-		if (issue.getComments().size() == 0) {
-			if (res > 0) {
-				updateIssueStatusById(issueId, 2);
-			}
-		} else {
-			if (comment.getIsResovleIssue() == 1) {
-				System.out.println("update resolve");
-				session.update("resolveIssueByComment", issueId);
-			} else if (comment.getIsProblem() == 1) {
-				System.out.println("update 4");
-				UpdateStatusByIssueId byIssueId = new UpdateStatusByIssueId(issueId, 4);
-				session.update("updateStatusById", byIssueId);
-				//updateIssueStatusById(issueId, 4);
-			}
+		int res = session.insert("insertIssueJointComment", ic);//添加评论关联
+	
+		if (comment.getIsResovleIssue() == 1) {
+			System.err.println("已解决");
+			session.update("resolveIssueByComment", issueId);
+		} else if (comment.getIsProblem() == 1) {
+			System.err.println("未查出问题");
+			session.update("unresolveIssueByComment", issueId);
+		} else if(comment.getIsResovleIssue() != 1 
+				&& comment.getIsProblem() != 1 ){
+			System.err.println("未解决");
+			session.update("replyIssueById", issueId);
 		}
-
 		session.update("updateLastTime", issueId);
 		session.commit();
 		session.close();
@@ -109,6 +105,7 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 
 	@Override
 	public int updateIssueStatusById(int issueId, int statusId) {
+		System.err.println(issueId + ":" + statusId);
 		SqlSession openSession = dbUtils.getSessionFactory().openSession();
 		UpdateStatusByIssueId byIssueId = new UpdateStatusByIssueId(issueId, statusId);
 		int res = openSession.update("updateStatusById", byIssueId);
@@ -236,8 +233,7 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 	@Override
 	public List<IssueCount> countIssue(Integer year, String type) {
 		SqlSession session = dbUtils.getSessionFactory().openSession();
-		List<IssueCount> issueCounts = session.selectList("countIssueByYearAndMonth",
-				new ParamStatistics(year , type));
+		List<IssueCount> issueCounts = session.selectList("countIssueByYearAndMonth", new ParamStatistics(year, type));
 		session.close();
 		return issueCounts;
 	}
