@@ -16,46 +16,57 @@
     <div class="container-fluid">
     <nav aria-label="breadcrumb" role="navigation">
 	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item">问题管理</li>
-	    <li class="breadcrumb-item active" aria-current="page">问题列表</li>
+	    <li class="breadcrumb-item">用户管理</li>
+	    <li class="breadcrumb-item active" aria-current="page">修改密码</li>
 	  </ol>
 	</nav>
 	
 	<div class="card"> 
         <div class="card-header">
-          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;问题列表
-          	<c:if test="${fn:contains(user_login.dept.permissions,2)}">
-          	<button class="btn btn-primary" id="btnAddIssue" style="float: right;"><i class="fa fa-plus"></i>&nbsp;添加问题</button>
-          	</c:if>
+          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;修改密码
           </div>
           
 	        <div class="card-body">
-		          <div class="table-responsive">
-	        		<table id="issue_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
-						<thead>
-							<tr>
-								<th>状态</th>
-								<th>标题</th>
-								<th>提交时间</th>
-								<th>上次更新时间</th>
-								<th>周</th>
-								<th>所属项目</th>
-								<th>详情</th>
-							</tr>
-						</thead>
-					</table>
-		        	</div>
+		          <form id="formUpdatePwd">
+					 <label for="inputNewPassword" >新密码</label>
+					<div class="mdl-grid">
+						<div class="mdl-cell mdl-cell--10-col">
+							
+							<input type="password" class="form-control" placeholder="请输入新密码" id="inputNewPassword"  required="required">
+						</div>
+						
+					</div>
+					
+					
+					<div class="alert" role="alert" id="alertNewPwd1" hidden="true">
+					  
+					</div>
+					
+					<label  for="inputNewPassword2" style="margin-top: 20px">确认新密码</label>
+					
+					<div class="mdl-grid">
+						<div class="mdl-cell mdl-cell--10-col">
+							<input type="password" class="form-control" placeholder="请再次输入新密码"  id="inputNewPassword2"  required="required">
+						</div>
+						
+					</div>
+					 
+					 <div class="alert " id="alertNewPwd2" role="alert" hidden="true">
+					  
+					 </div>
+						
+					<input type="submit" id="btnUpdatePwd" style="margin-top: 20px" class="btn btn-primary" value="修改密码">
+				</form>	
 	        	</div>
        	</div>
      </div>
      
       <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/modal_add_issue.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
   	 </div>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/index2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/update_pwd.js"></script>
 </body>
 </html>

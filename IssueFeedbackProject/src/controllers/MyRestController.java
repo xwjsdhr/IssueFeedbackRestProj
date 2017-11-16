@@ -359,9 +359,9 @@ public class MyRestController {
 	}
 
 	@PostMapping("/updatePwdById")
-	public ResponseEntity<AjaxResult<Boolean>> updatePwdById(HttpSession hs,
+	public ResponseEntity<AjaxResult<Boolean>> updatePwdById(HttpSession hs,ModelMap modelmap,
 			@RequestParam("password") String password) {
-		User user = (User) hs.getAttribute("user_session");
+		User user = filterSession(hs);
 		if (user == null) {
 			return null;
 		}

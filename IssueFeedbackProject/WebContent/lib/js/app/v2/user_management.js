@@ -114,7 +114,6 @@ $(document).ready(function(event){
 	        var data = userTable.row( $(this).parents('tr') ).data();
 	        var userId = $(this).attr("id").split("-")[1];
 			var userStatus = $(this).attr("data-status");
-			console.log(data);
 			$.ajax({
 				url:"/IssueFeedbackProject/disableOrEnableUser",
 				method:"get",
@@ -142,6 +141,27 @@ $(document).ready(function(event){
 				show:true
 			});
 	    });
+	 
+	 $('#user_table tbody').on( 'click', '.btnReset', function () {
+	        var data = userTable.row($(this).parents('tr') ).data();
+	        var userId = $(this).attr("id").split("-")[1];
+			
+			inputUpdateUserName.val(data.username);
+			inputUpdateRealName.val(data.realName);
+			
+			$.ajax({
+				url:"/IssueFeedbackProject/resetPwd",
+				method:"post",
+				data:{
+					user_id:userId,
+				},
+				success:function(data){
+					if(data.result){
+						userTable.ajax.reload();
+					}
+				}
+			});
+	    });
 	
 });
 
@@ -153,14 +173,17 @@ var userTable = $("#user_table").DataTable({
 				notification("加载用户成功","success");
 			}
 		},
+		"lengthMenu":[
+			[5,20],[5,20]
+		],
 		searching:true,
 		paging:true,
 		"language": {
-            "lengthMenu": "每页显示 _MENU_ 条记录",
-            "zeroRecords": "未查询到任何记录",
+            "lengthMenu": "每页显示 _MENU_ 条用户",
+            "zeroRecords": "未查询到任何用户",
             "info": "第 _PAGE_ 页 ，共  _PAGES_页",
-            "infoEmpty": "无任何问题",
-            "infoFiltered": "(filtered from _MAX_ total records)",
+            "infoEmpty": "无任何用户",
+            "infoFiltered": "(共 _MAX_条记录)",
             "paginate":{
             	"previous":"上一页",
             	"next":"下一页"
@@ -172,7 +195,8 @@ var userTable = $("#user_table").DataTable({
                      1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
             	}
             },
-            searchPlaceholder:"请输入查询信息"
+            search:"查询",
+            searchPlaceholder:"请输入查询用户信息"
         },
 		columns : [
 			{
@@ -224,6 +248,12 @@ var userTable = $("#user_table").DataTable({
 				data : "id",
 				render : function(data, type, row, meta) {
 					return "<button  class='btn btn-primary btnUpdate' id='btnUpdate-"+row.id+"'>修改</button>";
+				}
+			}, 
+			{
+				data : "id",
+				render : function(data, type, row, meta) {
+					return "<button  class='btn btn-primary btnReset' id='btnReset-"+row.id+"'>重置</button>";
 				}
 			}
 		]

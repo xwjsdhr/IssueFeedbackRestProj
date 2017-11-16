@@ -3,6 +3,8 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-sb-admin/blob/master/LICENSE)
  */
+ 
+
 html {
   position: relative;
   min-height: 100%; }
@@ -259,13 +261,18 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   color: #adb5bd; }
 
 @media (min-width: 992px) {
+	 #mainNav.navbar-dark .fix-top{
+	 background: #f8f8f8; }
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
     background: #343a40; }
+    
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
       color: white !important;
       background-color: #495057; }
+      
       #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a:focus, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a:hover {
         color: white; }
+        
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level,
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level {
       background: #343a40; } }
@@ -344,3 +351,20 @@ footer.sticky-footer {
 @media (min-width: 992px) {
   body.sidenav-toggled footer.sticky-footer {
     width: calc(100% - 55px); } }
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

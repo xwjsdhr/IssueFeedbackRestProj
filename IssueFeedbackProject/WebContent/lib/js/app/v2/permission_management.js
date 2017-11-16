@@ -11,8 +11,8 @@ $(document).ready(function(){
             targets: 0
         } ],
         "lengthMenu":[
-        	[20],[20]
-        ],
+			[5,20],[5,20]
+		],
         select: {
         	style: 'multi',
         },

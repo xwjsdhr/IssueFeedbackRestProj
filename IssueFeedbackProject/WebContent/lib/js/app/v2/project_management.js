@@ -115,8 +115,31 @@ var projectTable = $("#project_table").DataTable({
 				notification("加载项目成功","success");
 			}
 		},
-		searching:false,
-		paging:false,
+		searching:true,
+		paging:true,
+		"lengthMenu":[
+			[5,20],[5,20]
+		],
+		"language": {
+            "lengthMenu": "每页显示 _MENU_ 条记录",
+            "zeroRecords": "未查询到任何部门",
+            "info": "第 _PAGE_ 页 ，共  _PAGES_页",
+            "infoEmpty": "无任何部门",
+            "infoFiltered": "(总共_MAX_条记录)",
+            "paginate":{
+            	"previous":"上一页",
+            	"next":"下一页"
+            },
+            select:{
+            	rows:{
+            		 _: "    &nbsp;&nbsp;&nbsp;&nbsp;你已经选择了  %d 行",
+                     0: "    &nbsp;&nbsp;&nbsp;&nbsp;点击一行选择",
+                     1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
+            	}
+            },
+            search:"查询",
+            searchPlaceholder:"请输入查询信息"
+        },
 		columns : [
 			{
 				data : "projectName",

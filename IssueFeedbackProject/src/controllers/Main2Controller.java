@@ -103,7 +103,32 @@ public class Main2Controller {
 	public String trainRecordManagement(HttpSession session,ModelMap modelMap) {
 		return loginPageNoUser(session, modelMap, "v2/train_record_management");
 	}
-
+	
+	@GetMapping("/issue_statistics")
+	public String issueStatistics(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/issue_statistics");
+	}
+	
+	@GetMapping("/user_info")
+	public String userInfo(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/user_info");
+	}
+	
+	@GetMapping("/home_main")
+	public String mainHome(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/home_main");
+	}
+	
+	@GetMapping("/index_beta")
+	public String navbarBeta(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/index_beta");
+	}
+	@GetMapping("/update_pwd")
+	public String updatePwd(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/update_pwd");
+	}
+	
+	
 	private User getUserByIdStoredInSession(HttpSession hs) {
 		Integer userId = (Integer) hs.getAttribute("user_session_id");
 		if (userId != null) {

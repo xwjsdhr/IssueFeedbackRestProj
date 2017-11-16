@@ -31,12 +31,13 @@
 	        		<table id="user_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th>用户名</th>
+								<th>账号</th>
 								<th>部门</th>
 								<th>状态</th>
 								<th>姓名</th>
-								<th></th>
-								<th></th>
+								<th>禁用/启用</th>
+								<th>修改密码</th>
+								<th>重置密码</th>
 							</tr>
 						</thead>
 					</table>
@@ -45,7 +46,6 @@
        	</div>
       <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
      </div>
-     
      
     <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/modal_add_user.jsp"></jsp:include>

@@ -12,8 +12,6 @@ var lclstrg = window.localStorage;
 
 $(document).ready(function() {
 	
-	
-	
 	CKEDITOR.replace('inputIssueContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
 		filebrowserImageBrowseUrl: '/IssueFeedbackProject/ImageBrowser',
@@ -110,6 +108,7 @@ $(document).ready(function() {
                      1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
             	}
             },
+            search:"查询",
             searchPlaceholder:"请输入查询信息"
         },
 		columns : [

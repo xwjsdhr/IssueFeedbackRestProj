@@ -19,8 +19,14 @@ public class Dept implements Serializable{
 	private User leader;
 	private Boolean isEmbbed;
 	private String description;
+	private List<Project> projects;
 	
-	
+	public List<Project> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
 	public String getDescription() {
 		return description;
 	}
