@@ -1,6 +1,7 @@
 package com.xwj.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Project implements Serializable {
 
@@ -14,8 +15,15 @@ public class Project implements Serializable {
 	private Integer id;
 	private Dept dept;
 	private String description;
+	private List<ProjectModule> projectModules;
 	
 	
+	public List<ProjectModule> getProjectModules() {
+		return projectModules;
+	}
+	public void setProjectModules(List<ProjectModule> projectModules) {
+		this.projectModules = projectModules;
+	}
 	public String getDescription() {
 		return description;
 	}

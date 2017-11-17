@@ -11,6 +11,7 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.LogType;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
+import com.xwj.entity.ProjectModule;
 import com.xwj.entity.Status;
 import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
@@ -147,5 +148,9 @@ public interface BusinessService {
 	List<TrainingRecord> getAllTrainingRecords();
 	
 	List<UserLog> getAllUserLogs();
+
+	List<ProjectModule> getModuleByProjectId(Integer projectId);
+
+	Boolean addModuleToProject(Integer projectId, String moduleName);
 
 }

@@ -30,9 +30,15 @@ public class Issue implements Serializable{
 	private int isTop;
 	private Integer month;
 	private Project project;
+	private ProjectModule projectModule;
 	
 	
-	
+	public ProjectModule getProjectModule() {
+		return projectModule;
+	}
+	public void setProjectModule(ProjectModule projectModule) {
+		this.projectModule = projectModule;
+	}
 	public Integer getMonth() {
 		return month;
 	}

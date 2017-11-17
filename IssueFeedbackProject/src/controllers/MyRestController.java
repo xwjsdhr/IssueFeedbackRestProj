@@ -28,6 +28,7 @@ import com.xwj.entity.IssueCount;
 import com.xwj.entity.LogType;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
+import com.xwj.entity.ProjectModule;
 import com.xwj.entity.Status;
 import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
@@ -278,7 +279,7 @@ public class MyRestController {
 
 	@PostMapping("/addIssue")
 	public ResponseEntity<AjaxResult<Boolean>> addIssue(HttpSession hs, @RequestParam("title") String title,
-			@RequestParam("content") String content, @RequestParam("project_id") Integer projectId) {
+			@RequestParam("content") String content, @RequestParam("project_id") Integer projectId,@RequestParam("module_id")Integer moduleId) {
 		AjaxResult<Boolean> ar = null;
 		User user = filterSession(hs);
 		if (user != null) {
@@ -291,7 +292,10 @@ public class MyRestController {
 			issue.setUser(user);
 			issue.setWeekOfYear(calendar.get(Calendar.WEEK_OF_YEAR));
 			issue.setMonth(calendar.get(Calendar.MONTH) + 1);
-
+			ProjectModule projectModule = new ProjectModule();
+			projectModule.setId(moduleId);
+			issue.setProjectModule(projectModule);
+			
 			int i = businessService.addIssue(issue);
 			ar = new AjaxResult.Builder<Boolean>().result(i > 0).errorCode(i > 0 ? ErrorCode.ERRORCODE_SUCCESS : -2)
 					.message(i > 0 ? "添加成功" : "添加失败").build();
@@ -443,6 +447,27 @@ public class MyRestController {
 		issueAr = new AjaxResult.Builder<List<UserLog>>().result(businessService.getAllUserLogs())
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).message("获取成功").build();
 		return ResponseEntity.ok(issueAr);
+	}
+	
+	@GetMapping("/getModuleByProjectId")
+	public ResponseEntity<AjaxResult<List<ProjectModule>>> getModuleByProjectId(@RequestParam("project_id") Integer projectId) {
+		AjaxResult<List<ProjectModule>> moduleAr = null;
+		moduleAr = new AjaxResult.Builder<List<ProjectModule>>()
+				.result(businessService.getModuleByProjectId(projectId))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功").build();
+		return ResponseEntity.ok(moduleAr);
+	}
+	
+	@GetMapping("/addModuleToProject")
+	public ResponseEntity<AjaxResult<Boolean>> addModuleToProject(@RequestParam("project_id") Integer projectId
+			,@RequestParam("module_name")String moduleName) {
+		AjaxResult<Boolean> moduleAr = null;
+		moduleAr = new AjaxResult.Builder<Boolean>()
+				.result(businessService.addModuleToProject(projectId,moduleName))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功").build();
+		return ResponseEntity.ok(moduleAr);
 	}
 
 	private User filterSession(HttpSession hs) {

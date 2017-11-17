@@ -17,6 +17,8 @@
 		ti.user_id AS issueUserId,
 		ti.project_id AS projectId,
 		ti.month AS issueMonth,
+		tpm2.id as projectModuleId2,
+		tpm2.project_module_name as projectModuleName2,
 	</sql>
 
 	<sql id="statusColumns">
@@ -62,7 +64,9 @@
 		tpj.id AS ppid,
 		tpj.project_name as projectName,
 		tpj.dept_id as projDeptId,
-		tdproj.dept_name as deptNameProj
+		tdproj.dept_name as deptNameProj,
+		tppm.project_module_id as projectModuleId,
+		tpm.project_module_name as projectModuleName
 	</sql>
 
 	<sql id="issueTable">t_issue ti </sql>
@@ -128,6 +132,15 @@
 		LEFT JOIN 
 		t_dept tdproj
 		ON tpj.dept_id = tdproj.id
+		left join 
+		t_project_project_module tppm
+		on tpj.id = tppm.project_id
+		left join 
+		t_project_module tpm
+		on tpm.id = tppm.project_module_id
+		left join 
+		t_project_module tpm2
+		on ti.project_module_id = tpm2.id
 		WHERE
 		<include refid="isNotDelete" /> 
 	</sql>
@@ -178,9 +191,9 @@
 		statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO t_issue
-		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top,project_id,month)
+		(title,content,status_id,user_id,submit_time,submit_time_stamp,last_update_time,week_of_year,is_top,project_id,month,project_module_id)
 		VALUES
-		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop},#{project.id},#{month})
+		(#{title},#{content},1,#{user.id},now(),now(),now(),#{weekOfYear},#{isTop},#{project.id},#{month},#{projectModule.id})
 	</insert>
 	
 	<select id="selectAllProjects" resultMap="projectResultMap">
@@ -213,7 +226,6 @@
 		UPDATE t_issue SET status_id = #{statusId} WHERE id = #{issueId}
 	</update>
 	
-	
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
 		<result column="title" property="title" />
@@ -239,7 +251,16 @@
 				<result column="projDeptId" property="id" />
 				<result column="deptNameProj" property="deptName" />
 			</association>
+			<collection property="projectModules" ofType="com.xwj.entity.ProjectModule">
+				<result column="projectModuleName" property="projectModuleName"/>
+				<result column="projectModuleId" property="id"/>
+			</collection>
 			
+		</association>
+		
+		<association property="projectModule" javaType="com.xwj.entity.ProjectModule">
+			<result column="projectModuleName2" property="projectModuleName"/>
+			<result column="projectModuleId2" property="id"/>
 		</association>
 		<collection property="comments" ofType="com.xwj.entity.Comment">
 			<id column="pkCommentId" property="id" javaType="Integer" />
@@ -255,12 +276,10 @@
 				<association property="dept" javaType="com.xwj.entity.Dept">
 					<id column="deptIdC" property="id" />
 					<result column="deptNameC" property="deptName" />
-					
 				</association>
 			</association>
 		</collection>
 	</resultMap>
-
 
 	<resultMap type="com.xwj.entity.User" id="userResultMap">
 		<result column="userName" property="username" />

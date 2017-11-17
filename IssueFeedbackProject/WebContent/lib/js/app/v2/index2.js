@@ -7,10 +7,60 @@
 var inputIssueTitle = $("#inputIssueTitle");
 var inputIssueProject = $("#inputIssueProject");
 var inputIssueContent = $("#inputIssueContent");
-
-var lclstrg = window.localStorage;
+var inputIssueProjectModule = $("#inputIssueProjectModule");
 
 $(document).ready(function() {
+	
+	inputIssueProject.select2({});
+	
+	var select2Module = inputIssueProjectModule.select2({
+		tags: true,
+		tokenSeparators: [",", " "],
+		createTag: function (tag) {
+	        return {
+	            id: tag.term,
+	            text: tag.term,
+	            isNew : true
+	        };
+	    }
+	});
+	
+	select2Module.on("select2:select", function(e) {
+	    if(e.params.data.isNew){
+	        // append the new option element prenamently:
+	        $(this).find('[value="'+e.params.data.id+'"]').replaceWith('<option selected value="'+e.params.data.id+'">'+e.params.data.text+'</option>');
+	        $.ajax({
+	        	url: "/IssueFeedbackProject/addModuleToProject",
+	        	method:"get",
+	        	data:{
+	        		project_id:inputIssueProject.val(),
+	        		module_name:e.params.data.text
+	        	},
+	        	success:function(data){
+	        		inputIssueProjectModule.empty();
+	        		$.ajax({
+	        			url:"/IssueFeedbackProject/getModuleByProjectId",
+	        			method:"get",
+	        			data:{
+	        				project_id:1
+	        			},
+	        			success:function(data){
+	        				inputIssueProjectModule.empty();
+	        				if(data.result!= null){
+	        					$.each(data.result,function(index,element){
+	        						if(element!= null){
+	        							var row = $("<option>").val(element.id).text(element.projectModuleName);
+	        							inputIssueProjectModule.append(row);
+	        						}
+	        					});
+	        				}
+	        			}
+	        		});
+	        	}
+	        });
+	        
+	    }
+	});
 	
 	CKEDITOR.replace('inputIssueContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
@@ -35,6 +85,50 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	$.ajax({
+		url:"/IssueFeedbackProject/getModuleByProjectId",
+		method:"get",
+		data:{
+			project_id:1
+		},
+		success:function(data){
+			inputIssueProjectModule.empty();
+			if(data.result!= null){
+				$.each(data.result,function(index,element){
+					if(element!= null){
+						var row = $("<option>").val(element.id).text(element.projectModuleName);
+						inputIssueProjectModule.append(row);
+					}
+				});
+			}
+		}
+	});
+	
+	inputIssueProject.on("change",function(event){
+		var id = $(this).val();
+		console.log(id);
+		$.ajax({
+			url:"/IssueFeedbackProject/getModuleByProjectId",
+			method:"get",
+			data:{
+				project_id:id
+			},
+			success:function(data){
+				inputIssueProjectModule.empty();
+				if(data.result!= null){
+					$.each(data.result,function(index,element){
+						if(element!= null){
+							var row = $("<option>").val(element.id).text(element.projectModuleName);
+							inputIssueProjectModule.append(row);
+						}
+					});
+				}
+				
+			}
+		});
+	});
+	
 	$("#formAddIssue").validate({
 		rules:{
 			inputIssueTitle:"required",
@@ -59,7 +153,8 @@ $(document).ready(function() {
 			data:{
 				title:inputIssueTitle.val(),
 				content:content,
-				project_id:inputIssueProject.val()
+				project_id:inputIssueProject.val(),
+				module_id:inputIssueProjectModule.val()
 			},
 			success:function(data){
 				$("#addIssueModal").modal("hide");
@@ -75,8 +170,8 @@ $(document).ready(function() {
 		$("#addIssueModal").modal({
 			show:true
 		});
+		
 	});
-	
 	
 	var issueTable = $("#issue_table").DataTable({
 		dom:"Bfrtip",
@@ -166,12 +261,14 @@ $(document).ready(function() {
 				}
 			}, 
 			{
+				data : "projectModule.projectModuleName",
+				render : function(data, type, row, meta) {
+					return data;
+				}
+			}, 
+			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					/*return "<a href='issue_detail?id="+data+"' class='btn btn-primary'>查看&nbsp;" +
-							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
-							"</a>";*/
-					
 					return "<a class='btn btn-primary' href='issue_detail?id="+data+"'>查看&nbsp;" +
 							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
 							"</a>";

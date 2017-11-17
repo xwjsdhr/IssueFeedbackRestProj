@@ -9,5 +9,35 @@
 	<update id="updateProject" parameterType="com.xwj.entity.Project">
 		update t_project set dept_id = #{dept.id} ,project_name = #{projectName}, description = #{description} where id = #{id}
 	</update>
+	
+	<select id="getModuleByProjectId" parameterType="Integer" resultMap="projectModuleResultMap">
+		select tpm.id  as projectModuleId,
+		tpm.project_module_name as projectModuleName
+		
+		 from t_project tp
+		left join t_project_project_module tppm
+		on tp.id = tppm.project_id
+		left join t_project_module tpm
+		on tppm.project_module_id = tpm.id
+		where tp.id = #{id}
+	</select>
+	
+	
+	  
+	
+	<insert id="addModule" parameterType="String">
+		insert into t_project_module(project_module_name) values(#{moduleName});
+	</insert>
+	
+	<insert id="insertJointProjectModule" parameterType="com.xwj.params.ProjectWithModules">
+		insert into t_project_project_module(project_id,project_module_id) values(#{projectId},#{lastInsertedId});
+	</insert>
+	<select id="lastInsertedId" resultType="Integer">
+		select id from t_project_module order by id desc limit 1
+	</select>
 
+	<resultMap type="com.xwj.entity.ProjectModule" id="projectModuleResultMap">
+		<result column="projectModuleId" property="id"/>
+		<result column="projectModuleName" property="projectModuleName"/>
+	</resultMap>
 </mapper>

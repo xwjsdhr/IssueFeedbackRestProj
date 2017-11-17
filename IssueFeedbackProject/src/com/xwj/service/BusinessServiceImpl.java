@@ -24,6 +24,7 @@ import com.xwj.entity.IssuePage;
 import com.xwj.entity.LogType;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
+import com.xwj.entity.ProjectModule;
 import com.xwj.entity.Status;
 import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
@@ -308,5 +309,16 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public List<UserLog> getAllUserLogs() {
 		return userLogDao.getAllUserLog();
+	}
+
+	@Override
+	public List<ProjectModule> getModuleByProjectId(Integer projectId) {
+		return projectDao.getModuleByProjectId(projectId);
+	}
+
+	@Override
+	public Boolean addModuleToProject(Integer projectId, String moduleName) {
+		// TODO Auto-generated method stub
+		return projectDao.addModuleToProject(projectId,moduleName);
 	}
 }
