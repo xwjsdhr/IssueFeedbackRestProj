@@ -216,14 +216,18 @@ var userTable = $("#user_table").DataTable({
 				render : function(data, type, row, meta) {
 					var str = "禁用";
 					var type = 'badge-danger';
+					var iconStr = "<i class='fa fa-fw fa-lock'></i>";
+					
 					if(data){
 						str = "启用"
 						type = 'badge-success';
+						iconStr = "<i class='fa fa-fw fa-unlock'></i>";
 					}else{
 						str = "禁用";
 						type = 'badge-danger';
+						iconStr = "<i class='fa fa-fw fa-lock'></i>";
 					}
-					return "<span class='badge "+type+"'>"+str+"</span>";
+					return "<span class='badge "+type+"'>"+iconStr+"&nbsp;"+str+"</span>";
 				}
 			},
 			{
@@ -235,25 +239,31 @@ var userTable = $("#user_table").DataTable({
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
+					var iconStr = "<i class='fa fa-fw fa-lock'></i>";
+					var type = 'btn-success';
 					var str = "禁用";
 					if(row.status){
 						str = "禁用";
+						type = 'btn-danger';
+						iconStr = "<i class='fa fa-fw fa-lock'></i>";
 					}else{
 						str = "启用";
+						type = 'btn-success';
+						iconStr = "<i class='fa fa-fw fa-unlock'></i>";
 					}
-					return "<button class='btn btn-primary btnEnable' id='btnEnable-"+row.id+"' data-status='"+row.status+"' >"+str+"</button>";
+					return "<button class='btn "+type+" btnEnable' id='btnEnable-"+row.id+"' data-status='"+row.status+"' >"+iconStr+"&nbsp;"+str+"</button>";
 				}
 			}, 
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<button  class='btn btn-primary btnUpdate' id='btnUpdate-"+row.id+"'>修改</button>";
+					return "<button  class='btn btn-primary btnUpdate' id='btnUpdate-"+row.id+"'>修改&nbsp;<i class='fa fa-fw fa-pencil'></i></button>";
 				}
 			}, 
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<button  class='btn btn-primary btnReset' id='btnReset-"+row.id+"'>重置</button>";
+					return "<button  class='btn btn-primary btnReset' id='btnReset-"+row.id+"'><i class='fa fa-fw fa-refresh'></i>重置</button>";
 				}
 			}
 		]

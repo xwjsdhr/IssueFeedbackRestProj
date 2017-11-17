@@ -13,11 +13,20 @@ public class UserLog implements Serializable{
 	
 	private User user;
 	
-//	private LogType logType;
+	private LogType logType;
 	
 	private String logTime;
 	
 	private String ipAddr;
+
+	
+	public LogType getLogType() {
+		return logType;
+	}
+
+	public void setLogType(LogType logType) {
+		this.logType = logType;
+	}
 
 	public Integer getId() {
 		return id;

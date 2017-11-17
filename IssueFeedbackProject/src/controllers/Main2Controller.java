@@ -1,6 +1,7 @@
 package controllers;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.xwj.entity.LogType;
 import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
+import com.xwj.util.CommonUtil;
 
 @Controller
 @RequestMapping("/v2")
@@ -28,17 +31,24 @@ public class Main2Controller {
 	}
 
 	@GetMapping("/login")
-	public String login(HttpSession session) {
+	public String login(HttpSession session,ModelMap modelMap) {
 		User user = getUserByIdStoredInSession(session);
 		if(user != null) {
+			modelMap.addAttribute("user_login", user);
 			return "v2/index";
 		}
 		return "v2/login";
 	}
 
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("user_session_id");
+	public String logout(HttpSession session, HttpServletRequest hsr, ModelMap modelMap) {
+		User user = getUserByIdStoredInSession(session);
+		if(user != null) {
+			session.removeAttribute("user_session_id");
+			LogType logType = new LogType();
+			logType.setId(2);
+			businessService.logUser(user, CommonUtil.getClientIp(hsr), logType);
+		}
 		return "v2/login";
 	}
 
@@ -128,6 +138,10 @@ public class Main2Controller {
 		return loginPageNoUser(session, modelMap, "v2/update_pwd");
 	}
 	
+	@GetMapping("/user_log_management")
+	public String userLogManagement(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/user_log_management");
+	}
 	
 	private User getUserByIdStoredInSession(HttpSession hs) {
 		Integer userId = (Integer) hs.getAttribute("user_session_id");

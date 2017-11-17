@@ -2,8 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwj.util.sql_mapper_user_log">
 
-	<insert id="logUserLogin" parameterType="com.xwj.entity.UserLog">
-		insert into t_user_log(user_id,log_time,ip_addr) values(
-		#{user.id},now(),#{ipAddr});
+	<insert id="logUserLogin" parameterType="com.xwj.entity.UserLog" >
+		insert into
+		t_user_log(user_id,log_time,ip_addr,log_type_id) values(
+		#{user.id},now(),#{ipAddr},#{logType.id});
 	</insert>
+
+	<select id="selectAllUserLogs" resultMap="userLogResultMap">
+		select
+		tul.id as logId,
+		tu.id as userId,
+		tul.log_time as logTime,
+		tul.ip_addr as ip,
+		tu.user_name as userName,
+		tu.real_name as realName,
+		tot.log_type_name as typeName,
+		tot.id as logTypeId
+		from t_user_log tul
+		left join t_user tu on tul.user_id = tu.id
+		left join t_log_type tot on tot.id = tul.log_type_id;
+	</select>
+
+	<resultMap type="com.xwj.entity.UserLog" id="userLogResultMap">
+		<result column="logId" property="id"/>
+		<result column="logTime" property="logTime"/>
+		<result column="ip" property="ipAddr"/>
+		<association property="user" javaType="com.xwj.entity.User">
+			<result column="userId" property="id" />
+			<result column="userName" property="username" />
+			<result column="realName" property="realName" />
+		</association>
+		<association property="logType" javaType="com.xwj.entity.LogType">
+			<result column="logTypeId" property="id" />
+			<result column="typeName" property="typeName" />
+		</association>
+	</resultMap>
 </mapper>

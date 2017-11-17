@@ -71,12 +71,17 @@
 		            <li>
 		              <a href="user_management"><i class="fa fa-fw fa-bars"></i>&nbsp;用户列表</a>
 		            </li>
+		            <!-- user_log_management -->
+		            <li>
+		              <a href="user_log_management"><i class="fa fa-fw fa-sign-in"></i>&nbsp;登录/登出记录</a>
+		            </li>
+		            
 		            <c:if test="${user_login!= null }">
 		            	<li>
-			              <a href="user_info"><i class="fa fa-fw fa-user"></i>&nbsp;当前用户信息</a>
+			              <a href="user_info"><i class="fa fa-fw fa-user-md"></i>&nbsp;当前用户信息</a>
 			            </li>
 			            <li>
-			              <a href="update_pwd"><i class="fa fa-fw fa-user"></i>&nbsp;修改密码</a>
+			              <a href="update_pwd"><i class="fa fa-fw fa-user-secret"></i>&nbsp;修改密码</a>
 			            </li>
 			            
 		            </c:if>
@@ -139,10 +144,12 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="messagesDropdown">
             <a class="dropdown-item" href="update_pwd">
+            	<i class="fa fa-fw fa-user-secret"></i>
              	 修改密码
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="user_info">
+            	<i class="fa fa-fw fa-user-md"></i>
              	 查看信息
             </a>
           </div>

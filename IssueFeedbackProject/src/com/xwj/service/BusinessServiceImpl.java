@@ -21,11 +21,13 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.LogType;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
+import com.xwj.entity.UserLog;
 import com.xwj.params.SearchCondition;
 
 /**
@@ -294,12 +296,17 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 
 	@Override
-	public void logUser(User user, String remoteAddr) {
-		userLogDao.logUser(user,remoteAddr);
+	public void logUser(User user, String remoteAddr,LogType logType) {
+		userLogDao.logUser(user,remoteAddr,logType);
 	}
 
 	@Override
 	public List<TrainingRecord> getAllTrainingRecords() {
 		return trainingRecordDao.getAll();
+	}
+
+	@Override
+	public List<UserLog> getAllUserLogs() {
+		return userLogDao.getAllUserLog();
 	}
 }

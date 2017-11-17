@@ -24,8 +24,8 @@ $(document).ready(function(event){
 			}
 		});
 	});
-	
 });
+
 var inputNewPassword = $("#inputNewPassword");
 var inputNewPassword2 = $("#inputNewPassword2");
 var btnUpdatePwd = $("#btnUpdatePwd");

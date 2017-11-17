@@ -8,11 +8,13 @@ import com.xwj.entity.Dept;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.LogType;
 import com.xwj.entity.Permission;
 import com.xwj.entity.Project;
 import com.xwj.entity.Status;
 import com.xwj.entity.TrainingRecord;
 import com.xwj.entity.User;
+import com.xwj.entity.UserLog;
 import com.xwj.params.SearchCondition;
 
 public interface BusinessService {
@@ -139,8 +141,11 @@ public interface BusinessService {
 
 	Boolean updateProject(Project project);
 
-	void logUser(User user, String remoteAddr);
+	void logUser(User user, String remoteAddr, LogType logType);
+	
 	
 	List<TrainingRecord> getAllTrainingRecords();
+	
+	List<UserLog> getAllUserLogs();
 
 }
