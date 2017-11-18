@@ -33,6 +33,11 @@
 	                <a class="nav-link" href="permission_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-puzzle"></i> 权限管理</a>
 	              </li>
               </c:if>
+              <c:if test="${fn:contains(user_login.dept.permissions,6)}">
+               	  <li class="nav-item">
+	                <a class="nav-link" href="issue_statistics">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-graph"></i> 统计管理</a>
+	              </li>
+              </c:if>
             </ul>
           </li>
           </c:if>
@@ -48,39 +53,40 @@
                 <a class="nav-link" href="user_log_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-logout"></i>登入登出记录</a>
               </li>
               </c:if>
-              <li class="nav-item">
-                <a class="nav-link" href="update_pwd">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-key"></i>修改密码</a>
-              </li>
+              
               <li class="nav-item">
                 <a class="nav-link" href="user_info">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-user"></i>当前用户信息</a>
               </li>
             </ul>
           </li>
           <li class="nav-item nav-dropdown">
-          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i>培训记录管理</a>
+          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-note"></i>培训记录管理</a>
           		<ul class="nav-dropdown-items">
           			<li class="nav-item">
-		                <a class="nav-link" href="train_record_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-star"></i>记录列表</a>
+		                <a class="nav-link" href="train_record_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-note"></i>记录列表</a>
 		            </li>
           		</ul>
           </li>
           
           <li class="nav-item nav-dropdown">
-          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i>周报管理</a>
+          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-doc"></i>周报管理</a>
           		<ul class="nav-dropdown-items">
           			<li class="nav-item">
-		                <a class="nav-link" href="icons-font-awesome.html"><i class="icon-star"></i>周报列表</a>
+		                <a class="nav-link" href="icons-font-awesome.html">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-docs"></i>周报列表</a>
 		            </li>
           		</ul>
           </li>
           
           <li class="nav-item nav-dropdown">
-          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i>项目进度管理</a>
+          		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-hourglass"></i>项目进度管理</a>
           		<ul class="nav-dropdown-items">
           			<li class="nav-item">
-		                <a class="nav-link" href="icons-font-awesome.html"><i class="icon-star"></i>项目进度列表</a>
+		                <a class="nav-link" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-hourglass"></i>项目进度列表</a>
 		            </li>
           		</ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="personal_settings"><i class="icon-settings"></i>个人设置</a>
           </li>
         </ul>
       </nav>

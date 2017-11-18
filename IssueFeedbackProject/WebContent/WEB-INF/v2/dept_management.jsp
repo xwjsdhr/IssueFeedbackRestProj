@@ -51,15 +51,14 @@
 		       	</div>
             </div>
           </div>
-          
         </div>
-
+		<jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/v2/modal_add_dept.jsp"></jsp:include>
       </div>
     </main>
     <jsp:include page="/WEB-INF/v2/aside_menu.jsp"></jsp:include>
   </div>
-	<jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/modal_add_dept.jsp"></jsp:include>
+	
 	
   <footer class="app-footer">
     <span><a href="http://coreui.io">CoreUI</a> © 2017 creativeLabs.</span>

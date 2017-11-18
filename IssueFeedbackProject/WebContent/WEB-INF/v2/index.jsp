@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include>
 </head>
 
-<body class="app header-fixed sidebar-fixed">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <jsp:include page="/WEB-INF/v2/header.jsp"></jsp:include>
   <div class="app-body">
   	<jsp:include page="/WEB-INF/v2/siderbar.jsp"></jsp:include>

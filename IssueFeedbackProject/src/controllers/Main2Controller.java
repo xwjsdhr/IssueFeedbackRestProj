@@ -143,6 +143,11 @@ public class Main2Controller {
 		return loginPageNoUser(session, modelMap, "v2/user_log_management");
 	}
 	
+	@GetMapping("/personal_settings")
+	public String personalSettings(HttpSession session,ModelMap modelMap) {
+		return loginPageNoUser(session, modelMap, "v2/personal_settings");
+	}
+	
 	private User getUserByIdStoredInSession(HttpSession hs) {
 		Integer userId = (Integer) hs.getAttribute("user_session_id");
 		if (userId != null) {

@@ -21,11 +21,10 @@
         <a class="nav-link" href="#">用户</a>
       </li>
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">设置</a>
+        <a class="nav-link" href="personal_settings">设置</a>
       </li>
     </ul>
     <c:if test="${user_login!= null }">
-    
     	<ul class="nav navbar-nav ml-auto">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
