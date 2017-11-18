@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="selectAllDept" resultMap="deptResultMap">
-		select td.id as tdId , td.dept_name as deptName, tp.permission_name as perName, td.desc as description,tp.id as perId,td.is_embbed as embbed  from 
+		select td.id as tdId , td.dept_name as deptName, tp.permission_name as perName, td.description as description,tp.id as perId,td.is_embbed as embbed  from 
 		 t_dept td 
 		 left join t_dept_permission tdp 
 		 on td.id = tdp.dept_id  

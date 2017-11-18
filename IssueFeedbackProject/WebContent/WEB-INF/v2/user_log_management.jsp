@@ -7,9 +7,75 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
-<jsp:include page="/WEB-INF/v2/stylesheet.jsp"></jsp:include> 
+<jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include> 
 </head>
-<body class="fixed-nav sticky-footer" id="page-top">
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+  <jsp:include page="/WEB-INF/v2/header.jsp"></jsp:include>
+  <div class="app-body">
+  	<jsp:include page="/WEB-INF/v2/siderbar.jsp"></jsp:include>
+    <!-- Main content -->
+    <main class="main">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">模块管理</li>
+        <li class="breadcrumb-item">用户管理</li>
+        <li class="breadcrumb-item active">登录登出记录</li>
+        <!-- Breadcrumb Menu-->
+      </ol>
+      <div class="container-fluid">
+
+        <div class="animated fadeIn">
+         
+          <div class="row">
+            <div class="col-md-12">
+              
+              
+              <div class="card"> 
+		        <div class="card-header">
+		          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;用户登录记录
+		        </div>
+		        <div class="card-body">
+			          <div class="table-responsive">
+		        		<table id="issue_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>用户</th>
+									<th>时间</th>
+									<th>IP地址</th>
+									<th>类型</th>
+								</tr>
+							</thead>
+						</table>
+			        	</div>
+		         </div>
+		       	</div>
+              
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </main>
+    <jsp:include page="/WEB-INF/v2/aside_menu.jsp"></jsp:include>
+  </div>
+
+    <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/modal_add_issue.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/script_beta.jsp"></jsp:include>
+    
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/user_log_management.js"></script>
+</body>
+
+
+
+
+
+<%-- <body class="fixed-nav sticky-footer" id="page-top">
  <jsp:include page="/WEB-INF/v2/navbar.jsp"></jsp:include> 
   
    <div class="content-wrapper">
@@ -50,5 +116,5 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/user_log_management.js"></script>
-</body>
+</body> --%>
 </html>

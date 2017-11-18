@@ -153,4 +153,6 @@ public interface BusinessService {
 
 	Boolean addModuleToProject(Integer projectId, String moduleName);
 
+	Boolean updateUserInfo(User updateUser);
+
 }

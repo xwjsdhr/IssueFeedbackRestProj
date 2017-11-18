@@ -321,4 +321,9 @@ public class BusinessServiceImpl implements BusinessService {
 		// TODO Auto-generated method stub
 		return projectDao.addModuleToProject(projectId,moduleName);
 	}
+
+	@Override
+	public Boolean updateUserInfo(User updateUser) {
+		return userDao.updateUserInfo(updateUser);
+	}
 }

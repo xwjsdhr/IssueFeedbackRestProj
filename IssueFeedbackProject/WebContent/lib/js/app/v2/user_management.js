@@ -237,6 +237,18 @@ var userTable = $("#user_table").DataTable({
 				}
 			}, 
 			{
+				data : "telephone",
+				render : function(data, type, row, meta) {
+					return  data;
+				}
+			},
+			{
+				data : "email",
+				render : function(data, type, row, meta) {
+					return  data;
+				}
+			},
+			{
 				data : "id",
 				render : function(data, type, row, meta) {
 					var iconStr = "<i class='fa fa-fw fa-lock'></i>";

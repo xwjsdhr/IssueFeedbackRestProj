@@ -383,6 +383,32 @@ public class MyRestController {
 				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
 		return ResponseEntity.ok(ar);
 	}
+	
+	@PostMapping("/updateUserInfo")
+	public ResponseEntity<AjaxResult<Boolean>> updateUserInfo(HttpSession hs, ModelMap modelmap,
+			@RequestParam("real_name") String realName,
+			@RequestParam("dept_id") Integer deptId
+			,@RequestParam("email") String email
+			,@RequestParam("telephone") String telephone) {
+		User user = filterSession(hs);
+		if (user == null) {
+			return null;
+		}
+		User updateUser = new User();
+		updateUser.setId(user.getId());
+		updateUser.setEmail(email);
+		updateUser.setRealName(realName);
+		updateUser.setTelephone(telephone);
+		Dept dept = new Dept();
+		dept.setId(deptId);
+		updateUser.setDept(dept);
+		
+		AjaxResult<Boolean> ar = new AjaxResult.Builder<Boolean>()
+				.result(businessService.updateUserInfo(updateUser))
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		return ResponseEntity.ok(ar);
+	}
+	
 
 	@GetMapping("/addProject")
 	public ResponseEntity<AjaxResult<Boolean>> addProject(@RequestParam("project_name") String projectName,
@@ -469,6 +495,20 @@ public class MyRestController {
 				.message("获取成功").build();
 		return ResponseEntity.ok(moduleAr);
 	}
+	
+	@PostMapping("/getUserBySession")
+	public ResponseEntity<AjaxResult<User>> getUserBySession(HttpSession hs) {
+		User user = filterSession(hs);
+		AjaxResult<User> moduleAr = null;
+		if(user != null) {
+			moduleAr = new AjaxResult.Builder<User>()
+				.result(user)
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功").build();
+		}
+		return  ResponseEntity.ok(moduleAr);
+	}
+	
 
 	private User filterSession(HttpSession hs) {
 		Integer userId = (Integer) hs.getAttribute("user_session_id");

@@ -51,4 +51,6 @@ public interface UserDao {
 
 	Boolean updateUserPassword(Integer id, String password);
 
+	Boolean updateUserInfo(User updateUser);
+
 }

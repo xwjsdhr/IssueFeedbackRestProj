@@ -10,6 +10,8 @@
 		tu.user_name AS userName,
 		tu.real_name AS realName,
 		tu.password AS password,
+		tu.email as email,
+		tu.telephone as telephone,
 		tu.dept_id AS deptId,
 		tu.status AS userStatus,
 		td.dept_name AS deptName,
@@ -120,6 +122,9 @@
 	<update id="updateUser" parameterType="com.xwj.entity.User">
 		update t_user set user_name=#{username},real_name=#{realName}, dept_id=#{dept.id} where id=#{id}
 	</update>
+	<update id="updateUserInfo" parameterType="com.xwj.entity.User">
+		update t_user set real_name=#{realName}, dept_id=#{dept.id},email=#{email},telephone=#{telephone} where id=#{id}
+	</update>
 	
 	<update id="updateUserPassword">
 		update t_user set password = #{password} where id=#{id}
@@ -130,6 +135,8 @@
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
 		<result column="userId" property="id"/>
+		<result column="email" property="email"/>
+		<result column="telephone" property="telephone"/>
 		<result column="userStatus" property="status" javaType="Boolean" jdbcType="TINYINT"/>
 		
 		<association property="dept" javaType="com.xwj.entity.Dept">
@@ -146,6 +153,8 @@
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
 		<result column="userId" property="id"/>
+		<result column="email" property="email" />
+		<result column="telephone" property="telephone" />
 	</resultMap>
 
 </mapper>

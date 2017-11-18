@@ -6,6 +6,14 @@ $(document).ready(function(event){
 			show:true
 		});
 	});
+	
+	$.ajax({
+		url:"/IssueFeedbackProject/allDepts",
+		method:"get",
+		success:function(data){
+			console.log(data);
+		}
+	});
 	$("#formAddDept").validate({
 		rules:{
 			inputDeptName:"required"
@@ -71,6 +79,23 @@ var deptTable = $("#dept_table").DataTable({
 				data : "deptName",
 				render : function(data, type, row, meta) {
 					return data;
+				}
+			},
+			{
+				data:"description",
+				render:function(data, type, row, meta){
+					return data;
+				}
+			},
+			{
+				data:"permissionsList",
+				width:"30%",
+				render:function(data, type, row, meta){
+					var string = "";
+					$.each(data,function(index,element){
+						string = string.concat(element.permissionName).concat(" 、 ");
+					});
+					return  string;
 				}
 			}
 		]

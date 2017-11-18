@@ -127,5 +127,14 @@ public class UserDaoImpl implements UserDao {
 		return i>0;
 	}
 
+	@Override
+	public Boolean updateUserInfo(User updateUser) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i  = session.update("updateUserInfo",updateUser);
+		session.commit(true);
+		session.close();
+		return i>0;
+	}
+
 	
 }

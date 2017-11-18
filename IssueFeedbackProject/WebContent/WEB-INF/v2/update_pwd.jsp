@@ -7,9 +7,79 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>首页</title>
-<jsp:include page="/WEB-INF/v2/stylesheet.jsp"></jsp:include> 
+<jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include> 
 </head>
-<body class="fixed-nav sticky-footer" id="page-top">
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+  <jsp:include page="/WEB-INF/v2/header.jsp"></jsp:include>
+  <div class="app-body">
+  	<jsp:include page="/WEB-INF/v2/siderbar.jsp"></jsp:include>
+    <main class="main">
+    
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">模块管理</li>
+        <li class="breadcrumb-item">用户管理</li>
+        <li class="breadcrumb-item active">修改密码</li>
+      </ol>
+      <div class="container-fluid">
+
+        <div class="animated fadeIn">
+         
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card"> 
+		        <div class="card-header">
+		          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;修改密码
+		          </div>
+		          
+			        <div class="card-body">
+				          <form id="formUpdatePwd">
+							 <label for="inputNewPassword" >新密码</label>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--10-col">
+									
+									<input type="password" class="form-control" placeholder="请输入新密码" id="inputNewPassword"  required="required">
+								</div>
+								
+							</div>
+							<div class="alert" role="alert" id="alertNewPwd1" hidden="true">
+							</div>
+							<label  for="inputNewPassword2" style="margin-top: 20px">确认新密码</label>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--10-col">
+									<input type="password" class="form-control" placeholder="请再次输入新密码"  id="inputNewPassword2"  required="required">
+								</div>
+							</div>
+							 <div class="alert " id="alertNewPwd2" role="alert" hidden="true">
+							 </div>
+							<input type="submit" id="btnUpdatePwd" style="margin-top: 20px" class="btn btn-primary" value="修改密码">
+						</form>	
+			        	</div>
+       			</div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </main>
+    <jsp:include page="/WEB-INF/v2/aside_menu.jsp"></jsp:include>
+  </div>
+
+  <footer class="app-footer">
+    <span><a href="http://coreui.io">CoreUI</a> © 2017 creativeLabs.</span>
+    <span class="ml-auto">Powered by <a href="http://coreui.io">CoreUI</a></span>
+  </footer>
+  
+    <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/v2/script_beta.jsp"></jsp:include>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/update_pwd.js"></script>
+</body>
+
+<%-- <body class="fixed-nav sticky-footer" id="page-top">
  <jsp:include page="/WEB-INF/v2/navbar.jsp"></jsp:include> 
   
    <div class="content-wrapper">
@@ -68,5 +138,5 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/update_pwd.js"></script>
-</body>
+</body> --%>
 </html>
