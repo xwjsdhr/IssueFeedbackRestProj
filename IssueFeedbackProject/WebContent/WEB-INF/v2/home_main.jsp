@@ -1,85 +1,83 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>首页</title>
-<jsp:include page="/WEB-INF/v2/stylesheet.jsp"></jsp:include>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include>
 </head>
-<body class="fixed-nav sticky-footer bg-dark" id="page-top"   style="background-color: #F7F7F9">
-  
-  <jsp:include page="/WEB-INF/v2/navbar.jsp"></jsp:include>
-  <div>
-  <div class="content-wrapper" >
-	    <div class="container-fluid">
-	    
-		    <nav aria-label="breadcrumb" role="navigation">
-			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item">首页</li>
-			  </ol>
-			</nav>
-			<div class="container">
-					<br/>
-					<br/> 
-					<div class="row justify-content-center align-items-center">
-				   		<div class="col-4">
-							<div class="card bg-light" style="max-width: 20rem;">
-							  <div class="card-header">问题管理</div>
-							  <div class="card-body">
-							    <p class="card-text">对于组长问题的反馈与提报。</p>
-							    <a href="#" class="btn btn-primary">进入模块</a>
-							  </div>
-							</div>
-						</div>
-				   		<div class="col-4">
-							<div class="card bg-light" style="max-width: 20rem;">
-							  <div class="card-header">周报信息提报</div>
-							  <div class="card-body">
-							    <p class="card-text">周报的提交与汇总。</p>
-							    <a href="#" class="btn btn-primary">进入模块</a>
-							  </div>
-							</div>
-						</div>
-			   		</div>
-			   		<br/> 
-			   		<div class="row justify-content-center align-items-center">
-				   		<div class="col-4">
-							<div class="card bg-light" style="max-width: 20rem;">
-							  <div class="card-header">问题管理</div>
-							  <div class="card-body">
-							    <p class="card-text">对于组长问题的反馈与提报。</p>
-							    <a href="#" class="btn btn-primary">进入模块</a>
-							  </div>
-							</div>
-						</div>
-				   		<div class="col-4">
-							<div class="card bg-light" style="max-width: 20rem;">
-							  <div class="card-header">周报信息提报</div>
-							  <div class="card-body">
-							    <p class="card-text">周报的提交与汇总。</p>
-							    <a href="#" class="btn btn-primary">进入模块</a>
-							  </div>
-							</div>
-						</div>
-			   		</div>
-			   		
-			   		
-			   	</div>
-			
-			</div>
-	   	</div>
-   </div>
-   
-    <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/modal_add_issue.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/home_main.js"></script>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+  <jsp:include page="/WEB-INF/v2/header.jsp"></jsp:include>
+  <div class="app-body">
+  	<jsp:include page="/WEB-INF/v2/siderbar.jsp"></jsp:include>
+    <!-- Main content -->
+    <main class="main">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" href="#"><i class="icon-speech"></i></a>
+            <a class="btn" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+            <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+          </div>
+        </li>
+      </ol>
+      <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-3"  id="card_issue">
+              <div class="card text-white bg-primary">
+                <div class="card-body pb-0">
+                <h4 class="mb-0" id="issueCount"></h4>
+                <p>问题管理</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3"  id="card_project">
+              <div class="card text-white bg-warning">
+                <div class="card-body pb-0">
+                 <h4 class="mb-0" id="projectCount"></h4>
+                  <p>项目管理</p>
+                </div>
+              </div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-6 col-lg-3"  id="card_permission">
+              <div class="card text-white bg-danger">
+                <div class="card-body pb-0">
+                  <h4 class="mb-0" id="userCount"></h4>
+                  <p>用户管理</p>
+                </div>
+              </div>
+            </div>
+            <!--/.col-->
+          </div>
+          
+          <div class="row">
+          	<div class="col-lg-9 ">
+          		<div class="card"> 
+	          		<div class="card-body">
+	          			<canvas id="canvas" height="150px"></canvas>
+	          		</div>
+          		</div>
+          	</div>
+          </div>
+      </div>
+    </main>
   </div>
+
+ <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
+  	<jsp:include page="/WEB-INF/v2/script_beta.jsp"></jsp:include>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+  	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/home_main.js"></script>
 </body>
+
 </html>

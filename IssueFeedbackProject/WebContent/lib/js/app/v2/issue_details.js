@@ -1,9 +1,12 @@
+var statusSelect = $("#statusSelect");
 $(document).ready(function() {
+	
+	statusSelect.select2({});
 	
 	CKEDITOR.replace('textareaCommentContent',{
 		filebrowserImageUploadUrl: '/IssueFeedbackProject/CommentImageUpload',
 		filebrowserImageBrowseUrl: '/IssueFeedbackProject/ImageBrowser',
-		toolbar :	// Sample toolbar
+		toolbar :	
 		    [
 		        { name: 'document',    items : [ 'Source' ] },
 		        { name: 'clipboard',   items : [ 'Cut','Copy','Paste','-','Undo','Redo' ] },
@@ -11,6 +14,19 @@ $(document).ready(function() {
 		        { name: 'insert',      items : [ 'Link', 'Image', 'addFile', 'addImage' ] },
 		        { name: 'tools',       items : [ 'Maximize' ] }
 		    ],
+	});
+	
+	$.ajax({
+		url:"/IssueFeedbackProject/getCommentStatus",
+		method:"get",
+		success:function(data){
+			if(data.result!= null){
+				$.each(data.result,function(index,element){
+					var row = $("<option>").val(element.id).text(element.statusName);
+					statusSelect.append(row);
+				});
+			}
+		}
 	});
 	
 	$("#checkboxResovled").change(function(event) {
@@ -45,17 +61,22 @@ $(document).ready(function() {
 		console.log(desc);
 		btnSubmitAddComment.attr("hidden",true);
 		pbAddComment.attr("hidden",false);
+		
+		
 		$.ajax({
 			url : "/IssueFeedbackProject/addCommentToIssue",
 			data : {
 				issue_id : issueDetailId.val(),
 //				comm : JSON.stringify(comment)
 				content : desc,
-				isResovleIssue : checkboxResovled.prop("checked") ? 1 : 0,
-				isProblem : checkboxProblem.prop("checked") ? 1 : 0,
+//				isResovleIssue : checkboxResovled.prop("checked") ? 1 : 0,
+//				isProblem : checkboxProblem.prop("checked") ? 1 : 0,
+				statusId: statusSelect.val()
 			},
 			method : "get",
 			success : function(data) {
+				
+				console.log(typeof statusSelect.val());
 				addCommentToList(data.result);
 				btnSubmitAddComment.attr("hidden",false);
 				pbAddComment.attr("hidden",true);
@@ -89,7 +110,10 @@ function addCommentToList(comment) {
 
 	var divCommentText = $("<p class='comment-text'>").html(comment.content);
 	var divCommentBottom = $("<div class='bottom-comment'>").append($("<div class='comment-date'>").text(comment.createTime));
-	var divCommentBlock = $("<div class='comment-block'>").append(badge).append(divCommentText).append(divCommentBottom);
+	
+	var divCommentStatus = $("<div>").text(comment.status.statusName);
+	
+	var divCommentBlock = $("<div class='comment-block'>").append(badge).append(divCommentStatus).append(divCommentText).append(divCommentBottom);
 
 	
 	item.append(divPhoto).append(divCommentBlock);

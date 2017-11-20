@@ -25,6 +25,14 @@ $(document).ready(function() {
 	    }
 	});
 	
+	$.ajax({
+		url:"/IssueFeedbackProject/allIssues",
+		method:"get",
+		success:function(data){
+			console.log(data);
+		}
+	});
+	
 	select2Module.on("select2:select", function(e) {
 	    if(e.params.data.isNew){
 	        // append the new option element prenamently:
@@ -181,7 +189,12 @@ $(document).ready(function() {
 		},
 		paging : true,
 		buttons:[
-			'excel'
+			{
+				extend :'excel',
+				text:"导出为Excel",
+				className:"btn btn-sm btn-success"
+			}
+			
 		],
 		"lengthMenu":[
 			[10,25,50,-1],[10,25,50,"全部"]
@@ -203,7 +216,7 @@ $(document).ready(function() {
                      1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
             	}
             },
-            search:"查询",
+            search:"<label class='btn btn-sm btn-primary'><i class='fa fa-search'></i>查询</label>",
             searchPlaceholder:"请输入查询信息"
         },
 		columns : [
@@ -224,6 +237,9 @@ $(document).ready(function() {
 						case 4:
 							type = "badge-danger";
 							break;
+						case 5:
+							type= "badge-info";
+							break;
 					 	
 					}
 					var row = "<span class='badge "+type+"'>"+data.statusName+"</span>"
@@ -243,9 +259,27 @@ $(document).ready(function() {
 				}
 			}, 
 			{
-				data : "lastUpdateTime",
+				data : "user",
 				render : function(data, type, row, meta) {
-					return  moment(data).fromNow();
+									
+					var btn = "<button type='button' class='btn btn-secondary contact' data-toggle='tooltip' data-placement='top'>" +
+							data.username
+							"</button>";
+					$('.contact').tooltip({
+						html:true,
+						title:
+							"<div class='card border-primary text-primary'>" +
+								"<div class='card-header border-primary'>" +
+								data.realName+"  的联系方式" +
+								"</div>" +
+								"<div class='card-body border-primary ' style='color:white'>" +
+									"<b style='color:black'>电话<br/>"+data.telephone+"</b><br/>" +
+									"<b style='color:black'>电子邮箱<br/>"+data.email+"</b>" +
+								"</div>" +
+							"</div>",
+						template:'<div class="tooltip" role="tooltip" style:"padding:0;"><div  style="background-color:white;padding:0; width:200px " class="tooltip-inner"></div></div>'
+					});
+					return  btn;
 				}
 			}, 
 			{

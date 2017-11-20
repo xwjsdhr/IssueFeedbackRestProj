@@ -12,4 +12,6 @@ public interface StatusDao {
 	 */
 	List<Status> getAllStatus();
 
+	List<Status> getCommentStatus();
+
 }

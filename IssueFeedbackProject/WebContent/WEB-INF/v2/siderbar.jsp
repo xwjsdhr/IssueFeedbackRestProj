@@ -6,40 +6,40 @@
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index"><i class="icon-speedometer"></i>首页</a>
+            <a class="nav-link" href="home_main"><i class="icon-speedometer"></i>首页</a>
           </li>
           <li class="nav-title">
            	 模块管理
           </li>
           <c:if test="${fn:contains(user_login.dept.permissions,2) }">
-          <li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-question"></i>组长问题反馈</a>
-            <ul class="nav-dropdown-items" >
-              <li class="nav-item" >
-                <a class="nav-link" href="index">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-question"></i>问题管理</a>
-              </li>
-              <c:if test="${fn:contains(user_login.dept.permissions,4)}">
-	              <li class="nav-item">
-	                <a class="nav-link" href="dept_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-people"></i>部门管理</a>
+	          <li class="nav-item nav-dropdown">
+	            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-question"></i>组长问题反馈</a>
+	            <ul class="nav-dropdown-items" >
+	              <li class="nav-item" >
+	                <a class="nav-link" href="index">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-question"></i>问题管理</a>
 	              </li>
-              </c:if>
-              <c:if test="${fn:contains(user_login.dept.permissions,5)}">
-	              <li class="nav-item">
-	                <a class="nav-link" href="project_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-doc"></i> 项目管理</a>
-	              </li>
-              </c:if>
-              <c:if test="${fn:contains(user_login.dept.permissions,7)}">
-	              <li class="nav-item">
-	                <a class="nav-link" href="permission_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-puzzle"></i> 权限管理</a>
-	              </li>
-              </c:if>
-              <c:if test="${fn:contains(user_login.dept.permissions,6)}">
-               	  <li class="nav-item">
-	                <a class="nav-link" href="issue_statistics">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-graph"></i> 统计管理</a>
-	              </li>
-              </c:if>
-            </ul>
-          </li>
+	              <c:if test="${fn:contains(user_login.dept.permissions,4)}">
+		              <li class="nav-item">
+		                <a class="nav-link" href="dept_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-people"></i>部门管理</a>
+		              </li>
+	              </c:if>
+	              <c:if test="${fn:contains(user_login.dept.permissions,5)}">
+		              <li class="nav-item">
+		                <a class="nav-link" href="project_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-doc"></i> 项目管理</a>
+		              </li>
+	              </c:if>
+	              <c:if test="${fn:contains(user_login.dept.permissions,7)}">
+		              <li class="nav-item">
+		                <a class="nav-link" href="permission_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-puzzle"></i> 权限管理</a>
+		              </li>
+	              </c:if>
+	              <c:if test="${fn:contains(user_login.dept.permissions,6)}">
+	               	  <li class="nav-item">
+		                <a class="nav-link" href="issue_statistics">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-graph"></i> 统计管理</a>
+		              </li>
+	              </c:if>
+	            </ul>
+	          </li>
           </c:if>
           
           <li class="nav-item nav-dropdown">

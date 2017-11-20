@@ -21,7 +21,14 @@ public class Comment implements Serializable{
 	private int isResovleIssue = 0;//是否解决问题
 	private List<String> imagePaths;//图片路径
 	private int isProblem = 0;//是否是疑难问题
+	private Status status;
 	
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public int getIsProblem() {
 		return isProblem;
 	}

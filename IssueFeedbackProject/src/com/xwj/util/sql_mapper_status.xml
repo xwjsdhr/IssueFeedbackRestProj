@@ -6,6 +6,10 @@
 		select id,status_name from t_status 
 	</select>
 
+	<select id="getCommentStatus" resultMap="statusResultMap">
+		select id,status_name from t_status where can_rollback = 1
+	</select>
+	
 	<resultMap type="com.xwj.entity.Status" id="statusResultMap">
 		<result column="id" javaType="Integer" property="id"/>
 		<result column="status_name" javaType="String" property="statusName"/>

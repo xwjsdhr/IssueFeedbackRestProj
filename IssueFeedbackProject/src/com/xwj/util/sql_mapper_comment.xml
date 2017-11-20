@@ -8,9 +8,9 @@
 		
 		INSERT INTO 
 		t_comment
-		(content,user_id,create_time,is_resovled_issue,is_problem)
+		(content,user_id,create_time,is_resovled_issue,is_problem,status_id)
 		VALUES
-		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem});
+		(#{content},#{user.id},now(),#{isResovleIssue},#{isProblem},#{status.id});
 		
 		<selectKey
 		  keyProperty="id"

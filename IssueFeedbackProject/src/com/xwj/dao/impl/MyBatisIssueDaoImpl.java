@@ -11,6 +11,7 @@ import com.xwj.entity.Comment;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
+import com.xwj.entity.Status;
 import com.xwj.params.IssueJointComment;
 import com.xwj.params.ParamStatistics;
 import com.xwj.params.QueryCondition;
@@ -85,18 +86,24 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		Integer id = session.selectOne("selectInsertedKey");
 		IssueJointComment ic = new IssueJointComment(issueId, id);
 		int res = session.insert("insertIssueJointComment", ic);//添加评论关联
-	
-		if (comment.getIsResovleIssue() == 1) {
-			System.err.println("已解决");
-			session.update("resolveIssueByComment", issueId);
-		} else if (comment.getIsProblem() == 1) {
-			System.err.println("未查出问题");
-			session.update("unresolveIssueByComment", issueId);
-		} else if(comment.getIsResovleIssue() != 1 
-				&& comment.getIsProblem() != 1 ){
-			System.err.println("未解决");
-			session.update("replyIssueById", issueId);
-		}
+		Issue issue = new Issue();
+		issue.setId(issueId);
+		Status status = comment.getStatus();
+		issue.setStatus(status);
+		session.update("updateIssueStatus",issue);
+		
+//		if (comment.getStatusId() == 3) {
+//			System.err.println("已解决");
+//			session.update("resolveIssueByComment", issueId);
+//		} else if (comment.getStatusId() == 4) {
+//			System.err.println("未查出问题");
+//			session.update("unresolveIssueByComment", issueId);
+//		} else if(comment.getStatusId() == 5){
+//			
+//		} else{
+//			System.err.println("未解决");
+//			session.update("replyIssueById", issueId);
+//		}
 		session.update("updateLastTime", issueId);
 		session.commit();
 		session.close();

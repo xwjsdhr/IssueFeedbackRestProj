@@ -27,5 +27,13 @@ public class StatusDaoImpl implements StatusDao {
 		session.close();
 		return list;
 	}
+
+	@Override
+	public List<Status> getCommentStatus() {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Status> list = session.selectList("getCommentStatus");
+		session.close();
+		return list;
+	}
 	
 }

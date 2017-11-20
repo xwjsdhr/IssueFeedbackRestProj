@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
+import com.xwj.entity.HomeMainData;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.LogType;
@@ -102,6 +103,17 @@ public class MyRestController {
 		return ResponseEntity.ok(ar);
 	}
 
+	@GetMapping("/getCommentStatus")
+	public ResponseEntity<AjaxResult<List<Status>>> getCommentStatus(HttpSession hs) {
+		User user = filterSession(hs);
+		AjaxResult<List<Status>> ar = null;
+		if (user != null) {
+			ar = new AjaxResult.Builder<List<Status>>().result(businessService.getCommentStatus()).message("获取成功")
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+		}
+		return ResponseEntity.ok(ar);
+	}
+	
 	/**
 	 * 
 	 * @param id
@@ -183,7 +195,7 @@ public class MyRestController {
 		}
 		return ResponseEntity.ok(ar);
 	}*/
-
+	
 	@GetMapping("/disableOrEnableUser")
 	public ResponseEntity<AjaxResult<Boolean>> disableOrEnableUser(HttpSession hs,
 			@RequestParam("userId") Integer userId, @RequestParam("userStatus") Boolean userStatus) {
@@ -255,15 +267,20 @@ public class MyRestController {
 	@GetMapping("/addCommentToIssue")
 	public ResponseEntity<AjaxResult<Comment>> addCommentToIssue(HttpSession hs,
 			@RequestParam("issue_id") Integer issueId, @RequestParam("content") String desc,
-			@RequestParam("isResovleIssue") Integer isResovleIssue, @RequestParam("isProblem") Integer isProblem) {
+//			@RequestParam("isResovleIssue") Integer isResovleIssue, @RequestParam("isProblem") Integer isProblem
+			@RequestParam("statusId") Integer statusId
+			) {
 		User user = filterSession(hs);
 		AjaxResult<Comment> ar = null;
 		if (user != null) {
 			Comment comment = new Comment();
 			comment.setContent(desc);
-			comment.setIsResovleIssue(isResovleIssue);
-			comment.setIsProblem(isProblem);
+//			comment.setIsResovleIssue(isResovleIssue);
+//			comment.setIsProblem(isProblem);
 			comment.setUser(user);
+			Status status = new Status();
+			status.setId(statusId!= 0 ? statusId: 2);
+			comment.setStatus(status);
 			int i = businessService.addCommentToIssue(issueId, comment);
 			if (i > 0) {
 				comment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA).format(new Date()));
@@ -509,6 +526,18 @@ public class MyRestController {
 		return  ResponseEntity.ok(moduleAr);
 	}
 	
+	@GetMapping("/getHomeMainData")
+	public ResponseEntity<AjaxResult<HomeMainData>> getHomeMainData(HttpSession hs) {
+		User user = filterSession(hs);
+		AjaxResult<HomeMainData> moduleAr = null;
+		if(user != null) {
+			moduleAr = new AjaxResult.Builder<HomeMainData>()
+				.result(businessService.getHomeMainData())
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.message("获取成功").build();
+		}
+		return  ResponseEntity.ok(moduleAr);
+	}
 
 	private User filterSession(HttpSession hs) {
 		Integer userId = (Integer) hs.getAttribute("user_session_id");

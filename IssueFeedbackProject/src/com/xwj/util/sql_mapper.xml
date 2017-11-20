@@ -19,6 +19,7 @@
 		ti.month AS issueMonth,
 		tpm2.id as projectModuleId2,
 		tpm2.project_module_name as projectModuleName2,
+		
 	</sql>
 
 	<sql id="statusColumns">
@@ -30,6 +31,8 @@
 		tu.user_name AS userName,
 		tu.real_name AS
 		realName,
+		tu.email as email,
+		tu.telephone as telephone,
 		tu.password AS password,
 		tu.dept_id AS deptId,
 	</sql>
@@ -46,6 +49,8 @@
 		tc.id AS pkCommentId,
 		tc.create_time AS commentCreateTime,
 		tc.user_id AS commentUserId,
+		tcomstatus.status_name AS commentStatusName,
+		tcomstatus.id AS commentStatusId,
 	</sql>
 	<sql id="commentUserColumn">
 		tuc.id AS userIdC,
@@ -141,6 +146,8 @@
 		left join 
 		t_project_module tpm2
 		on ti.project_module_id = tpm2.id
+		left join t_status tcomstatus
+		on tcomstatus.id = tc.status_id
 		WHERE
 		<include refid="isNotDelete" /> 
 	</sql>
@@ -225,6 +232,9 @@
 	<update id="updateStatusById" parameterType="com.xwj.params.UpdateStatusByIssueId" flushCache="true" >
 		UPDATE t_issue SET status_id = #{statusId} WHERE id = #{issueId}
 	</update>
+	<update id="updateIssueStatus" parameterType="com.xwj.entity.Issue">
+		UPDATE t_issue SET status_id = #{status.id} WHERE id = #{id}
+	</update>
 	
 	<resultMap type="com.xwj.entity.Issue" id="issueResultMap">
 		<id column="issueId" property="id" />
@@ -262,12 +272,18 @@
 			<result column="projectModuleName2" property="projectModuleName"/>
 			<result column="projectModuleId2" property="id"/>
 		</association>
+		
 		<collection property="comments" ofType="com.xwj.entity.Comment">
 			<id column="pkCommentId" property="id" javaType="Integer" />
 			<result column="commentContent" property="content" />
 			<result column="isResolvedIssue" property="isResovleIssue" />
 			<result column="isProblem" property="isProblem" />
 			<result column="commentCreateTime" property="createTime" />
+			
+			<association property="status" javaType="com.xwj.entity.Status">
+				<id column="commentStatusId" property="id" />
+				<result column="commentStatusName" property="statusName" />
+			</association>
 
 			<association property="user" javaType="com.xwj.entity.User">
 				<result column="userNameC" property="username" />
@@ -285,6 +301,8 @@
 		<result column="userName" property="username" />
 		<result column="password" property="password" />
 		<result column="realName" property="realName" />
+		<result column="email" property="email" />
+		<result column="telephone" property="telephone" />
 		<association property="dept" javaType="com.xwj.entity.Dept">
 			<id column="pkDeptId" property="id" />
 			<result column="deptId" property="id" />

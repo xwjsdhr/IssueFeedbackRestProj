@@ -18,7 +18,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item">模块管理</li>
         <li class="breadcrumb-item">组长问题反馈</li>
-        <li class="breadcrumb-item active">问题管理</li>
+        
         <li class="breadcrumb-menu d-md-down-none">
           <div class="btn-group" role="group" aria-label="Button group">
         	<c:if test="${fn:contains(user_login.dept.permissions,2)}">
@@ -45,7 +45,7 @@
 									<th>状态</th>
 									<th>标题</th>
 									<th>提交时间</th>
-									<th>上次更新时间</th>
+									<th>反馈用户</th>
 									<th>周</th>
 									<th>所属项目</th>
 									<th>项目模块</th>

@@ -1,209 +1,119 @@
-$(document).ready(function() {
-	
-	var issueTable = $("#issue_table").DataTable({
-		dom:"Bfrtip",
-		ajax : {
-			"url" : "/IssueFeedbackProject/allIssues",
-			"dataSrc" : "result"
-		},
-		searching:false,
-		paging:true,
-		buttons:[
-			'excel'
-		],
-		"lengthMenu":[
-			[5],[5]
-		],
-		"language": {
-            "lengthMenu": "每页显示 _MENU_ 条记录",
-            "zeroRecords": "未查询到任何问题",
-            "info": "第 _PAGE_ 页 ，共  _PAGES_页",
-            "infoEmpty": "无任何问题",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "paginate":{
-            	"previous":"上一页",
-            	"next":"下一页"
-            },
-            select:{
-            	rows:{
-            		 _: "    &nbsp;&nbsp;&nbsp;&nbsp;你已经选择了  %d 行",
-                     0: "    &nbsp;&nbsp;&nbsp;&nbsp;点击一行选择",
-                     1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
-            	}
-            },
-            search:"查询",
-            searchPlaceholder:"请输入查询信息"
-        },
-		columns : [
-			{
-				data : "status",
-				render : function(data, type, row, meta) {
-					var type = null;
-					switch(data.id){
-						case 1:
-							type = "badge-warning";
-							break;
-						case 2:
-							type = "badge-secondary";
-							break;
-						case 3:
-							type = "badge-success";
-							break;
-						case 4:
-							type = "badge-danger";
-							break;
-					 	
-					}
-					var row = "<span class='badge "+type+"'>"+data.statusName+"</span>"
-					return row;
-				}
-			},
-			{
-				data : "title",
-				render : function(data, type, row, meta) {
-					return data;
-				}
-			}, 
-			{
-				data : "lastUpdateTime",
-				render : function(data, type, row, meta) {
-					return  moment(data).fromNow();
-				}
-			}, 
-			{
-				data : "project.projectName",
-				render : function(data, type, row, meta) {
-					return data;
-				}
-			}
-		]
-	});
-	
-	$("#train_record_table").DataTable({
-		dom:"Bfrtip",
-		ajax:{
-			"url":"/IssueFeedbackProject/allTrainingRecords",
-			"dataSrc":"result"
-		},
-		"lengthMenu":[
-			[5],[5]
-		],
-		buttons:[
-			'excel'
-		],
-		searching:false,
-		paging:true,
-		"language": {
-	        "lengthMenu": "每页显示 _MENU_ 条记录",
-	        "zeroRecords": "未查询到任何记录",
-	        "info": "第 _PAGE_ 页 ，共  _PAGES_页",
-	        "infoEmpty": "无任何问题",
-	        "infoFiltered": "(filtered from _MAX_ total records)",
-	        "paginate":{
-	        	"previous":"上一页",
-	        	"next":"下一页"
-	        },
-	        select:{
-	        	rows:{
-	        		 _: "    &nbsp;&nbsp;&nbsp;&nbsp;你已经选择了  %d 行",
-	                 0: "    &nbsp;&nbsp;&nbsp;&nbsp;点击一行选择",
-	                 1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
-	        	}
-	        },
-	        search:"查询",
-	        searchPlaceholder:"请输入查询信息"
-	    },
-		columns:[
-			{
-				data:"content",
-				render:function(data, type, row, meta){
-					return data;
-				}
-			},
-			{
-				data:"trainingWay.trainingWayName",
-				render:function(data, type, row, meta){
-					return data;
-				}
-			},
-			{
-				data:"trainingTime",
-				render:function(data, type, row, meta){
-					return data;
-				}
-			},
-			{
-				data:"teacher.realName",
-				render:function(data, type, row, meta){
-					return data;
-				}
-			},
-			{
-				data:"duration", 
-				render:function(data, type, row, meta){
-					return data+" "+row.timeUnit.timeUnitName;
-				}
-			}
-		]
-	});
+var color = Chart.helpers.color;
+var dataset = [];
+var labels = [];
+var backgroundColors =  [];
 
-	
-	
-	$("#project_table").DataTable({
-		dom:"Bfrtip",
-		ajax : {
-			"url" : "/IssueFeedbackProject/allProjects",
-			"dataSrc" : "result",
-			"data":function(){
-				notification("加载项目成功","success");
+var issueCount = $("#issueCount");
+var userCount = $("#userCount");
+var deptCount = $("#deptCount");
+var projectCount = $("#projectCount");
+var datasets = [];
+
+var barChartData = {
+	labels : labels,
+	datasets : datasets
+};
+
+
+
+$(document).ready(function() {
+	var ctx = document.getElementById("canvas").getContext("2d");
+	window.myBar = new Chart(ctx, {
+		type : 'bar',
+		data : barChartData,
+		options : {
+			barPercentage:0.2,
+			categoryPercentage:0.2,
+			barThickness:20,
+			responsive : true,
+			legend : {
+				boxWidth:20,
+				position : 'top',
+			},
+			title : {
+				display : true,
+				text : '问题统计'
+			},
+			scales : {
+				yAxes : [ {
+					ticks : {
+						min : 0,
+						stepSize : 1
+					}
+				}]
 			}
-		},
-		buttons:[
-			'excel'
-		],
-		searching:false,
-		paging:true,
-		"lengthMenu":[
-			[5,20],[5,20]
-		],
-		"language": {
-            "lengthMenu": "每页显示 _MENU_ 条记录",
-            "zeroRecords": "未查询到任何部门",
-            "info": "第 _PAGE_ 页 ，共  _PAGES_页",
-            "infoEmpty": "无任何部门",
-            "infoFiltered": "(总共_MAX_条记录)",
-            "paginate":{
-            	"previous":"上一页",
-            	"next":"下一页"
-            },
-            select:{
-            	rows:{
-            		 _: "    &nbsp;&nbsp;&nbsp;&nbsp;你已经选择了  %d 行",
-                     0: "    &nbsp;&nbsp;&nbsp;&nbsp;点击一行选择",
-                     1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
-            	}
-            },
-            search:"查询",
-            searchPlaceholder:"请输入查询信息"
-        },
-		columns : [
-			{
-				data : "projectName",
-				render : function(data, type, row, meta) {
-					return data;
-				}
-			}, 
-			{
-				data : "description",
-				render : function(data, type, row, meta) {
-					return data;
-				}
-			}
-		]
+		}
 	});
 	
+	$.ajax({
+		 url:"/IssueFeedbackProject/getHomeMainData",
+		 method:"get",
+		 success:function(data){
+			 issueCount.text(data.result.issueCount);
+			 deptCount.text(data.result.deptCount);
+			 projectCount.text(data.result.projectCount);
+			 userCount.text(data.result.userCount);
+		 }
+	 });
 	
+	$.ajax({
+		 url:"/IssueFeedbackProject/issueCount",
+		 method:"post",
+		 data:{
+			 year:2017,
+			 type:"week_of_year",
+		 },
+		 success:function(data){
+			 
+			 $.each(data.result,function(index,data){
+				 console.log(data);
+				 var dataset = makeDataset(data);
+				 datasets.push(dataset);
+			 });
+			 window.myBar.update(); 
+		 }
+	 });
 	
+	initListener();
 });
+
+function randomColor(){
+	var color = "#";
+	for(var i = 0 ;i<6 ;i++){
+		color = color.concat(Math.floor(Math.random()*10));
+	}
+	return color;
+}
+function makeDataset(data){
+	
+	var data = 	 {
+			label :"第"+data.week+"周",
+			borderWidth : 1,
+			backgroundColor :randomColor(),
+			borderColor : randomColor(),
+			data : [data.count],
+			
+	 };
+	return data;
+}
+function initListener(){
+	
+	$('#card_dept').click(function(event){
+		window.location.href="dept_management";
+	});
+	
+	$('#card_issue').click(function(event){
+		window.location.href="index";
+	});
+	
+	$('#card_project').click(function(event){
+		window.location.href="project_management";
+	});
+	
+	$('#card_permission').click(function(event){
+		window.location.href="permission_management";
+	});
+	
+}
 
 

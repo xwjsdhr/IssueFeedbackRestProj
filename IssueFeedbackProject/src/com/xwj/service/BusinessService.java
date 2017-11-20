@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
+import com.xwj.entity.HomeMainData;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
@@ -154,5 +155,9 @@ public interface BusinessService {
 	Boolean addModuleToProject(Integer projectId, String moduleName);
 
 	Boolean updateUserInfo(User updateUser);
+
+	List<Status> getCommentStatus();
+
+	HomeMainData getHomeMainData();
 
 }

@@ -18,6 +18,7 @@ import com.xwj.dao.UserLogDao;
 import com.xwj.dao.training.TrainingRecordDao;
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
+import com.xwj.entity.HomeMainData;
 import com.xwj.entity.Issue;
 import com.xwj.entity.IssueCount;
 import com.xwj.entity.IssuePage;
@@ -325,5 +326,22 @@ public class BusinessServiceImpl implements BusinessService {
 	@Override
 	public Boolean updateUserInfo(User updateUser) {
 		return userDao.updateUserInfo(updateUser);
+	}
+
+	@Override
+	public List<Status> getCommentStatus() {
+		return statusDao.getCommentStatus();
+	}
+
+	@Override
+	public HomeMainData getHomeMainData() {
+		
+		HomeMainData homeMainData = new HomeMainData();
+		homeMainData.setIssueCount(myBatisIssueDao.getAllIssuesWithoutDept().size());
+		homeMainData.setUserCount(userDao.getAllUsers().size());
+		homeMainData.setProjectCount(projectDao.getAll().size());
+		homeMainData.setDeptCount(deptDao.getAllDepts().size());
+		homeMainData.setStatusCount(statusDao.getAllStatus().size());
+		return homeMainData;
 	}
 }
