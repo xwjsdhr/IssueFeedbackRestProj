@@ -42,7 +42,7 @@
 
 body
 {
-    background: url('/IssueFeedbackProject/lib/imgs/login_bg.jpg') fixed;
+    /*background: url('/IssueFeedbackProject/lib/imgs/login_bg.jpg') fixed;*/
     background-size: cover;
     padding: 0;
     margin: 0;

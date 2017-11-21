@@ -20,6 +20,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/bootstrap/bootstrap-notify.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/moment/moment.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/moment/zh-cn.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/parsley/parsley.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/externals/parsley/zh_cn.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/global.js"></script>

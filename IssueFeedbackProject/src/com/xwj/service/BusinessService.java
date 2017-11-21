@@ -3,6 +3,8 @@ package com.xwj.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.xwj.entity.Comment;
 import com.xwj.entity.Dept;
 import com.xwj.entity.HomeMainData;
@@ -19,7 +21,7 @@ import com.xwj.entity.User;
 import com.xwj.entity.UserLog;
 import com.xwj.params.SearchCondition;
 
-public interface BusinessService {
+public interface BusinessService extends UserDetailsService{
 
 	/**
 	 * ÓÃ»§µÇÂ¼

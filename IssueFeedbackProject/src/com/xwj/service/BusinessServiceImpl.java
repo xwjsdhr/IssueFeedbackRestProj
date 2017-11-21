@@ -1,12 +1,17 @@
 package com.xwj.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.xwj.dao.DeptDao;
 import com.xwj.dao.IssueDao;
@@ -38,6 +43,7 @@ import com.xwj.params.SearchCondition;
  * @createTime ÉÏÎç9:12:30
  */
 @Component
+@Service
 public class BusinessServiceImpl implements BusinessService {
 
 	@NonNull
@@ -343,5 +349,57 @@ public class BusinessServiceImpl implements BusinessService {
 		homeMainData.setDeptCount(deptDao.getAllDepts().size());
 		homeMainData.setStatusCount(statusDao.getAllStatus().size());
 		return homeMainData;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		User user = userDao.getPasswordByUserName(userName);
+		return new UserDetails() {
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isEnabled() {
+				return true;
+			}
+			
+			@Override
+			public boolean isCredentialsNonExpired() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+			@Override
+			public boolean isAccountNonLocked() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+			@Override
+			public boolean isAccountNonExpired() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+			@Override
+			public String getUsername() {
+				// TODO Auto-generated method stub
+				return user.getUsername();
+			}
+			
+			@Override
+			public String getPassword() {
+				// TODO Auto-generated method stub
+				return user.getPassword();
+			}
+			
+			@Override
+			public Collection<? extends GrantedAuthority> getAuthorities() {
+				return null;
+			}
+		};
 	}
 }

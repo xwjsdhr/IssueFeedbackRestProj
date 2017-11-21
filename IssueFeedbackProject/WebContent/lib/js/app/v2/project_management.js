@@ -9,7 +9,7 @@ var inputUpdateProjectName = $("#inputUpdateProjectName");
 var selectorUpdateDept = $("#selectorUpdateDept");
 var inputUpdateProjectDesc = $("#inputUpdateProjectDesc");
 var btnUpdateProject = $("#btnUpdateProject");
-	
+var deptArr = [];
 $(document).ready(function(){
 	
 	$("#formAddProject").validate({
@@ -22,6 +22,7 @@ $(document).ready(function(){
 			inputProjectDesc:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入项目描述</div>"
 		}
 	});
+	
 	$.ajax({
 		url:"/IssueFeedbackProject/allDepts",
 		method:"get",
@@ -31,8 +32,9 @@ $(document).ready(function(){
 				selectorDept.append(row);
 			});
 			$.each(data.result,function(index,element){
-				var row = $("<option>").val(element.id).text(element.deptName);
-				selectorUpdateDept.append(row);
+				deptArr.push(element);
+//				var row = $("<option>").val(element.id).text(element.deptName);
+//				selectorUpdateDept.append(row);
 			});
 		}
 	});
@@ -96,6 +98,17 @@ $(document).ready(function(){
 		inputUpdateProjectName.val(data.projectName);
 		inputUpdateProjectDesc.val(data.description);
 		btnUpdateProject.attr("id","udpate-"+data.id);
+		selectorUpdateDept.empty();
+		console.log(data);
+		var row = $("<option>").val(data.dept.id).text(data.dept.deptName);
+		selectorUpdateDept.prepend(row);
+		$.each(deptArr,function(index,element){
+			if(data.dept.deptName != element.deptName){
+				var row = $("<option>").val(element.id).text(element.deptName);
+				selectorUpdateDept.append(row);
+			}
+		});
+		
     });
 	
 });

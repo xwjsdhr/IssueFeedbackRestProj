@@ -8,7 +8,7 @@ var inputIssueTitle = $("#inputIssueTitle");
 var inputIssueProject = $("#inputIssueProject");
 var inputIssueContent = $("#inputIssueContent");
 var inputIssueProjectModule = $("#inputIssueProjectModule");
-
+var localStorage = window.localStorage;
 $(document).ready(function() {
 	
 	inputIssueProject.select2({});
@@ -25,13 +25,6 @@ $(document).ready(function() {
 	    }
 	});
 	
-	$.ajax({
-		url:"/IssueFeedbackProject/allIssues",
-		method:"get",
-		success:function(data){
-			console.log(data);
-		}
-	});
 	
 	select2Module.on("select2:select", function(e) {
 	    if(e.params.data.isNew){
@@ -191,7 +184,7 @@ $(document).ready(function() {
 		buttons:[
 			{
 				extend :'excel',
-				text:"导出为Excel",
+				text:"<i class='fa fa-table'></i>&nbsp;导出为Excel",
 				className:"btn btn-sm btn-success"
 			}
 			
@@ -216,7 +209,7 @@ $(document).ready(function() {
                      1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
             	}
             },
-            search:"<label class='btn btn-sm btn-primary'><i class='fa fa-search'></i>查询</label>",
+            search:"<label class='btn btn-sm btn-primary'><i class='fa fa-search'></i>&nbsp;查询</label>",
             searchPlaceholder:"请输入查询信息"
         },
 		columns : [
@@ -262,7 +255,7 @@ $(document).ready(function() {
 				data : "user",
 				render : function(data, type, row, meta) {
 									
-					var btn = "<button type='button' class='btn btn-secondary contact' data-toggle='tooltip' data-placement='top'>" +
+					var btn = "<button type='button' class='btn btn-sm btn-secondary contact text-white' data-toggle='tooltip' data-placement='top'><i class='fa fa-user'></i> &nbsp;" +
 							data.username
 							"</button>";
 					$('.contact').tooltip({
@@ -303,9 +296,7 @@ $(document).ready(function() {
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<a class='btn btn-primary' href='issue_detail?id="+data+"'>查看&nbsp;" +
-							"<span class='badge badge-light'>"+row.comments.length+"</span>" +
-							"</a>";
+					return "<a class='btn btn-sm btn-primary' href='"+data+"'>查看&nbsp;<i class='fa fa-arrow-right'></i></a>";
 				}
 			}
 		]

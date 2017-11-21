@@ -51,7 +51,7 @@ public class MyRestController {
 	@NonNull
 	@Autowired(required = true)
 	public Calendar calendar;
-
+	
 	@PostMapping("/auth")
 	public ResponseEntity<User> auth(@RequestParam("user_name") String username,
 			@RequestParam("password") String password, HttpSession hs, ModelMap modelMap,
@@ -70,10 +70,9 @@ public class MyRestController {
 	}
 
 	@GetMapping("/allIssues")
-	public ResponseEntity<AjaxResult<List<Issue>>> allIssues(HttpSession hs) {
+	public ResponseEntity<AjaxResult<List<Issue>>> allIssues(HttpSession hs,HttpServletRequest req) {
 		AjaxResult<List<Issue>> ar = null;
 		User user = filterSession(hs);
-
 		if (user == null) {
 			AjaxResult<List<Issue>> ar1 = new AjaxResult.Builder<List<Issue>>().result(null)
 					.errorCode(ErrorCode.ERRORCODE_NO_USER).message("ÎÞÓÃ»§µÇÂ¼").build();
@@ -218,8 +217,11 @@ public class MyRestController {
 	@PostMapping("/addUser")
 	public ResponseEntity<AjaxResult<Boolean>> addUser(@RequestParam("user_name") String username,
 			@RequestParam("password") String password, @RequestParam("real_name") String realName,
-			@RequestParam("dept_id") Integer deptId) {
+			@RequestParam("dept_id") Integer deptId,
+			@RequestParam("telephone")String telephone,@RequestParam("email")String email) {
 		User user = new User(username, password, realName);
+		user.setEmail(email);
+		user.setTelephone(telephone);
 		Dept dept = new Dept();
 		dept.setId(deptId);
 		user.setDept(dept);

@@ -55,6 +55,10 @@
     	<qualifier value="userLogDao"></qualifier>
     </bean>
     
+    <bean class="com.xwj.util.TimeProvider">
+    	<qualifier value="timeProvider"></qualifier>
+    </bean>
+    
     
     <bean class="com.xwj.dao.training.impl.TrainingRecordDaoImpl">
     	<qualifier value="trainingRecordDao"></qualifier>

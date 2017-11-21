@@ -1,6 +1,9 @@
 var inputUserName = $("#inputUserName");
 var inputPassword = $("#inputPassword");
 var inputRealName = $("#inputRealName");
+var inputTelephone = $("#inputTelephone");
+var inputEmail = $("#inputEmail");
+
 var selectDept = $("#selectDept");
 
 var inputUpdateUserName = $("#inputUpdateUserName");
@@ -22,18 +25,29 @@ $(document).ready(function(event){
 		});
 	});
 	
-	formAddUser.validate({
+	formAddUser.parsley();
+	/*formAddUser.validate({
 		rules:{
 			inputUserName:"required",
 			inputPassword:"required",
-			inputRealName:"required"
+			inputRealName:"required",
+			inputTelephone:{
+				"required":true,
+				"digit":true
+			},
+			inputEmail:{
+				"required":true,
+				"email":true
+			}
 		},
 		messages:{
-			inputUserName:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入用户名</div>",
-			inputPassword:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入密码</div>",
-			inputRealName:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入姓名</div>"
+			inputUserName:"<div class='alert alert-danger col-lg-12 text-center' style='margin-top:5px;'  role='alert'>请输入用户名</div>",
+			inputPassword:"<div class='alert alert-danger col-lg-12' style='margin-top:5px' role='alert'>请输入密码</div>",
+			inputRealName:"<div class='alert alert-danger col-lg-12' style='margin-top:5px' role='alert'>请输入姓名</div>",
+			inputTelephone:"<div class='alert alert-danger col-lg-12' style='margin-top:5px' role='alert'>请输入电话</div>",
+			inputEmail:"<div class='alert alert-danger col-lg-12' style='margin-top:5px' role='alert'>请输入电子邮箱</div>"
 		}
-	});
+	});*/
 	
 	//获取部门列表
 	$.ajax({
@@ -59,9 +73,12 @@ $(document).ready(function(event){
 		var username = inputUserName.val().trim();
 		var password = inputPassword.val().trim();
 		var realName = inputRealName.val().trim();
+		var telephone = inputTelephone.val().trim();
+		var email = inputEmail.val().trim();
 		if(username.length == 0 ||
 				password.length == 0 ||
-				realName.length == 0){
+				realName.length == 0 || telephone.length == 0
+	|| email.length == 0){
 			return;
 		}
 		$.ajax({
@@ -71,7 +88,9 @@ $(document).ready(function(event){
 				user_name:inputUserName.val(),
 				password:inputPassword.val(),
 				real_name:inputRealName.val(),
-				dept_id:selectDept.val()
+				dept_id:selectDept.val(),
+				telephone:inputTelephone.val(),
+				email:inputEmail.val()
 			},
 			success:function(data){
 				if(data.result){
@@ -263,19 +282,19 @@ var userTable = $("#user_table").DataTable({
 						type = 'btn-success';
 						iconStr = "<i class='fa fa-fw fa-unlock'></i>";
 					}
-					return "<button class='btn "+type+" btnEnable' id='btnEnable-"+row.id+"' data-status='"+row.status+"' >"+iconStr+"&nbsp;"+str+"</button>";
+					return "<button class='btn btn-sm "+type+" btnEnable' id='btnEnable-"+row.id+"' data-status='"+row.status+"' >"+iconStr+"&nbsp;"+str+"</button>";
 				}
 			}, 
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<button  class='btn btn-primary btnUpdate' id='btnUpdate-"+row.id+"'>修改&nbsp;<i class='fa fa-fw fa-pencil'></i></button>";
+					return "<button  class='btn btn-sm btn-primary btnUpdate' id='btnUpdate-"+row.id+"'>修改&nbsp;<i class='fa fa-fw fa-pencil'></i></button>";
 				}
 			}, 
 			{
 				data : "id",
 				render : function(data, type, row, meta) {
-					return "<button  class='btn btn-primary btnReset' id='btnReset-"+row.id+"'><i class='fa fa-fw fa-refresh'></i>重置</button>";
+					return "<button  class='btn btn-sm btn-primary btnReset' id='btnReset-"+row.id+"'><i class='fa fa-fw fa-refresh'></i>重置</button>";
 				}
 			}
 		]
