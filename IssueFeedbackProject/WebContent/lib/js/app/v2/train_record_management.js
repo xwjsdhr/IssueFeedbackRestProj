@@ -6,13 +6,16 @@ $(document).ready(function(event){
 		}
 	});
 });
+var app = null;
+
+
+
+
 $("#train_record_table").DataTable({
 	ajax:{
 		"url":"/IssueFeedbackProject/allTrainingRecords",
 		"dataSrc":"result",
-		"data":function(){
-			
-		}
+		
 	},
 	"lengthMenu":[
 		[5,20],[5,20]

@@ -21,7 +21,7 @@ var formUpdateUser = $("#formUpdateUser");
 $(document).ready(function(event){
 	btnAddUser.click(function(event){
 		addUserModal.modal({
-			show:true
+			show:true,
 		});
 	});
 	
@@ -197,6 +197,7 @@ var userTable = $("#user_table").DataTable({
 		],
 		searching:true,
 		paging:true,
+//		paginationType: "input",
 		"language": {
             "lengthMenu": "每页显示 _MENU_ 条用户",
             "zeroRecords": "未查询到任何用户",
@@ -299,3 +300,10 @@ var userTable = $("#user_table").DataTable({
 			}
 		]
 });
+
+
+	
+
+
+
+

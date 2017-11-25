@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +42,11 @@ import com.xwj.params.SearchCondition;
 import com.xwj.service.BusinessService;
 import com.xwj.util.CommonUtil;
 
+/**
+ * 符合Rest的控制器
+ * @author xia weijia
+ * @createTime 下午2:43:49
+ */
 @Component
 @RestController
 public class MyRestController {
@@ -57,12 +64,17 @@ public class MyRestController {
 			@RequestParam("password") String password, HttpSession hs, ModelMap modelMap,
 			HttpServletRequest httpRequest) {
 		User user = businessService.loginBCrypt(username, password);
+		
 		if (user != null) {
 			hs.setAttribute("user_session_id", user.getId());
 			modelMap.addAttribute("user_login", user);
-			LogType logType = new LogType();
-			logType.setId(1);
-			businessService.logUser(user, CommonUtil.getClientIp(httpRequest), logType);
+			
+			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+					new UsernamePasswordAuthenticationToken(username, password);
+			SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
+			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			
+			businessService.logUser(user, CommonUtil.getClientIp(httpRequest), new LogType(1));
 			return ResponseEntity.ok(user);
 		} else {
 			return ResponseEntity.noContent().build();
@@ -79,17 +91,42 @@ public class MyRestController {
 			return ResponseEntity.ok(ar1);
 		}
 		List<String> permissions = user.getDept().getPermissions();
-		List<Issue> issues = new ArrayList<>();
 		if (!permissions.contains("1")) {
-			issues = businessService.getAllIssues(user.getDept().getId());
-			ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+			ar = new AjaxResult.Builder<List<Issue>>()
+					.result(
+						businessService.getAllIssues(user.getDept().getId())
+					)
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.build();
 		} else if (permissions.contains("2")) {
-			issues = businessService.getAllIssuesWithoutDept();
-			ar = new AjaxResult.Builder<List<Issue>>().result(issues).errorCode(ErrorCode.ERRORCODE_SUCCESS).build();
+			ar = new AjaxResult.Builder<List<Issue>>()
+					.result(
+						businessService.getAllIssuesWithoutDept()
+					)
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.build();
 		}
 
 		return ResponseEntity.ok(ar);
 	}
+	
+	@GetMapping("/issueAboutMe")
+	public ResponseEntity<AjaxResult<List<Issue>>> issueAboutMe(HttpSession hs,HttpServletRequest req){
+		User user = filterSession(hs);
+		if(user == null) {
+			AjaxResult<List<Issue>> ar1 = new AjaxResult.Builder<List<Issue>>().result(null)
+					.errorCode(ErrorCode.ERRORCODE_NO_USER).message("无用户登录").build();
+			return ResponseEntity.ok(ar1);
+		}
+		AjaxResult<List<Issue>> ar = new AjaxResult.Builder<List<Issue>>()
+				.result(businessService.issueAboutMe(user.getId()))
+				.message("登录成功")
+				.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+				.build();
+		return ResponseEntity.ok(ar);
+	}
+	
+	
 
 	@GetMapping("/allStatus")
 	public ResponseEntity<AjaxResult<List<Status>>> allStatus(HttpSession hs) {
@@ -125,7 +162,6 @@ public class MyRestController {
 
 		List<String> permissions = user.getDept().getPermissions();
 		SearchCondition condition = null;
-		System.out.println(permissions);
 		if (permissions.contains("1")) {
 			System.out.println("contain 1");
 			condition = new SearchCondition(id, year, week == -1 ? null : week);
@@ -539,6 +575,20 @@ public class MyRestController {
 				.message("获取成功").build();
 		}
 		return  ResponseEntity.ok(moduleAr);
+	}
+	
+	@GetMapping("/delDeptById")
+	public ResponseEntity<AjaxResult<Boolean>> delDeptById(
+			@RequestParam("id")Integer id,HttpSession hs) {
+		User user = filterSession(hs);
+		AjaxResult<Boolean> ar = null;
+		if(user != null) {
+			ar = new AjaxResult.Builder<Boolean>()
+					.result(businessService.delDeptById(id))
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.message("获取成功").build();
+		}
+		return ResponseEntity.ok(ar);
 	}
 
 	private User filterSession(HttpSession hs) {

@@ -7,17 +7,26 @@
   	<setting name="logImpl"  value="LOG4J"/>
   	<setting name="useGeneratedKeys" value="true"/>
   </settings>
+  <typeAliases>
+ 	<typeAlias type="com.xwj.entity.Issue" alias="Issue"/>
+ 	<typeAlias type="com.xwj.entity.User" alias="User"/>
+ 	<typeAlias type="com.xwj.entity.Status" alias="Status"/>
+ 	<typeAlias type="com.xwj.entity.Dept" alias="Dept"/>
+ 	<typeAlias type="com.xwj.entity.Project" alias="Project"/>
+ </typeAliases>
+ 
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/db_issue"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
       </dataSource>
     </environment>
   </environments>
+ 
  
   <mappers>
     <mapper resource="com/xwj/util/sql_mapper.xml"/>

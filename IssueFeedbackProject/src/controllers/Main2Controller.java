@@ -1,5 +1,6 @@
 package controllers;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,11 +16,13 @@ import com.xwj.entity.LogType;
 import com.xwj.entity.User;
 import com.xwj.service.BusinessService;
 import com.xwj.util.CommonUtil;
+import com.xwj.util.ConstantUtil;
 
 @Controller
 @RequestMapping("/v2")
 public class Main2Controller {
 
+	private static final String USER_LOGIN = "user_login";
 	@NonNull
 	@Autowired
 	private BusinessService businessService;
@@ -30,11 +33,10 @@ public class Main2Controller {
 	}
 
 	@GetMapping("/login")
-	public String login(HttpSession session, ModelMap modelMap,HttpServletRequest req) {
+	public String login(HttpSession session, ModelMap modelMap, HttpServletRequest req) {
 		User user = getUserByIdStoredInSession(session);
 		if (user != null) {
-			
-			modelMap.addAttribute("user_login", user);
+			modelMap.addAttribute(USER_LOGIN, user);
 			return "v2/index";
 		}
 		return "v2/login";
@@ -43,32 +45,30 @@ public class Main2Controller {
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest hsr, ModelMap modelMap) {
 		User user = getUserByIdStoredInSession(session);
-		if (user != null) {
-			session.removeAttribute("user_session_id");
-			LogType logType = new LogType();
-			logType.setId(2);
-			businessService.logUser(user, CommonUtil.getClientIp(hsr), logType);
+		try {
+			if (user != null) {
+				hsr.logout();
+				session.removeAttribute("user_session_id");
+				modelMap.remove(USER_LOGIN);
+				LogType logType = new LogType(2);
+				businessService.logUser(user, CommonUtil.getClientIp(hsr), logType);
+			}
+		} catch (ServletException e) {
+			e.printStackTrace();
 		}
+		
 		return "v2/login";
 	}
 
 	@GetMapping("/index")
-	public String index(HttpServletRequest req , HttpSession session, ModelMap modelMap) {
+	public String index(HttpServletRequest req, HttpSession session, ModelMap modelMap) {
 		User user = getUserByIdStoredInSession(session);
-		if (user == null) {
 
-			return "v2/login";
-		} else {
-			
-			User userLogin = (User) modelMap.get("user_login");
-
-			if (userLogin != null) {
-				modelMap.remove("user_login");
-			}
-			modelMap.addAttribute("user_login", user);
-			return "v2/index";
+		if (modelMap.get(USER_LOGIN) != null) {
+			modelMap.remove(USER_LOGIN);
 		}
-
+		modelMap.addAttribute(USER_LOGIN, user);
+		return "v2/index";
 	}
 
 	@GetMapping("/{id}")
@@ -89,7 +89,7 @@ public class Main2Controller {
 
 	private String loginPageNoUser(HttpSession session, ModelMap modelMap, String dest) {
 		User user = getUserByIdStoredInSession(session);
-		modelMap.addAttribute("user_login", user);
+		modelMap.addAttribute(USER_LOGIN, user);
 		return dest;
 	}
 
@@ -144,7 +144,7 @@ public class Main2Controller {
 	}
 
 	private User getUserByIdStoredInSession(HttpSession hs) {
-		Integer userId = (Integer) hs.getAttribute("user_session_id");
+		Integer userId = (Integer) hs.getAttribute(ConstantUtil.USER_SESSION_ID);
 		return userId != null ? businessService.getUserById(userId) : null;
 	}
 }

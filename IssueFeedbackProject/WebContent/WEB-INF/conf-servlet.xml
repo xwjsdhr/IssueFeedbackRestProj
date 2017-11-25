@@ -6,10 +6,9 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd 
   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
   http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
- 
+	 
     <!-- scans packages to register controllers using annotations -->
     <context:component-scan base-package="controllers" />
- 
     <!-- support for mvc-annotation -->
     <mvc:annotation-driven />
  	<mvc:resources location="/lib/" mapping="/lib/**"/>
@@ -24,43 +23,44 @@
         </property>
     </bean> 
     
+    
     <bean scope="singleton" class="com.xwj.service.BusinessServiceImpl">
     	<qualifier value="businessService"></qualifier>
     </bean>
-    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    <bean scope="singleton" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
     	<qualifier value="passwordEncoder"></qualifier>
     </bean>
-    <bean  class="com.xwj.dao.impl.UserDaoImpl">
+    <bean scope="singleton" class="com.xwj.dao.impl.UserDaoImpl">
     	<qualifier value="userDao"></qualifier>
     </bean> 
-    <bean class="com.xwj.dao.impl.DeptDaoImpl">
+    <bean scope="singleton" class="com.xwj.dao.impl.DeptDaoImpl">
     	<qualifier value="deptDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.StatusDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.StatusDaoImpl">
     	<qualifier value="statusDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.IssueStatisticsDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.IssueStatisticsDaoImpl">
     	<qualifier value="issueStatisticsDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.MyBatisIssueDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.MyBatisIssueDaoImpl">
     	<qualifier value="myBatisIssueDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.ProjectDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.ProjectDaoImpl">
     	<qualifier value="projectDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.PermissionDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.PermissionDaoImpl">
     	<qualifier value="permissionDao"></qualifier>
     </bean>
-    <bean class="com.xwj.dao.impl.UserLogDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.impl.UserLogDaoImpl">
     	<qualifier value="userLogDao"></qualifier>
     </bean>
     
-    <bean class="com.xwj.util.TimeProvider">
+    <bean   class="com.xwj.util.TimeProvider">
     	<qualifier value="timeProvider"></qualifier>
     </bean>
     
-    
-    <bean class="com.xwj.dao.training.impl.TrainingRecordDaoImpl">
+    <bean scope="singleton"  class="com.xwj.dao.training.impl.TrainingRecordDaoImpl">
     	<qualifier value="trainingRecordDao"></qualifier>
     </bean>
+    
 </beans>

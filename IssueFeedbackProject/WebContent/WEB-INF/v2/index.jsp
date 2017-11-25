@@ -23,7 +23,13 @@
           <div class="btn-group" role="group" aria-label="Button group">
         	<c:if test="${fn:contains(user_login.dept.permissions,2)}">
 	          	<a class="btn" id="btnAddIssue" href="#"><i class="icon-plus"></i>&nbsp;添加问题 </a>
+	          	<div class="form-check form-check-inline">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="checkbox" id="chkAboutMe" value="option1"> 我参与的
+					  </label>
+					</div>
           	</c:if>
+          	
           </div>
         </li>
         
@@ -35,20 +41,20 @@
 	              <div class="card">
 		            <div class="card-header">
 	                  <i class="fa fa-align-justify"></i>问题列表
-		                
 	                </div>
 	                <div class="card-body">
+	                
 	                  <div class="table-responsive">
-		        		<table id="issue_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+		        		<table id="issue_table" class="table table-striped table-bordered" style="width: 100%;"  cellspacing="0">
 							<thead>
 								<tr>
 									<th>状态</th>
 									<th>标题</th>
-									<th>提交时间</th>
-									<th>反馈用户</th>
+									<th>提交<br>时间</th>
+									<th>反馈人</th>
 									<th>周</th>
-									<th>所属项目</th>
-									<th>项目模块</th>
+									<th>项目</th>
+									<th>项目<br>模块</th>
 									<th>详情</th>
 								</tr>
 							</thead>

@@ -50,4 +50,14 @@ public class DeptDaoImpl implements DeptDao {
 		session.close();
 		return dept;
 	}
+
+	@Override
+	public Boolean delDeptById(Integer id) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		int i = session.delete("delDeptById", id);
+		session.delete("delDeptPermissionsById",id);
+		session.commit(true);
+		session.close();
+		return i > 0 ;
+	}
 }

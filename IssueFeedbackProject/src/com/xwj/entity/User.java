@@ -1,12 +1,15 @@
 package com.xwj.entity;
 
-import java.io.Serializable;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 /**
  * 用户实体类
  * @author Administrator
  *
  */
-public class User  implements Serializable{
+public class User  implements UserDetails{
 
 	/**
 	 * 
@@ -52,7 +55,6 @@ public class User  implements Serializable{
 	}
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Boolean getStatus() {
 		return status;
@@ -95,8 +97,29 @@ public class User  implements Serializable{
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", dept=" + dept + ", realName="
 				+ realName + ", status=" + status + "]";
 	}
-	
-	
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 }

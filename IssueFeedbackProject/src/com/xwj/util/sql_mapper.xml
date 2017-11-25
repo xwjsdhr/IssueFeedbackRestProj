@@ -161,6 +161,14 @@
 		<include refid="orderByLastUptTime" />
 	</select>
 	
+	<select id="issueAboutMe" parameterType="Integer" resultMap="issueResultMap">
+		<include refid="IssueSelect" />
+		AND 
+		ti.user_id = #{id} or tc.user_id=#{id}
+		<include refid="orderByLastUptTime" />
+	</select>
+	
+	
 	<select id="allIssuesList" resultMap="issueResultMap">
 		<include refid="IssueSelect" />
 		<include refid="orderByLastUptTime" />

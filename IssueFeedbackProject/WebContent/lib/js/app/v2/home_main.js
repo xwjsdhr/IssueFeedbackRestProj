@@ -13,8 +13,19 @@ var barChartData = {
 	labels : labels,
 	datasets : datasets
 };
+var linelabels = [];
+var lineDatas =[];
 
-
+var lineChartData = {
+	labels : linelabels,
+	datasets : [{
+		label:"问题数量",
+		backgroundColor:"#3C6E7A",
+		borderColor:"#202425",
+		fill:true,
+		data: lineDatas
+	}]
+};
 
 $(document).ready(function() {
 	var ctx = document.getElementById("canvas").getContext("2d");
@@ -34,6 +45,23 @@ $(document).ready(function() {
 				display : true,
 				text : '问题统计'
 			},
+			scales : {
+				yAxes : [ {
+					ticks : {
+						min : 0,
+						stepSize : 1
+					}
+				}]
+			}
+		}
+	});
+	
+	var ctx1 = document.getElementById("lineChart").getContext("2d");
+	window.myLine = new Chart(ctx1, {
+		type : 'line',
+		data : lineChartData,
+		options:{
+			responsive : true,
 			scales : {
 				yAxes : [ {
 					ticks : {
@@ -69,7 +97,10 @@ $(document).ready(function() {
 				 console.log(data);
 				 var dataset = makeDataset(data);
 				 datasets.push(dataset);
+				 linelabels.push(data.week);
+				 lineDatas.push(data.count);
 			 });
+			 window.myLine.update(); 
 			 window.myBar.update(); 
 		 }
 	 });

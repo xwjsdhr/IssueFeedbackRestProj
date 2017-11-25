@@ -8,6 +8,7 @@ var inputIssueTitle = $("#inputIssueTitle");
 var inputIssueProject = $("#inputIssueProject");
 var inputIssueContent = $("#inputIssueContent");
 var inputIssueProjectModule = $("#inputIssueProjectModule");
+
 var localStorage = window.localStorage;
 $(document).ready(function() {
 	
@@ -130,15 +131,31 @@ $(document).ready(function() {
 		});
 	});
 	
-	$("#formAddIssue").validate({
-		rules:{
-			inputIssueTitle:"required",
-			inputIssueContent:"required"
-		},
-		messages:{
-			inputIssueTitle :"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题标题</div>",
-			inputIssueContent:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题描述</div>"
+	$("#formAddIssue").submit(function(event){
+		event.preventDefault();
+	    $(this).addClass("was-validated");
+	});
+//	$("#formAddIssue").validate({
+//		rules:{
+//			inputIssueTitle:"required",
+//			inputIssueContent:"required"
+//		},
+//		messages:{
+//			inputIssueTitle :"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题标题</div>",
+//			inputIssueContent:"<div class='alert alert-danger col-lg-12' style='margin-top:10px' role='alert'>请输入问题描述</div>"
+//		}
+//	});
+	$("#chkAboutMe").change(function(event){
+		var issueUrl = null;
+		if(this.checked){
+			console.log("true")
+			issueUrl = "/IssueFeedbackProject/issueAboutMe";
+		}else{
+			console.log("false")
+			issueUrl = "/IssueFeedbackProject/allIssues";
 		}
+		issueTable.ajax.url(issueUrl).load();
+		
 	});
 	
 	$("#formAddIssue").submit(function(event){
@@ -171,7 +188,6 @@ $(document).ready(function() {
 		$("#addIssueModal").modal({
 			show:true
 		});
-		
 	});
 	
 	var issueTable = $("#issue_table").DataTable({
@@ -241,6 +257,7 @@ $(document).ready(function() {
 			},
 			{
 				data : "title",
+				width:"15%",
 				render : function(data, type, row, meta) {
 					return data;
 				}
@@ -253,6 +270,7 @@ $(document).ready(function() {
 			}, 
 			{
 				data : "user",
+				width:"5%",
 				render : function(data, type, row, meta) {
 									
 					var btn = "<button type='button' class='btn btn-sm btn-secondary contact text-white' data-toggle='tooltip' data-placement='top'><i class='fa fa-user'></i> &nbsp;" +
@@ -290,13 +308,14 @@ $(document).ready(function() {
 			{
 				data : "projectModule.projectModuleName",
 				render : function(data, type, row, meta) {
-					return data;
+					return "<p class='text-center'>"+ data+"</p>";
 				}
 			}, 
 			{
 				data : "id",
+				width:"5%",
 				render : function(data, type, row, meta) {
-					return "<a class='btn btn-sm btn-primary' href='"+data+"'>查看&nbsp;<i class='fa fa-arrow-right'></i></a>";
+					return "<a class='btn btn-link' href='"+data+"'>查看&nbsp;<i class='fa fa-arrow-right'></i></a>";
 				}
 			}
 		]

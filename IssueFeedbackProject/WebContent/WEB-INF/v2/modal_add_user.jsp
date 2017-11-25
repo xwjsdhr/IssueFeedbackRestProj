@@ -9,7 +9,7 @@
     <form id="formAddUser">
     	<fieldset>
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">添加用户</h5>
+		        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp;添加用户</h5>
 		        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">×</span>
 		        </button>
@@ -19,7 +19,7 @@
 		      		<div class="row"> 
 		      			<div class="col-lg-6">
 		      				<div class="form-group">
-			      				<label for="inputUserName">用户名</label>
+			      				<label for="inputUserName"><b><i class="fa fa-user"></i>&nbsp;用户名</b></label>
 			      				<input type="text" id="inputUserName" data-parsley-required="true" 
 			      				name="inputUserName" class="form-control" 
 			      				 data-parsley-trigger="input" placeholder="请输入用户名"
@@ -29,7 +29,7 @@
 		      			</div>
 		      			<div class="col-lg-6">
 		      				<div class="form-group">
-			      				<label for="inputPassword">密码</label>
+			      				<label for="inputPassword"><b><i class="fa fa-shield"></i>&nbsp; 密码</b></label>
 			      				<input type="password" id="inputPassword" name="inputPassword"
 			      				 data-parsley-required="true" class="form-control" placeholder="请输入密码"
 			      				 data-parsley-minlength="6" />
@@ -39,13 +39,13 @@
 		      		<div class="row">
 		      			<div class="col-lg-6">
 			      			<div class="form-group">
-			      				<label for="inputDept">部门</label>
+			      				<label for="inputDept"><b>部门</b></label>
 			      				<select id="selectDept" class="form-control" data-parsley-required="true" ></select>
 			      			</div>
 		      			</div>
 		      			<div class="col-lg-6">
 			      			<div class="form-group">
-			      				<label for="inputRealName">姓名</label>
+			      				<label for="inputRealName"><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;姓名</b></label>
 			      				<input type="text" id="inputRealName" data-parsley-required="true"
 			      				 name="inputRealName" class="form-control" placeholder="请输入姓名" />
 		      				</div>
@@ -54,7 +54,7 @@
 		      		<div class="row">
 		      			<div class="col-lg-6">
 			      			<div class="form-group">
-			      				<label for="inputTelephone">电话</label>
+			      				<label for="inputTelephone"><b><i class="fa fa-phone"></i>&nbsp;电话</b></label>
 			      				<input type="text" id="inputTelephone" data-parsley-required="true"
 			      				  name="inputTelephone" class="form-control" data-parsley-type="number" 
 			      				  placeholder="请输入电话" />
@@ -63,7 +63,7 @@
 
 						<div class="col-lg-6">
 			      			<div class="form-group">
-			      				<label for="inputEmail">邮箱</label>
+			      				<label for="inputEmail"><b><i class="fa fa-envelope"></i>&nbsp;邮箱</b></label>
 			      				<input type="text" id="inputEmail" data-parsley-required="true" 
 			      				name="inputEmail" class="form-control" data-parsley-type="email"
 			      				 placeholder="请输入电子邮箱" />

@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class LogType implements Serializable{
 
 	
+	public LogType() {
+		super();
+	}
+
 	/**
 	 * 
 	 */
@@ -17,6 +21,13 @@ public class LogType implements Serializable{
 	public Integer getId() {
 		return id;
 	}
+	
+
+	public LogType(Integer id) {
+		super();
+		this.id = id;
+	}
+
 
 	public void setId(Integer id) {
 		this.id = id;

@@ -15,22 +15,13 @@
     <main class="main">
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item"><a href="#">Admin</a></li>
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item">首页</li>
         <!-- Breadcrumb Menu-->
-        <li class="breadcrumb-menu d-md-down-none">
-          <div class="btn-group" role="group" aria-label="Button group">
-            <a class="btn" href="#"><i class="icon-speech"></i></a>
-            <a class="btn" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a>
-            <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
-          </div>
-        </li>
       </ol>
       <div class="container-fluid">
 
         <div class="row">
-            <div class="col-sm-6 col-lg-3"  id="card_issue">
+            <div class="col-sm-6 col-lg-4"  id="card_issue">
               <div class="card text-white bg-primary">
                 <div class="card-body pb-0">
                 <h4 class="mb-0" id="issueCount"></h4>
@@ -38,8 +29,7 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-sm-6 col-lg-3"  id="card_project">
+            <div class="col-sm-6 col-lg-4"  id="card_project">
               <div class="card text-white bg-warning">
                 <div class="card-body pb-0">
                  <h4 class="mb-0" id="projectCount"></h4>
@@ -48,12 +38,17 @@
               </div>
             </div>
             <!--/.col-->
-
-            <div class="col-sm-6 col-lg-3"  id="card_permission">
+            <div class="col-sm-6 col-lg-4"  id="card_permission">
               <div class="card text-white bg-danger">
                 <div class="card-body pb-0">
-                  <h4 class="mb-0" id="userCount"></h4>
-                  <p>用户管理</p>
+                	<div class="container-fluid">
+                		<div class="row">
+                			<div class="col-lg-10">
+	                			 <h4 class="mb-0" id="userCount"></h4>
+	                 			 <p>用户管理</p>
+                			</div>
+                		</div>
+                	</div>
                 </div>
               </div>
             </div>
@@ -61,14 +56,23 @@
           </div>
           
           <div class="row">
-          	<div class="col-lg-9 ">
+          	<div class="col-lg-6 ">
           		<div class="card"> 
 	          		<div class="card-body">
-	          			<canvas id="canvas" height="150px"></canvas>
+	          			<canvas id="canvas" height="120px"></canvas>
+	          		</div>
+          		</div>
+          	</div>
+          	<div class="col-lg-6 ">
+          		<div class="card"> 
+	          		<div class="card-body">
+	          			<canvas id="lineChart" height="120px"></canvas>
 	          		</div>
           		</div>
           	</div>
           </div>
+          
+          
       </div>
     </main>
   </div>

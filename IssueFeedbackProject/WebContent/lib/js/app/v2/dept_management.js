@@ -44,9 +44,25 @@ $(document).ready(function(event){
 		}
 	});
 	
-	
+	$("#dept_table tbody").on("click",".btn-delete",function(event){
+		var id = $(this).attr("id").split("-")[1];
+		$.ajax({
+			url:"/IssueFeedbackProject/delDeptById",
+			data:{
+				id:id
+			},
+			method:"get",
+			success:function(data){
+				if(data.result != null && data.result){
+					deptTable.ajax.reload();
+				}
+			}
+		});
+	});
 	
 });
+
+
 var deptTable = $("#dept_table").DataTable({
 		ajax : {
 			"url" : "/IssueFeedbackProject/allDepts",
@@ -98,5 +114,12 @@ var deptTable = $("#dept_table").DataTable({
 					return  string;
 				}
 			}
+//			,{
+//				data:"id",
+//				width:"5%",
+//				render:function(data, type, row, meta){
+//					return  "<button class='btn btn-sm btn-danger btn-delete' id='btn-"+data+"'>删除</button>";
+//				}
+//			}
 		]
 });

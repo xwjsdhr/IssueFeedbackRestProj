@@ -36,18 +36,19 @@
 		          	
 		          </div>
 			        <div class="card-body">
-				          <div class="table-responsive">
-			        		<table id="dept_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
-								<thead>
-									<tr>
-										<th>部门名称</th>
-										<th>部门描述</th>
-										<th>部门描述</th>
-									</tr>
-								</thead>
-							</table>
-				        	</div>
+			          <div class="table-responsive">
+		        		<table id="dept_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>部门名称</th>
+									<th>部门描述</th>
+									<th >部门描述</th>
+									<!-- <th></th> -->
+								</tr>
+							</thead>
+						</table>
 			        	</div>
+		        	</div>
 		       	</div>
             </div>
           </div>
@@ -59,61 +60,10 @@
     <jsp:include page="/WEB-INF/v2/aside_menu.jsp"></jsp:include>
   </div>
 	
-	
-  <footer class="app-footer">
-    <span><a href="http://coreui.io">CoreUI</a> © 2017 creativeLabs.</span>
-    <span class="ml-auto">Powered by <a href="http://coreui.io">CoreUI</a></span>
-  </footer>
+ <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
   
   	 <jsp:include page="/WEB-INF/v2/script_beta.jsp"></jsp:include>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/dept_management.js"></script>
 </body>
 
-
-
-
-
-
-
-
-
-<%-- <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-  
-  <jsp:include page="/WEB-INF/v2/navbar.jsp"></jsp:include>
-  
-  <div class="content-wrapper">
-    <div class="container-fluid">
-     <nav aria-label="breadcrumb" role="navigation">
-	  <ol class="breadcrumb">
-	    <li class="breadcrumb-item">部门管理</li>
-	    <li class="breadcrumb-item active" aria-current="page">部门列表</li>
-	  </ol>
-	</nav>
-      <div class="card"> 
-        <div class="card-header">
-          <i class="fa fa-table"></i>&nbsp; &nbsp;&nbsp;部门列表
-          	<button class="btn btn-primary" style="float: right;" id="btnAddDept"><i class="fa fa-plus"></i>&nbsp;添加部门</button>
-          </div>
-	        <div class="card-body">
-		          <div class="table-responsive">
-	        		<table id="dept_table" class="table table-striped table-bordered" width="100%" cellspacing="0">
-						<thead>
-							<tr>
-								<th>部门名称</th>
-							</tr>
-						</thead>
-					</table>
-		        	</div>
-	        	</div>
-       	</div>
-      <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
-     </div>
-     
-    <jsp:include page="/WEB-INF/v2/logout.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/modal_add_dept.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/v2/script2.jsp"></jsp:include>
-	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/lib/js/app/v2/dept_management.js"></script>
-  </div>
-</body> --%>
 </html>

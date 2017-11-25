@@ -70,10 +70,8 @@
       </div>
     </main>
   </div>
-  <footer class="app-footer">
-    <span><a href="http://coreui.io">CoreUI</a> © 2017 creativeLabs.</span>
-    <span class="ml-auto">Powered by <a href="http://coreui.io">CoreUI</a></span>
-  </footer>
+  <jsp:include page="/WEB-INF/v2/footer.jsp"></jsp:include>
+  
   
   <jsp:include page="/WEB-INF/v2/modal_add_project.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/v2/modal_update_project.jsp"></jsp:include>

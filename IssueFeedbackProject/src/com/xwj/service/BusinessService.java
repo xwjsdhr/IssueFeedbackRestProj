@@ -162,4 +162,8 @@ public interface BusinessService extends UserDetailsService{
 
 	HomeMainData getHomeMainData();
 
+	Boolean delDeptById(Integer id);
+
+	List<Issue> issueAboutMe(Integer userId);
+
 }

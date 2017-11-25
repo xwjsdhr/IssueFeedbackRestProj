@@ -245,4 +245,12 @@ public class MyBatisIssueDaoImpl implements IssueDao {
 		return issueCounts;
 	}
 
+	@Override
+	public List<Issue> issueAboutMe(Integer userId) {
+		SqlSession session = dbUtils.getSessionFactory().openSession();
+		List<Issue> issues = session.selectList("issueAboutMe",userId);
+		session.close();
+		return issues;
+	}
+
 }

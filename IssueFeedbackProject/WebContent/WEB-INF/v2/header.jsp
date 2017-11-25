@@ -10,7 +10,7 @@
     </button>
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon" ></span>
     </button>
 
     <ul class="nav navbar-nav d-md-down-none">
@@ -35,7 +35,7 @@
 	          <div class="dropdown-header text-center">
 	            <strong>设置</strong>
 	          </div>
-	          <a class="dropdown-item" href="user_info"><i class="fa fa-user"></i>个人信息</a>
+	          <a class="dropdown-item" href="user_info"><i class="fa fa-id-card-o" aria-hidden="true"></i>个人信息</a>
 	          <div class="divider"></div>
 	          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i>退出</a>
 	        </div>

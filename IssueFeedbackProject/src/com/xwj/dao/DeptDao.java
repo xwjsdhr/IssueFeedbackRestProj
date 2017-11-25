@@ -26,4 +26,6 @@ public interface DeptDao {
 	 */
 	Dept getDeptById(Integer id);
 
+	Boolean delDeptById(Integer id);
+
 }

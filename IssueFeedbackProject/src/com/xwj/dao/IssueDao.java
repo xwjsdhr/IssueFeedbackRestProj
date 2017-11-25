@@ -158,4 +158,6 @@ public interface IssueDao {
 
 	List<IssueCount> countIssue(Integer year ,String type);
 
+	List<Issue> issueAboutMe(Integer userId);
+
 }

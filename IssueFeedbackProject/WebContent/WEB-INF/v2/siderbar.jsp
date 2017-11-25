@@ -72,7 +72,7 @@
           		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-doc"></i>周报管理</a>
           		<ul class="nav-dropdown-items">
           			<li class="nav-item">
-		                <a class="nav-link" href="icons-font-awesome.html">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-docs"></i>周报列表</a>
+		                <a class="nav-link" href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-docs"></i>周报列表</a>
 		            </li>
           		</ul>
           </li>

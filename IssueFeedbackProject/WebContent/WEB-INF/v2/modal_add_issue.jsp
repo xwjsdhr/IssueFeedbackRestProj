@@ -6,7 +6,7 @@
 	<div class="modal fade" id="addIssueModal" role="dialog">
 	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
-	    <form id="formAddIssue">
+	    <form id="formAddIssue" novalidate>
 	    	<fieldset>
 			      <div class="modal-header">
 			        <h5 class="modal-title" id="exampleModalLabel">添加问题</h5>
@@ -27,14 +27,14 @@
 			      		<div class="row">
 			      			<div class="col-lg-6">
 				      				<label for="inputIssueProject"><b>系统</b>
-				      				</label><select id="inputIssueProject" style="width: 100%"></select>
+				      				</label><select id="inputIssueProject" class="form-control d-block" style="width: 100%" required></select>
 			      			</div>
 			      			<div class="col-lg-6">
 			      				<div class="form-group">
 				      				<label for="inputIssueProjectModule"><b>系统模块</b>
 					      				
 				      				</label>
-				      				<select id="inputIssueProjectModule" style="width: 100% ;" ></select>
+				      				<select id="inputIssueProjectModule" class="form-control d-block" style="width: 100% ;" required></select>
 				      			</div>
 			      			</div>
 			      			

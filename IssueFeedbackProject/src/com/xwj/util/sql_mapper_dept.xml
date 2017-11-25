@@ -25,6 +25,13 @@
 		insert into t_dept(dept_name) values(#{deptName})
 	</insert>
 	
+	<delete id="delDeptById" parameterType="Integer">
+		delete from t_dept where id = #{id};
+		
+	</delete>
+	<delete id="delDeptPermissionsById" parameterType="Integer">
+		delete from t_dept_permission where dept_id = #{id};
+	</delete>
 	<resultMap type="com.xwj.entity.Dept" id="deptResultMap">
 		<result column="deptName" property="deptName"/>
 		<result column="tdId" property="id"/>
