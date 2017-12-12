@@ -63,7 +63,7 @@
           		<a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-note"></i>培训记录管理</a>
           		<ul class="nav-dropdown-items">
           			<li class="nav-item">
-		                <a class="nav-link" href="train_record_management">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-note"></i>记录列表</a>
+		                <a class="nav-link" href="http://10.80.6.22:8080/trained/trained_list.do">&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-note"></i>记录列表</a>
 		            </li>
           		</ul>
           </li>

@@ -58,7 +58,7 @@
 									</select>
 								</div>
 								<div class="col-lg-3">
-									<button class="btn btn-danger" style="width: 100%"  type="button" id="btnQuery">查询</button>
+									<button class="btn btn-danger" style="width: 100%;align-items: center;"  type="button" id="btnQuery">查询</button>
 								</div>
 							</div>
 						</div>

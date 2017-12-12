@@ -38,6 +38,6 @@ public class UserSessionFilter extends OncePerRequestFilter {
 		String contextPath = request.getServletPath();
 		return contextPath.endsWith("login")||contextPath.endsWith("auth")
 				|| contextPath.endsWith("logout")|| contextPath.endsWith(".css") 
-				|| contextPath.endsWith(".js");
+				|| contextPath.endsWith(".js")||contextPath.endsWith("allIssues1");
 	}
 }

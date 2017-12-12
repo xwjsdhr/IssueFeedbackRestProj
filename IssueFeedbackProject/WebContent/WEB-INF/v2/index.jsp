@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/lib/imgs/penguin.ico" />
 <title>首页</title>
 <jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include>
 </head>
@@ -21,21 +22,25 @@
         
         <li class="breadcrumb-menu d-md-down-none">
           <div class="btn-group" role="group" aria-label="Button group">
+          	<a hidden='true' class="btn" id="btnFilter" href="#"><i class="icon-equalizer"></i>&nbsp;筛选 </a>
         	<c:if test="${fn:contains(user_login.dept.permissions,2)}">
 	          	<a class="btn" id="btnAddIssue" href="#"><i class="icon-plus"></i>&nbsp;添加问题 </a>
 	          	<div class="form-check form-check-inline">
-					  <label class="form-check-label">
-					    <input class="form-check-input" type="checkbox" id="chkAboutMe" value="option1"> 我参与的
-					  </label>
-					</div>
+				  <label class="form-check-label">
+				    <input class="form-check-input" type="checkbox" id="chkAboutMe" value="option1"> 我参与的
+				  </label>
+				</div>
           	</c:if>
-          	
+          
           </div>
         </li>
         
       </ol>
       
       <div class="container-fluid">
+      
+      	<jsp:include page="/WEB-INF/v2/filter_panel.jsp"></jsp:include>
+      		
 	          <div class="row">
 	            <div class="col-md-12">
 	              <div class="card">
@@ -50,11 +55,11 @@
 								<tr>
 									<th>状态</th>
 									<th>标题</th>
-									<th>提交<br>时间</th>
+									<th>提交时间</th>
 									<th>反馈人</th>
 									<th>周</th>
 									<th>项目</th>
-									<th>项目<br>模块</th>
+									<th>项目模块</th>
 									<th>详情</th>
 								</tr>
 							</thead>

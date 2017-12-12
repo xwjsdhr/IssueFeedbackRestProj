@@ -24,3 +24,27 @@
     z-index: 900;
     line-height: 40px;
 }
+
+.chip{
+	display:inline-block;
+	background-color: #376bc1;
+	border-radius: 14px;
+	padding-top:5px;
+	color:#ffffff;
+	padding-bottom:5px;
+	padding-left: 10px;
+	padding-right:10px;
+	border-bottom-color: #dddddd;
+	border-width: 10px;
+	margin-right: 10px;
+	
+}
+.chip a{
+	color: white;
+	text-decoration: none;
+}
+.chip i{
+	background-color: #376bc1;
+	border-radius: 20px;
+	width: 30px;
+}

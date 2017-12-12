@@ -109,6 +109,17 @@ public class MyRestController {
 
 		return ResponseEntity.ok(ar);
 	}
+	@GetMapping("/allIssues1")
+	public ResponseEntity<AjaxResult<List<Issue>>> allIssues1() {
+		AjaxResult<List<Issue>> ar = null;
+			ar = new AjaxResult.Builder<List<Issue>>()
+					.result(
+						businessService.getAllIssuesWithoutDept()
+					)
+					.errorCode(ErrorCode.ERRORCODE_SUCCESS)
+					.build();
+		return ResponseEntity.ok(ar);
+	}
 	
 	@GetMapping("/issueAboutMe")
 	public ResponseEntity<AjaxResult<List<Issue>>> issueAboutMe(HttpSession hs,HttpServletRequest req){
