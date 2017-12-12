@@ -106,8 +106,8 @@
 	</select>
 	<!-- 添加用户 -->
 	<insert id="insertUser" parameterType="com.xwj.entity.User">
-		insert into t_user(user_name,password,dept_id,real_name) values(#{username}, #{password}, #{dept.id},
-				#{realName});
+		insert into t_user(user_name,password,dept_id,real_name,telephone,email) values(#{username}, #{password}, #{dept.id},
+				#{realName},#{telephone},#{email});
 	</insert>
 	
 	

@@ -150,7 +150,7 @@ var projectTable = $("#project_table").DataTable({
                      1: "    &nbsp;&nbsp;&nbsp;&nbsp;仅 %d 行被选择 "
             	}
             },
-            search:"查询",
+            search:"<label class='btn btn-sm btn-primary'><i class='fa fa-search'></i>&nbsp;查询</label>",
             searchPlaceholder:"请输入查询信息"
         },
 		columns : [

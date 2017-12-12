@@ -77,8 +77,9 @@ $(document).ready(function(event){
 		var email = inputEmail.val().trim();
 		if(username.length == 0 ||
 				password.length == 0 ||
-				realName.length == 0 || telephone.length == 0
-	|| email.length == 0){
+				realName.length == 0 || 
+				telephone.length == 0||
+				email.length == 0){
 			return;
 		}
 		$.ajax({

@@ -273,23 +273,23 @@ $(document).ready(function() {
 				width:"5%",
 				render : function(data, type, row, meta) {
 									
-					var btn = "<button type='button' class='btn btn-sm btn-secondary contact text-white' data-toggle='tooltip' data-placement='top'><i class='fa fa-user'></i> &nbsp;" +
+					var btn = "<button type='button' id='contact-"+data.id+"' class='btn btn-sm btn-secondary contact text-white' data-toggle='tooltip' data-placement='top'><i class='fa fa-user'></i> &nbsp;" +
 							data.username
 							"</button>";
-					$('.contact').tooltip({
-						html:true,
-						title:
-							"<div class='card border-primary text-primary'>" +
-								"<div class='card-header border-primary'>" +
-								data.realName+"  的联系方式" +
-								"</div>" +
-								"<div class='card-body border-primary ' style='color:white'>" +
-									"<b style='color:black'>电话<br/>"+data.telephone+"</b><br/>" +
-									"<b style='color:black'>电子邮箱<br/>"+data.email+"</b>" +
-								"</div>" +
-							"</div>",
-						template:'<div class="tooltip" role="tooltip" style:"padding:0;"><div  style="background-color:white;padding:0; width:200px " class="tooltip-inner"></div></div>'
-					});
+//					$('#contact-'+data.id).tooltip({
+//						html:true,
+//						title:
+//							"<div class='card border-primary text-primary'>" +
+//								"<div class='card-header border-primary'>" +
+//								data.realName+"  的联系方式" +
+//								"</div>" +
+//								"<div class='card-body border-primary ' style='color:white'>" +
+//									"<b style='color:black'>电话<br/>"+data.telephone+"</b><br/>" +
+//									"<b style='color:black'>电子邮箱<br/>"+data.email+"</b>" +
+//								"</div>" +
+//							"</div>",
+//						template:'<div class="tooltip" role="tooltip" style:"padding:0;"><div  style="background-color:white;padding:0; width:200px " class="tooltip-inner"></div></div>'
+//					});
 					return  btn;
 				}
 			}, 
@@ -315,7 +315,7 @@ $(document).ready(function() {
 				data : "id",
 				width:"5%",
 				render : function(data, type, row, meta) {
-					return "<a class='btn btn-link' href='"+data+"'>查看&nbsp;<i class='fa fa-arrow-right'></i></a>";
+					return "<a class='btn btn-primary btn-sm' href='"+data+"'>查看&nbsp;<i class='fa fa-arrow-right'></i></a>";
 				}
 			}
 		]

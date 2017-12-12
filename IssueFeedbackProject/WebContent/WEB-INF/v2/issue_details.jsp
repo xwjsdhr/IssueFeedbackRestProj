@@ -175,7 +175,8 @@
 												</c:if>
 												<div class="row" id="replyRow"> 
 													<div class="col-lg-6">
-														<input style="margin-top: 20px; clear: left; float: none;" id="btnSubmitAddComment" class="btn btn-primary" type="submit" value="回复">
+														<button style="margin-top: 20px; clear: left; float: none;"
+														 id="btnSubmitAddComment" class="btn btn-primary" type="submit" ><i class='fa fa-reply'></i>  回复</button>
 														<div class="mdl-spinner mdl-js-spinner is-active" hidden="true" id="pbAddComment"></div>
 													</div>
 												</div>

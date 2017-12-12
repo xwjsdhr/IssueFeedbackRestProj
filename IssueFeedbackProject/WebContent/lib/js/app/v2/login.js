@@ -25,7 +25,7 @@ function setListener() {
 						if(data.status){//启用
 							btnLogin.val("登录成功，正在跳转...");
 							setTimeout(function(){
-								window.location.href = "/IssueFeedbackProject/v2/index";
+								window.location.href = "/IssueFeedbackProject/v2/home_main";
 							},1000);
 						}else{//禁用
 							validateFormElement(true);

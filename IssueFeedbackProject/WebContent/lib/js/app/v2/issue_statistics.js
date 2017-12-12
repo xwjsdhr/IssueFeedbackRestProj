@@ -93,8 +93,16 @@ $(document).ready(function(event) {
 				 type:type,
 			 },
 			 success:function(data){
-				 labels.pop();
-				 dataset.pop();
+				 
+				 labels.forEach(function(index,element){
+					 labels.pop();
+				 });
+			 
+			
+				 dataset.forEach(function(index,element){
+					 dataset.pop();
+				 });
+				 
 				 
 				 $.each(data.result,function(index,data){
 					 labels.push(data.week);

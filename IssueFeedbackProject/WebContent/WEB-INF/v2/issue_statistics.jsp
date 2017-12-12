@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>首页</title>
+<title>统计管理-alpha</title>
 <jsp:include page="/WEB-INF/v2/stylesheet_beta.jsp"></jsp:include>
 </head>
 
